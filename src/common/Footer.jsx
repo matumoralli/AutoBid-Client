@@ -1,5 +1,5 @@
 import React from 'react'
-import { AiFillInstagram, AiFillTwitterSquare } from "react-icons/ai";
+import { AiFillInstagram, AiOutlineTwitter } from "react-icons/ai";
 
 export default function Footer() {
   return (
@@ -14,55 +14,55 @@ export default function Footer() {
         </div>
         <div className="flex-grow flex flex-wrap md:pl-15 -mb-10 md:mt-2 mt-10 md:text-left text-center">
           <div className="lg:w-1/4 md:w-1/2 sm:w-1/2 w-full px-4">
-            <h2 className=" font-medium text-gray-900 text-sm mb-3">HOW IT WORKS</h2>
+            <h2 className=" font-medium text-gray-400 text-sm mb-3">HOW IT WORKS</h2>
             <nav className="list-none mb-10">
               <li>
-                <a className="text-gray-600 hover:text-gray-800">Buying a Car</a>
+                <a className="text-gray-900 hover:text-gray-800">Buying a Car</a>
               </li>
               <li>
-                <a className="text-gray-600 hover:text-gray-800">Selling a Car</a>
+                <a className="text-gray-900 hover:text-gray-800">Selling a Car</a>
               </li>
               <li>
-                <a className="text-gray-600 hover:text-gray-800">Finalizing the Sale</a>
+                <a className="text-gray-900 hover:text-gray-800">Finalizing the Sale</a>
               </li>
               <li>
-                <a className="text-gray-600 hover:text-gray-800">FAQs</a>
+                <a className="text-gray-900 hover:text-gray-800">FAQs</a>
               </li>
             </nav>
           </div>
           <div className="lg:w-1/4 md:w-1/2 sm:w-1/2  w-full px-4">
-            <h2 className=" font-medium text-gray-900 text-sm mb-3">SELLERS</h2>
+            <h2 className=" font-medium text-gray-400 text-sm mb-3">SELLERS</h2>
             <nav className="list-none mb-10">
               <li>
-                <a className="text-gray-600 hover:text-gray-800">Submit your Car</a>
+                <a className="text-gray-900 hover:text-gray-800">Submit your Car</a>
               </li>
               <li>
-                <a className="text-gray-600 hover:text-gray-800">Photography Guide</a>
+                <a className="text-gray-900 hover:text-gray-800">Photography Guide</a>
               </li>
             </nav>
           </div>
           <div className="lg:w-1/4 md:w-1/2 sm:w-1/2  w-full px-4">
-            <h2 className=" font-medium text-gray-900 text-sm mb-3">HELPFUL LINKS</h2>
+            <h2 className=" font-medium text-gray-400 text-sm mb-3">HELPFUL LINKS</h2>
             <nav className="list-none mb-10">
               <li>
-                <a className="text-gray-600 hover:text-gray-800">Support</a>
+                <a className="text-gray-900 hover:text-gray-800">Support</a>
               </li>
               <li>
-                <a className="text-gray-600 hover:text-gray-800">Shipping</a>
+                <a className="text-gray-900 hover:text-gray-800">Shipping</a>
               </li>
             </nav>
           </div>
           <div className="lg:w-1/4 md:w-1/2 sm:w-1/2  w-full px-4">
             <div className='flex items-center justify-center md:justify-start gap-1'>
               <i className=" text-gray-900"><AiFillInstagram size={22}/></i>
-              <i className=" text-gray-900"><AiFillTwitterSquare size={22}/></i>
+              <i className=" text-gray-900"><AiOutlineTwitter size={22}/></i>
             </div>
             <nav className="list-none mb-10 mt-2">
               <li>
-                <a className="text-gray-600 hover:text-gray-800 text-xs">© Copyright 2023 AutoBid </a>
+                <a className="text-gray-900 hover:text-gray-800 text-xs">© Copyright 2023 AutoBid </a>
               </li>
               <li>
-                <a className="text-gray-600 hover:text-gray-800 text-xs">Terminos de uso</a>
+                <a className="text-gray-900 hover:text-gray-800 text-xs">Terminos de uso</a>
               </li>
             </nav>
           </div>
