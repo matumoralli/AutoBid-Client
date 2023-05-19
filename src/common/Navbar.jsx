@@ -10,8 +10,8 @@ export default function Navbar() {
 
   return (
     <div className="fixed top-0 left-0 right-0 bg-white">
-      <div className="px-4 mx-auto max-w-[1440px]">
-        <div className="flex items-center justify-between py-4 md:border-b">
+      <div className="px-4 mx-auto max-w-[1440px] shadow-md md:shadow-none ">
+        <div className="flex items-center justify-between py-4 md:border-b ">
           <h1 className="text-3xl font-bold text-green-400 md:mr-8 lg:text-4xl">
             Auto<span className="text-3xl font-bold text-black lg:text-4xl">Bid</span>
           </h1>

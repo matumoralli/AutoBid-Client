@@ -8,19 +8,19 @@ export default function About() {
           <div className="block">
             <ul className="">
               <li>
-                <a className=" font-semibold text-gray-500 text-sm">About Us</a>
+                <a className=" font-semibold text-gray-500 text-sm">Sobre Nosotros</a>
               </li>
               <li className="mt-8">
-                <span className="text-[12px] text-gray-400 ">HOW IT WORKS</span>
+                <span className="text-[12px] text-gray-400 uppercase">Cómo funciona</span>
                 <ul>
                   <li className="my-2">
-                    <a className="text-sm font-semibold text-gray-500">Buying a Car</a>
+                    <a className="text-sm font-semibold text-gray-500">Comprar un Auto</a>
                   </li>
                   <li className="my-2">
-                    <a className="text-sm font-semibold text-gray-500">Selling a Car</a>
+                    <a className="text-sm font-semibold text-gray-500">Vender un Auto</a>
                   </li>
                   <li className="my-2">
-                    <a className="text-sm font-semibold text-gray-500">Finalizing the Sale</a>
+                    <a className="text-sm font-semibold text-gray-500">Finalización de la venta</a>
                   </li>
                 </ul>
               </li>
@@ -28,17 +28,17 @@ export default function About() {
                 <span className="text-[12px] text-gray-400 ">FAQ</span>
                 <ul>
                   <li className="my-2">
-                    <a className="text-sm font-semibold text-gray-500">Buyer FAQ</a>
+                    <a className="text-sm font-semibold text-gray-500">Comprador FAQ</a>
                   </li>
                   <li className="my-2">
-                    <a className="text-sm font-semibold text-gray-500">Seller FAQ</a>
+                    <a className="text-sm font-semibold text-gray-500">Vendedeor FAQ</a>
                   </li>
                 </ul>
               </li>
             </ul>
           </div>
         </aside>
-        <div className="w-3/4">
+        <div className="w-2/4">
           <div className="self-center mr-6 border-b">
             <h2 className="font-bold text-4xl mb-6">Sobre Nosotros</h2>
             <p className="my-8 text-[18px] text-justify">
@@ -60,6 +60,41 @@ export default function About() {
               <li className="mb-20  text-[18px] text-justify">Siempre estamos aquí para ayudar, <strong>incluso después de que termine la subasta.</strong>  Hemos creado una lista de pasos a seguir para garantizar una venta sin problemas, y estamos a solo un mail de distancia si tiene alguna pregunta.</li>
             </ul>
           </div>
+          <div className="self-center mr-6 border-b">
+            <h2 className="font-bold text-4xl mb-8 mt-16">Cómo funciona</h2>
+            <h3 className="font-bold text-2xl">Comprar un Auto</h3>
+            <p className="my-6 text-[18px] text-justify">
+              Una vez que haya encontrado un vehículo que le interese, estos son los pasos a seguir para ofertar con confianza y, con un poco de suerte, ¡ganar la subasta!
+            </p>
+            <h4 className="font-semibold text-lg my-2">1. Regístrese para ofertar</h4>
+            <p className="mb-8  text-[18px] text-justify">
+              Para realizar ofertas, primero debe registrarse. Luego tendrá que abonar un crédito reembolsable de participación (Bid Point), y esto lo habilita a participar en una subasta. Los usuarios que ganen una subasta pagan a AutoBid un cargo del 2% del monto ofertado, además del crédito de participación. 
+            </p>
+            <h4 className="font-semibold text-lg my-2">2. Realizar la debida evaluación</h4>
+            <p className="mb-8  text-[18px] text-justify">
+              Si bien hemos tratado de hacer que comprar un automóvil publicado en línea sea lo más seguro y fácil posible, en última instancia, es su responsabilidad realizar su propia debida evaluación y asegurarse que el automóvil que está considerando sea adecuado para usted, antes de realizar una <strong>oferta.</strong>
+            </p>
+            <ul className="ml-4 list-disc">
+              <li className="mb-8  text-[18px] text-justify">Revise el listado a fondo, incluidas las fallas conocidas, el equipamiento del vehículo, el informe de dominio,  inspección (si incluye una), mantenimiento reciente, fotos, etc.</li>
+              <li className="mb-8  text-[18px] text-justify">Pregúntele al vendedor, a través de los comentarios, cualquier duda que pueda tener sobre el vehículo.</li>
+              <li className="mb-8  text-[18px] text-justify">Coordine con AutoBid para programar una inspección detallada con una compañía de verificación a domicilio (a su cargo).</li>
+            </ul>
+            <h4 className="font-semibold text-lg my-2">3. Oferta</h4>
+            <ul className="ml-4 list-disc">
+              <li className="mb-8  text-[18px] text-justify">
+                Cuando oferta se compromete a abonar, en caso de tener la oferta ganadora, un “cargo” a AutoBid por el servicio, correspondiente al 2% del monto ofertado. Podrá abonar el cargo por distintos medios de pago <strong>y pagará directamente al vendedor</strong> por el vehículo una vez finalizada la subasta.</li>
+              <li className="mb-8  text-[18px] text-justify">Cobramos un crédito de participación (Bid Point) que habilita a los usuarios a ofertar en una subasta. En caso de no ganar la subasta este crédito podrá ser reembolsado o permanecer en su cuenta, habilitandolo a participar en cualquier otra subasta.</li>
+              <li className="mb-8  text-[18px] text-justify">Para garantizar que el proceso sea justo para todos, las ofertas realizadas en el último minuto restablecerán el tiempo restante a 1 minuto, lo que dará a otros la oportunidad de ofertar.</li>
+            </ul>
+            <h4 className="font-semibold text-lg my-2">5. Gana la subasta</h4>
+            <p className="mb-8  text-[18px] text-justify">
+              Para comprar un automóvil en AutoBid, debe ganar la subasta teniendo la oferta ganadora y, si la subasta tiene un "Mínimo", haciendo una oferta que alcance o supere el precio mínimo oculto del vendedor. Si la subasta es "Sin Mínimo", entonces el usuario con la oferta más alta gana, independientemente del monto ofertado.
+            </p>
+            <p className="mb-20  text-[18px] text-justify">
+              Una vez que se cierre la subasta y abone el cargo correspondiente, recibirá la información de contacto del vendedor (y viceversa) para finalizar los detalles y completar la transacción. AutoBid les brinda a ambos una lista de tips para llevar a cabo una venta exitosa. <a className=" underline text-green-500" href="">Obtenga más información sobre cómo finalizar la venta.</a>
+            </p>
+          </div>
+
         </div>
       </div>
     </div>
