@@ -36,3 +36,11 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
+
+Auth0 routes
+/api/auth/login: The route used to perform login with Auth0.
+/api/auth/logout: The route used to log the user out.
+/api/auth/callback: The route Auth0 will redirect the user to after a successful login.
+/api/auth/me: The route to fetch the user profile from.
