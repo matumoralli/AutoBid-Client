@@ -7,10 +7,9 @@ import Image from "next/image";
 export default function Navbar() {
   const { user, error, isLoading } = useUser();
 
-  const [open, setOpen] = useState(false);
+  console.log(user);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>{error.message}</div>;
+  const [open, setOpen] = useState(false);
 
   return (
     <div className="fixed top-0 left-0 right-0 bg-white">
@@ -42,13 +41,16 @@ export default function Navbar() {
           {user ? (
             <div className="flex items-center ml-auto">
               <div>
-                Welcome {user.name}! <a href="/api/auth/logout">Logout</a>
+                Welcome {user.name}!{" "}
+                <button className=" mx-6 md:mx-auto text-sm px-3 py-2 md:px-7 md:py-[10px] md:text-base font-semibold text-black bg-green-400 rounded-md hover:text-gray-200">
+                  <a href="/api/auth/logout">Log out</a>
+                </button>
               </div>
             </div>
           ) : (
             <div className="flex items-center ml-auto">
               <button className=" mx-6 md:mx-auto text-sm px-3 py-2 md:px-7 md:py-[10px] md:text-base font-semibold text-black bg-green-400 rounded-md hover:text-gray-200">
-                Sign Up
+                <a href="/api/auth/login">Sign Up</a>
               </button>
             </div>
           )}
