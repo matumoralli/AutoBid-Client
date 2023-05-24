@@ -24,6 +24,4 @@ async function getApiToken() {
   }
 }
 
-
-
 getApiToken();
