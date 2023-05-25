@@ -3,7 +3,7 @@ import React from 'react'
 export default function Faq() {
   return (
     <div className="self-center mr-6 border-b">
-      <h2 className="font-bold text-4xl mb-8 mt-16">
+      <h2 id='faq' className="font-bold text-4xl mb-8 mt-16">
         Preguntas Frecuentes
       </h2>
       <h3 id="faqComprador" className="font-bold text-2xl">Comprador</h3>
@@ -791,6 +791,113 @@ export default function Faq() {
             </summary>
             <p className="text-neutral-600 mt-3 ">
               Mantenemos todas las subastas finalizadas publicadas en nuestro sitio, independientemente de su resultado.
+            </p>
+          </details>
+        </div>
+      </div>
+      <h3 id="faqAcceso" className="font-bold text-2xl mt-2">Acceso</h3>
+      <div className="grid divide-y divide-neutral-200 mx-auto mt-2">
+        <div className="py-5">
+          <details className="group">
+            <summary className="flex justify-between items-center font-medium cursor-pointer list-none">
+              <span>
+                ¿Cómo inicio sesión?
+              </span>
+              <span className="transition group-open:rotate-180">
+                <svg
+                  fill="none"
+                  height="24"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="1.5"
+                  viewBox="0 0 24 24"
+                  width="24"
+                >
+                  <path d="M6 9l6 6 6-6"></path>
+                </svg>
+              </span>
+            </summary>
+            <p className="text-neutral-600 mt-3 ">
+              Podes iniciar sesión usando una dirección de email y una contraseña, o una de las muchas plataformas de acceso (Google, Facebook). Simplemente clickea el botón de “Iniciar Sesión” en la parte de arriba a la derecha de tu pantalla. Si todavía no tenes una cuenta creada, clickea “Crear Perfil”, ahí podrás ingresar tu email y contraseña o elegir una de las plataformas de acceso.
+            </p>
+          </details>
+        </div>
+        <div className="py-5">
+          <details className="group">
+            <summary className="flex justify-between items-center font-medium cursor-pointer list-none">
+              <span>
+                ¿Qué hago si me olvido mi contraseña?
+              </span>
+              <span className="transition group-open:rotate-180">
+                <svg
+                  fill="none"
+                  height="24"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="1.5"
+                  viewBox="0 0 24 24"
+                  width="24"
+                >
+                  <path d="M6 9l6 6 6-6"></path>
+                </svg>
+              </span>
+            </summary>
+            <p className="text-neutral-600 mt-3 ">
+              En la sección “Iniciar Sesión” verás en la parte baja de tu pantalla un link que dice “¿olvidaste tu contraseña?”. Ingresa la dirección de email de tu cuenta y te enviaremos un email con un link para elegir una nueva contraseña. Asegúrate de tener acceso a tu email ya que este link vence 24 horas después de ser enviado.
+            </p>
+          </details>
+        </div>
+        <div className="py-5">
+          <details className="group">
+            <summary className="flex justify-between items-center font-medium cursor-pointer list-none">
+              <span>
+                ¿Para qué necesitan mi dirección de email?
+              </span>
+              <span className="transition group-open:rotate-180">
+                <svg
+                  fill="none"
+                  height="24"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="1.5"
+                  viewBox="0 0 24 24"
+                  width="24"
+                >
+                  <path d="M6 9l6 6 6-6"></path>
+                </svg>
+              </span>
+            </summary>
+            <p className="text-neutral-600 mt-3 ">
+              Todos los usuarios deben proveer su dirección de email para poder contactarnos con ellos sobre sus subastas u ofertas, y para compartir la información de contacto en caso de haber ganado una subasta o haber vendido un auto.
+            </p>
+          </details>
+        </div>
+        <div className="py-5">
+          <details className="group">
+            <summary className="flex justify-between items-center font-medium cursor-pointer list-none">
+              <span>
+                Necesito contactar a AutoBid, ¿Cómo puedo hacerlo?
+              </span>
+              <span className="transition group-open:rotate-180">
+                <svg
+                  fill="none"
+                  height="24"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="1.5"
+                  viewBox="0 0 24 24"
+                  width="24"
+                >
+                  <path d="M6 9l6 6 6-6"></path>
+                </svg>
+              </span>
+            </summary>
+            <p className="text-neutral-600 mt-3 ">
+              Estamos acá para ayudarte. Contáctanos enviando un email a soporte@autobid.com y te vamos a contestar lo antes posible.
             </p>
           </details>
         </div>

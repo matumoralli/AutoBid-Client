@@ -7,9 +7,9 @@ export default function About() {
 
   return (
     <div className="max-w-[1440px] mx-auto">
-      <div className="flex mt-[180px] ml-4">
+      <div className="flex mt-[84px] md:mt-[110px] lg:mt-[180px] ml-4">
         <Aside/>
-        <div className=" w-full md:w-2/3 md:ml-[33.3%]">
+        <div className="w-full md:w-2/3 md:ml-[33.3%]">
           <AboutUs/>
           <HowTo/>
           <Faq/>
