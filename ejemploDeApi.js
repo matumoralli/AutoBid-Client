@@ -1,3 +1,4 @@
+//! NO BORRAR, BACKUP DE LAS FORMAS DE TRAER INFO DESDE LA API
 import Head from "next/head";
 import Image from "next/image";
 import { useSelector, useDispatch } from "react-redux";
