@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import { useSelector, useDispatch } from "react-redux";
-import { decrement, increment } from "../../slices/counterSlice";
+import { decrement, increment } from "../redux/counter/counterSlice";
 import DefButton from "@/common/DefButton";
 
 export default function Home() {
