@@ -2,6 +2,7 @@ import AutoCard from "@/common/AutoCard";
 import FiltersBar from "@/common/FiltersBar";
 import SideBar from "@/common/SideBar";
 import Head from "next/head";
+
 const cars = [
   {
     id: "1",
