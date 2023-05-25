@@ -22,7 +22,7 @@ const UserCard = ({ user, adminOpt = false }) => {
   };
 
   return (
-    <article className="relative w-[384px] p-6 my-2 mx-1 rounded-md flex flex-col items-center bg-gray-50 transition-all duration-15 group">
+    <article className="relative w-full p-6 my-2 mx-1 rounded-md flex flex-col items-center bg-gray-50 transition-all duration-15 group">
       {adminOpt && (
         <ul className="absolute top-0 right-0 m-2 flex gap-2 items-center text-white text-lg transition-all duration-300 scale-0 group-hover:scale-100">
           <li>
