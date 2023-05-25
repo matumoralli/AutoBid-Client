@@ -3,6 +3,7 @@ import HowTo from "@/components/about/HowTo";
 import AboutUs from "@/components/about/AboutUs";
 import Aside from "@/components/about/Aside";
 
+
 export default function About() {
 
   return (
