@@ -74,10 +74,14 @@ export default function Footer() {
             <h2 className="font-medium text-gray-400 text-sm mb-3">VENDEDORES</h2>
             <nav className="list-none mb-10">
               <li>
-                <a className="text-gray-900 hover:text-gray-800">Submit your Car</a>
+                <a className="text-gray-900 hover:text-gray-800">
+                  Submit your Car
+                </a>
               </li>
               <li>
-                <a className="text-gray-900 hover:text-gray-800">Photography Guide</a>
+                <a className="text-gray-900 hover:text-gray-800">
+                  Photography Guide
+                </a>
               </li>
             </nav>
           </div>
@@ -93,13 +97,19 @@ export default function Footer() {
             </nav>
           </div>
           <div className="lg:w-1/4 md:w-1/2 sm:w-1/2 w-full md:px-4">
-            <div className='flex items-center justify-center md:justify-start gap-1'>
-              <i className="text-gray-900"><AiFillInstagram size={22}/></i>
-              <i className="text-gray-900"><AiOutlineTwitter size={22}/></i>
+            <div className="flex items-center justify-center md:justify-start gap-1">
+              <i className="text-gray-900">
+                <AiFillInstagram size={22} />
+              </i>
+              <i className="text-gray-900">
+                <AiOutlineTwitter size={22} />
+              </i>
             </div>
             <nav className="list-none mb-10 mt-2">
               <li>
-                <a className="text-gray-900 hover:text-gray-800 text-xs">© Copyright 2023 AutoBid </a>
+                <a className="text-gray-900 hover:text-gray-800 text-xs">
+                  © Copyright 2023 AutoBid{" "}
+                </a>
               </li>
               <li>
                 <Link className="text-gray-900 hover:text-gray-800 hover:underline text-xs" href="/terms-of-use">Terminos de uso</Link>
@@ -114,8 +124,3 @@ export default function Footer() {
     </footer>
   );
 }
-
-
-
-
-

@@ -1,12 +1,10 @@
-import React, { useState } from 'react'
-import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
-import Link from 'next/link';
-import Image from 'next/image'
-import { useRouter } from 'next/router';
+import React, { useState } from "react";
+import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
+import Link from "next/link";
+import Image from "next/image";import { useRouter } from 'next/router';
 
 
 export default function Navbar() {
-
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
@@ -43,17 +41,29 @@ export default function Navbar() {
             </button>
           </div>
 
-          <button className=' md:hidden' onClick={() => setOpen(true)}>
-            <AiOutlineMenu size={30} className='text-black'/>
+          <button className=" md:hidden" onClick={() => setOpen(true)}>
+            <AiOutlineMenu size={30} className="text-black" />
           </button>
 
-          <div className={`${!open && "hidden"} bg-gray-600/50 min-h-screen w-full fixed top-0 left-0 right-0 backdrop-blur-sm z-[3]`} onClick={() => setOpen(false)}></div>
+          <div
+            className={`${
+              !open && "hidden"
+            } bg-gray-600/50 min-h-screen w-full fixed top-0 left-0 right-0 backdrop-blur-sm z-[3]`}
+            onClick={() => setOpen(false)}
+          ></div>
 
-          <div className={`${open ? "w-screen" : "w-0"} bg-[#fafbfd] min-h-screen fixed top-0 left-0 transition-all duration-300 z-[3]`}>
+          <div
+            className={`${
+              open ? "w-screen" : "w-0"
+            } bg-[#fafbfd] min-h-screen fixed top-0 left-0 transition-all duration-300 z-[3]`}
+          >
             <div className={`${!open && "hidden"} pt-3`}>
               <div className="flex items-center justify-between px-4">
                 <h1 className="text-2xl font-bold text-gray-800">Menu</h1>
-                <button className="py-3 ml-2 text-black" onClick={() => setOpen(false)}>
+                <button
+                  className="py-3 ml-2 text-black"
+                  onClick={() => setOpen(false)}
+                >
                   <AiOutlineClose size={25} />
                 </button>
               </div>
@@ -83,9 +93,5 @@ export default function Navbar() {
         </div>
       </div>
     </div>
-  )
-};
-
-
-
-
+  );
+}
