@@ -1,7 +1,13 @@
-import Head from 'next/head'
-import Image from 'next/image'
+import Head from "next/head";
+import Image from "next/image";
+import { useSelector, useDispatch } from "react-redux";
+import { decrement, increment } from "../../slices/counterSlice";
+import DefButton from "@/common/DefButton";
 
 export default function Home() {
+  const counter = useSelector((state) => state.counter.value);
+  const dispatch = useDispatch();
+
   return (
     <>
       <Head>
@@ -10,6 +16,13 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <main className="container flex h-screen items-center justify-center gap-2">
+        <h1>The value of counter is {counter}</h1>
+        <DefButton className="text-white" onClick={() => dispatch(increment())}>
+          Aumentar
+        </DefButton>
+        <DefButton onClick={() => dispatch(decrement())}>Restar</DefButton>
+      </main>
     </>
-  )
-};
+  );
+}
