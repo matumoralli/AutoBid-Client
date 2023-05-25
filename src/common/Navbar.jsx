@@ -7,8 +7,6 @@ import Image from "next/image";
 export default function Navbar() {
   const { user, error, isLoading } = useUser();
 
-  console.log(user);
-
   const [open, setOpen] = useState(false);
 
   return (
