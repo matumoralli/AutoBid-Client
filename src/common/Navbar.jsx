@@ -17,12 +17,15 @@ export default function Navbar() {
     <div className="fixed top-0 left-0 right-0 bg-white z-20">
       <div className="px-4 mx-auto max-w-[1440px] shadow-md md:shadow-none ">
         <div className="flex items-center justify-between py-4 md:border-b ">
-          <Image
-            className="md:mr-8 w-[120px] h-[38px] md:h-[46px] sm:w-[150px]"
-            src="/../public/Logo.png"
-            width={150}
-            height={300}
-          />
+          <Link href="/">
+            <Image
+              className="md:mr-8 w-[120px] h-[38px] md:h-[46px] sm:w-[150px]"
+              src="/../public/Logo.png"
+              width={150}
+              height={300}
+            />
+          </Link>
+
           <ul className="hidden space-x-6 md:flex">
             <li>
               <a className="text-base font-medium hover:text-gray-400" href="#">
