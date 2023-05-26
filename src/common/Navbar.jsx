@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from 'next/router';
-
+import { useRouter } from "next/router";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -18,7 +17,15 @@ export default function Navbar() {
     <div className="fixed top-0 left-0 right-0 bg-white z-20">
       <div className="px-4 mx-auto max-w-[1440px] shadow-md md:shadow-none ">
         <div className="flex items-center justify-between py-4 md:border-b ">
-          <Image className='md:mr-8 w-[120px] h-[38px] md:h-[46px] sm:w-[150px]' src="/../public/Logo.png" width={150} height={300}/>
+          <Link href="/">
+            <Image
+              className="md:mr-8 w-[120px] h-[38px] md:h-[46px] sm:w-[150px]"
+              src="/../public/Logo.png"
+              width={150}
+              height={300}
+            />
+          </Link>
+
           <ul className="hidden space-x-6 md:flex">
             <li>
               <a className="text-base font-medium hover:text-gray-400" href="#">
@@ -26,18 +33,24 @@ export default function Navbar() {
               </a>
             </li>
             <li>
-              <Link className="text-base font-medium hover:text-gray-400" href="/sell-car">
+              <Link
+                className="text-base font-medium hover:text-gray-400"
+                href="/sell-car"
+              >
                 Vende tu Auto
               </Link>
             </li>
             <li>
-              <Link className="text-base font-medium hover:text-gray-400" href="/about">
+              <Link
+                className="text-base font-medium hover:text-gray-400"
+                href="/about"
+              >
                 ¿Qué es AutoBid?
               </Link>
             </li>
           </ul>
           <div className="flex items-center ml-auto">
-            <button className=" mx-6 md:mx-auto text-xs px-2 py-3 md:px-4 md:py-[11px] lg:px-6 md:text-base font-semibold text-black bg-red-500 rounded-md hover:text-gray-200">
+            <button className=" mx-6 md:mx-auto text-xs px-2 py-3 md:px-4 md:py-[11px] lg:px-6 md:text-base font-semibold border-2 rounded-md border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-all duration-300">
               Iniciar sesión
             </button>
           </div>
@@ -70,19 +83,21 @@ export default function Navbar() {
               </div>
               <ul className="flex p-1 text-[#18171c]">
                 <li className="flex flex-col items-start py-2 text-xl">
-                  <button className="px-4 py-3 text-base font-medium">Subastas</button>
+                  <button className="px-4 py-3 text-base font-medium">
+                    Subastas
+                  </button>
                   <Link href="/sell-car">
-                    <button 
+                    <button
                       className="px-4 py-2 text-base font-medium ml-3 bg-red-500 rounded-xl"
-                      onClick={() => handleMenuLinkClick('/sell-car')}
+                      onClick={() => handleMenuLinkClick("/sell-car")}
                     >
                       Vende tu Auto
                     </button>
                   </Link>
                   <Link href="/about">
-                    <button 
+                    <button
                       className="px-4 py-3 text-base font-medium"
-                      onClick={() => handleMenuLinkClick('/about')}
+                      onClick={() => handleMenuLinkClick("/about")}
                     >
                       ¿Qué es AutoBid?
                     </button>

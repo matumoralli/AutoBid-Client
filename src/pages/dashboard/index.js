@@ -113,7 +113,11 @@ const cars = [
     services: "Regularly serviced at authorized service center",
     addedItems: "Floor mats, Window tint",
     checked: true,
-    image: "https://source.unsplash.com/random/384x256/?cars",
+    images: [
+      "https://source.unsplash.com/random/384x256/?cars",
+      "https://source.unsplash.com/random/384x256/?cars",
+      "https://source.unsplash.com/random/384x256/?cars",
+    ],
   },
   {
     id: "2",
@@ -135,7 +139,11 @@ const cars = [
     services: "Serviced at local garage",
     addedItems: "Rear spoiler",
     checked: false,
-    image: "https://source.unsplash.com/random/384x256/?cars",
+    images: [
+      "https://source.unsplash.com/random/384x256/?cars",
+      "https://source.unsplash.com/random/384x256/?cars",
+      "https://source.unsplash.com/random/384x256/?cars",
+    ],
   },
   {
     id: "3",
@@ -157,7 +165,11 @@ const cars = [
     services: "Maintained at authorized dealership",
     addedItems: "Custom wheels",
     checked: false,
-    image: "https://source.unsplash.com/random/384x256/?cars",
+    images: [
+      "https://source.unsplash.com/random/384x256/?cars",
+      "https://source.unsplash.com/random/384x256/?cars",
+      "https://source.unsplash.com/random/384x256/?cars",
+    ],
   },
   {
     id: "4",
@@ -179,7 +191,11 @@ const cars = [
     services: "Regularly serviced at independent mechanic",
     addedItems: "Hood stripes",
     checked: true,
-    image: "https://source.unsplash.com/random/384x256/?cars",
+    images: [
+      "https://source.unsplash.com/random/384x256/?cars",
+      "https://source.unsplash.com/random/384x256/?cars",
+      "https://source.unsplash.com/random/384x256/?cars",
+    ],
   },
   {
     id: "5",
@@ -201,7 +217,11 @@ const cars = [
     services: "Serviced at authorized service center",
     addedItems: "Roof rack",
     checked: true,
-    image: "https://source.unsplash.com/random/384x256/?cars",
+    images: [
+      "https://source.unsplash.com/random/384x256/?cars",
+      "https://source.unsplash.com/random/384x256/?cars",
+      "https://source.unsplash.com/random/384x256/?cars",
+    ],
   },
   {
     id: "6",
@@ -223,7 +243,11 @@ const cars = [
     services: "Serviced at BMW dealership",
     addedItems: "M Performance exhaust",
     checked: false,
-    image: "https://source.unsplash.com/random/384x256/?cars",
+    images: [
+      "https://source.unsplash.com/random/384x256/?cars",
+      "https://source.unsplash.com/random/384x256/?cars",
+      "https://source.unsplash.com/random/384x256/?cars",
+    ],
   },
   {
     id: "7",
@@ -245,7 +269,11 @@ const cars = [
     services: "Regularly serviced at authorized dealership",
     addedItems: "Roof rails, All-weather floor mats",
     checked: true,
-    image: "https://source.unsplash.com/random/384x256/?cars",
+    images: [
+      "https://source.unsplash.com/random/384x256/?cars",
+      "https://source.unsplash.com/random/384x256/?cars",
+      "https://source.unsplash.com/random/384x256/?cars",
+    ],
   },
   {
     id: "8",
@@ -267,7 +295,11 @@ const cars = [
     services: "Serviced at authorized service center",
     addedItems: "S-Line exterior package",
     checked: true,
-    image: "https://source.unsplash.com/random/384x256/?cars",
+    images: [
+      "https://source.unsplash.com/random/384x256/?cars",
+      "https://source.unsplash.com/random/384x256/?cars",
+      "https://source.unsplash.com/random/384x256/?cars",
+    ],
   },
   {
     id: "9",
@@ -289,7 +321,11 @@ const cars = [
     services: "Regularly serviced at local mechanic",
     addedItems: "Trunk organizer",
     checked: false,
-    image: "https://source.unsplash.com/random/384x256/?cars",
+    images: [
+      "https://source.unsplash.com/random/384x256/?cars",
+      "https://source.unsplash.com/random/384x256/?cars",
+      "https://source.unsplash.com/random/384x256/?cars",
+    ],
   },
   {
     id: "10",
@@ -311,9 +347,14 @@ const cars = [
     services: "Maintained at Jeep dealership",
     addedItems: "Winch",
     checked: false,
-    image: "https://source.unsplash.com/random/384x256/?cars",
+    images: [
+      "https://source.unsplash.com/random/384x256/?cars",
+      "https://source.unsplash.com/random/384x256/?cars",
+      "https://source.unsplash.com/random/384x256/?cars",
+    ],
   },
 ];
+
 const carModel = {
   id: "",
   brand: "",
@@ -465,9 +506,10 @@ const Dashboard = () => {
             placeholder={`${
               toShow.section === "cars" ? "Search pulication" : "Search user"
             }`}
-            className="w-[95%] p-1 bg-gray-50 border-2 border-gray-200 rounded-md outline-none focus:bg-gray-100 focus:border-gray-300 transition-all duration-200"
+            className="w-full p-1 bg-gray-50 border-2 border-gray-200 rounded-md outline-none focus:bg-gray-100 focus:border-gray-300 transition-all duration-200"
           />
-          <div className="flex flex-wrap justify-center items-start">
+
+          <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-2">
             {
               <>
                 {!toShow.array.length && (

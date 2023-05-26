@@ -8,7 +8,7 @@ const handleDelete = () => {};
 const handleUpdate = () => {};
 
 const AutoCard = ({ car, adminOpt = false }) => {
-  const { brand, model, equipement, kilometers, price, year, image, checked } =
+  const { brand, model, equipement, kilometers, price, year, images, checked } =
     car;
 
   const [modals, setModals] = useState({
@@ -26,7 +26,7 @@ const AutoCard = ({ car, adminOpt = false }) => {
   return (
     <article className="m-2 overflow-hidden rounded-md max-w-sm bg-gray-50 hover:bg-gray-200 transition-all duration-150 group">
       <div className="relative">
-        <img src={image} alt={brand + model + "-image"} />
+        <img src={images[0]} alt={brand + model + "-image"} />
 
         {adminOpt && (
           <ul className="absolute top-0 right-0 m-2 flex gap-2 items-center text-white text-lg transition-all duration-300 scale-0 group-hover:scale-100">
