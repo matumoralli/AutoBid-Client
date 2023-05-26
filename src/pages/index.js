@@ -276,11 +276,11 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="mt-20">
+      <main className="mt-20 max-w-[1440px] mx-auto">
         <FiltersBar />
 
         <section className="flex">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 =">
             {cars?.map((car, indx) => (
               <AutoCard car={car} key={car.model + "-" + indx} />
             ))}
