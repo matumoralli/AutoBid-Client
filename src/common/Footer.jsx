@@ -5,8 +5,10 @@ import { Link as ScrollLink } from 'react-scroll';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
+
 export default function Footer() {
   const router = useRouter();
+  const pdfPath = '/GuiaFotos.pdf';
 
   const isCurrentPage = (pathname) => {
     return router.pathname === pathname;
@@ -74,14 +76,14 @@ export default function Footer() {
             <h2 className="font-medium text-gray-400 text-sm mb-3">VENDEDORES</h2>
             <nav className="list-none mb-10">
               <li>
-                <a className="text-gray-900 hover:text-gray-800">
-                  Submit your Car
-                </a>
+                <Link href="/sell-car" className="text-gray-900 hover:text-gray-800 hover:underline cursor-pointer">
+                  Vende tu Auto
+                </Link>
               </li>
               <li>
-                <a className="text-gray-900 hover:text-gray-800">
-                  Photography Guide
-                </a>
+                <Link target="_blank" rel="noopener noreferrer" href={pdfPath} className="text-gray-900 hover:text-gray-800 hover:underline cursor-pointer">
+                  Guía de fotos
+                </Link>
               </li>
             </nav>
           </div>
@@ -89,10 +91,10 @@ export default function Footer() {
             <h2 className="font-medium text-gray-400 text-sm mb-3">LINKS DE AYUDA</h2>
             <nav className="list-none mb-10">
               <li>
-                <a className="text-gray-900 hover:text-gray-800 hover:underline cursor-pointer">Soporte</a>
+                <Link href="/support" className="text-gray-900 hover:text-gray-800 hover:underline cursor-pointer">Soporte</Link>
               </li>
               <li>
-                <a className="text-gray-900 hover:text-gray-800 hover:underline cursor-pointer">Inspecciones</a>
+                <Link href="/inspections" className="text-gray-900 hover:text-gray-800 hover:underline cursor-pointer">Inspecciones</Link>
               </li>
             </nav>
           </div>

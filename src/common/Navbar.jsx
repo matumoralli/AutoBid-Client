@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import Link from "next/link";
-import Image from "next/image";import { useRouter } from 'next/router';
+import Image from "next/image";
+import { useRouter } from 'next/router';
 
 
 export default function Navbar() {
