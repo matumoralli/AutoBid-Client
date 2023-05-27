@@ -16,7 +16,7 @@ const FiltersBar = () => {
     <nav className="p-2">
       <ul className="flex gap-4 text-sm">
         {filters.map((filter, i) => (
-          <li>
+          <li key={filter}>
             <button
               className={`${
                 active === i
