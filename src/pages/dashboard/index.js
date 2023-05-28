@@ -108,7 +108,7 @@ const Dashboard = () => {
   return (
     <>
       <main className="h-[80vh] mt-20 flex">
-        <aside className="p-2 h-full w-[10%] border-r flex flex-col items-center justify-center gap-10">
+        <aside className="p-2 h-full w-[10%] max-w-[100px] border-r flex flex-col items-center justify-center gap-10">
           <ul className="flex flex-col gap-10">
             <li
               className={`text-2xl hover:scale-110 transition-all duration-300 ${
