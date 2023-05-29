@@ -2,7 +2,7 @@ import React from "react";
 import { Field, ErrorMessage } from "formik";
 
 export default function ReservePriceForm({ formikProps }) {
-  const { values, errors, touched } = formikProps;
+  const { values } = formikProps;
 
   return (
     <div className="relative border border-gray-100 space-y-3 mx-auto rounded-md bg-white p-6 shadow-md lg:p-10 my-6">
@@ -30,27 +30,28 @@ export default function ReservePriceForm({ formikProps }) {
         />
       </div>
 
-      {values.minReservePrice === "si" && (
-        <div className="grid gap-3 grid-cols-1">
-          <label className="">
-            ¿Qué precio mínimo te gustaría obtener? (USD$)
-          </label>
-          <Field
-            type="number"
-            name="reservePrice"
-            className={`mt-2 h-10 w-[50%] rounded-md bg-gray-100 px-3 ${
-              errors.reservePrice && touched.reservePrice
-                ? "border border-red-500"
-                : ""
-            }`}
-          />
-          <ErrorMessage
-            name="reservePrice"
-            component="div"
-            className="text-red-500 mt-1 text-sm"
-          />
-        </div>
-      )}
+      
+      <div className="grid gap-3 grid-cols-1">
+        <label className={`flex ${
+          (values.minReservePrice === 'no' || values.minReservePrice === '') ? 'hidden' : ''
+        }`}>
+          ¿Qué precio mínimo te gustaría obtener? (USD$)
+        </label>
+        <Field
+          type="text"
+          name="reservePrice"
+          className={`mt-2 h-10 w-[50%] rounded-md bg-gray-100 px-3 ${
+            values.minReservePrice === 'si' ? '' : 'hidden'
+          }`}
+        />
+        <ErrorMessage
+          name="reservePrice"
+          component="div"
+          className={`flex text-red-500 mt-1 text-sm ${
+            values.minReservePrice !== 'si' ? 'hidden' : ''
+          }`}
+        />
+      </div>
     </div>
   );
 }

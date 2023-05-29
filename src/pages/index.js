@@ -4,11 +4,11 @@ import Pagination from "@/common/Pagination";
 import SideBar from "@/common/SideBar";
 import Head from "next/head";
 import { useState } from "react";
-// import { cars } from "../db.json";
+import { cars } from "../db.json";
 
 export default function Home() {
-  // const [page, setPage] = useState(1);
-  // const rst = cars.length / 16 - page;
+  const [page, setPage] = useState(1);
+  const rst = cars.length / 16 - page;
 
   return (
     <>
@@ -22,8 +22,8 @@ export default function Home() {
       <main className="mt-20 max-w-[1440px] mx-auto">
         <FiltersBar />
 
-        {/* <section className="flex justify-center">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 =">
+        <section className="flex justify-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
             {!cars.length && (
               <h1 className="text-xl text-center">
                 At the moment there are no publications available to display
@@ -44,7 +44,7 @@ export default function Home() {
         <Pagination
           maxLength={Math.ceil(cars.length / 16)}
           pageStg={[page, setPage]}
-        /> */}
+        />
       </main>
     </>
   );
