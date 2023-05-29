@@ -35,6 +35,13 @@ const validationSchema = Yup.object({
   notas: Yup.string().required('Ingresa las notas / datos importantes.'),
   fueModificado: Yup.string().required('Selecciona si el vehículo es modificado o no.'),
   fallaExistente: Yup.string().required('Selecciona si hay alguna falla mecánica o cosmética.'),
+  fallaDescripcion: Yup.string().test('fallaDescripcion', 'Ingresa la descripción de la falla.', function (value) {
+    const fallaExistente = this.parent.fallaExistente;
+    if (fallaExistente === 'si') {
+      return Yup.string().required().isValidSync(value);
+    }
+    return true;
+  }),
   provincia: Yup.string()
     .required('Ingresa la provincia.')
     .matches(/^[A-Za-zÁÉÍÓÚáéíóú\s]+$/, 'Ingresa solo letras en el campo de provincia.'),
@@ -43,7 +50,23 @@ const validationSchema = Yup.object({
     .matches(/^[A-Za-zÁÉÍÓÚáéíóú\s]+$/, 'Ingresa solo letras en el campo de localidad.'),
   codigoPostal: Yup.number().required('Ingresa el código postal.'),
   esTitular: Yup.string().required('Selecciona si es titular o no.'),
+  nombreTitular: Yup.string().required('Cual es el nombre del titular y tu relacion con el.', function (value) {
+    const esTitular = this.parent.esTitular;
+    if (esTitular === 'si') {
+      return Yup.string().required().isValidSync(value);
+    }
+    return true;
+  }),
   minReservePrice: Yup.string().required('Selecciona si deseas poner un precio mínimo de venta.'),
+  reservePrice: Yup.number().test('minReservePrice', 'Ingresa un precio mínimo para la reserva que sea válido.', function (value) {
+    const minReservePrice = this.parent.minReservePrice;
+    if (minReservePrice === 'si') {
+      return Yup.number()
+        .min(0, 'El precio mínimo no puede ser negativo.')
+        .required().isValidSync(value);
+    }
+    return true;
+  }),
   images: Yup.array()
     .required("Por favor carga al menos una imagen.")
     .min(1, "Por favor carga al menos una imagen.")
