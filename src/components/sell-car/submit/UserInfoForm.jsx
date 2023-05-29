@@ -1,7 +1,8 @@
 import React from 'react'
 import { Field, ErrorMessage } from 'formik';
 
-export default function UserInfoForm() {
+export default function UserInfoForm({ formikProps }) {
+  const { errors, touched } = formikProps;
   
   return (
     <div className="relative border border-gray-100 space-y-3 mx-auto rounded-md bg-white p-6 shadow-md lg:p-10 my-6">
@@ -14,17 +15,30 @@ export default function UserInfoForm() {
           <Field type="radio" name="sellerType" value="concesionario" id="concesionario" />
           <label htmlFor="concesionario">Concesionario</label>
         </div>
+        <ErrorMessage name="sellerType" component="div" className="text-red-500 mt-1 text-sm" />
       </div>
       <div className="grid gap-3 md:grid-cols-2">
         <div>
           <label className="">Nombre Completo</label>
-          <Field type="text" name="fullName" className="mt-2 h-10 w-full rounded-md bg-gray-100 px-3" />
-          <ErrorMessage name="fullName" component="div" className="text-red-500 mt-1" />
+          <Field
+            type="text"
+            name="fullName"
+            className={`mt-2 h-10 w-full rounded-md bg-gray-100 px-3 ${
+              errors.fullName && touched.fullName ? 'border border-red-500' : ''
+            }`}
+          />
+          <ErrorMessage name="fullName" component="div" className="text-red-500 mt-1 text-sm" />
         </div>
         <div>
           <label className="">Número de contacto</label>
-          <Field type="text" name="contactNumber" className="mt-2 h-10 w-full rounded-md bg-gray-100 px-3" />
-          <ErrorMessage name="contactNumber" component="div" className="text-red-500 mt-1" />
+          <Field
+            type="text"
+            name="contactNumber"
+            className={`mt-2 h-10 w-full rounded-md bg-gray-100 px-3 ${
+              errors.contactNumber && touched.contactNumber ? 'border border-red-500' : ''
+            }`}
+          />
+          <ErrorMessage name="contactNumber" component="div" className="text-red-500 mt-1 text-sm" />
         </div>
       </div>
     </div>
