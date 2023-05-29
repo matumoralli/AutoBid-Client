@@ -21,6 +21,7 @@ export default function Navbar() {
             <Image
               className="md:mr-8 w-[120px] h-[38px] md:h-[46px] sm:w-[150px]"
               src="/../public/Logo.png"
+              alt="AutoBidLogo"
               width={150}
               height={300}
             />

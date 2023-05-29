@@ -1,10 +1,9 @@
-import React from 'react'
-import Link from 'next/link'
+import React from 'react';
 
 export default function Inspections() {
   return (
-    <div className="p-4 mt-3 max-w-[1440px] mx-auto text-gray-600">
-      <div className="container px-0 pt-20 mx-auto max-w-3xl">
+    <div className="p-4 mt-[92px] max-w-[1440px] mx-auto text-gray-600">
+      <div className="container mx-auto max-w-3xl">
         <div className="text-justify mb-5 ">
           <h1 className="text-4xl font-bold text-gray-900 mb-2 underline">Inspecciones</h1>
         </div>

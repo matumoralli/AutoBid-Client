@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { MdKeyboardArrowDown } from "react-icons/md";
+import { Field, ErrorMessage } from 'formik';
 
-export default function VehicleInfoForm() {
-  const [showTextArea, setShowTextArea] = useState(false);
+
+export default function VehicleInfoForm({ formikProps }) {
+  const { values } = formikProps;
   
   return (
     <>
@@ -15,129 +16,113 @@ export default function VehicleInfoForm() {
         <div className="grid gap-3 md:grid-cols-2">
           <div>
             <label className="">Dominio</label>
-            <input
+            <Field
               type="text"
+              name="dominio"
               className="mt-2 h-10 w-full rounded-md bg-gray-100 px-3"
             />
+            <ErrorMessage name="dominio" component="div" className="text-red-500 mt-1" />
           </div>
           <div>
-            <label className="">Año</label>
-            <div className="relative w-56 mt-2 bg-gray-100 rounded-lg">
-              <input
-                className="peer hidden"
-                type="checkbox"
-                name="select-1"
-                id="select-1"
-              />
-              <label
-                htmlFor="select-1"
-                className="flex w-full cursor-pointer rounded-lg select-none border p-2 px-3 text-sm text-gray-700 ring-red-300 peer-checked:ring"
-              >
-                Elegir Año
-              </label>
-              <MdKeyboardArrowDown className="pointer-events-none absolute right-5 top-3 h-4 text-gray-600 transition peer-checked:rotate-180" />
-              <ul className="max-h-0 select-none flex-col  overflow-y-scroll rounded-b-lg shadow-md transition-all duration-300 peer-checked:max-h-56 peer-checked:py-3">
-                {Array.from({ length: 75 }, (_, index) => {
-                  const year = 2024 - index;
-                  return (
-                    <li
-                      key={year}
-                      className="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
-                    >
-                      {year}
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
+            <label htmlFor="anio">Año</label>
+            <Field
+              as="select"
+              name="anio"
+              id="anio"
+              className="mt-2 h-10 w-full rounded-md bg-gray-100 px-3"
+            >
+              <option value="">Elegir Año</option>
+              {Array.from({ length: 75 }, (_, index) => {
+                const year = 2024 - index;
+                return (
+                  <option key={year} value={year}>
+                    {year}
+                  </option>
+                );
+              })}
+            </Field>
+            <ErrorMessage name="anio" component="div" className="text-red-500 mt-1" />
           </div>
         </div>
         <div className="grid gap-3 md:grid-cols-2">
           <div>
             <label className="">Marca</label>
-            <input
+            <Field
               type="text"
+              name="marca"
               className="mt-2 h-10 w-full rounded-md bg-gray-100 px-3"
             />
+            <ErrorMessage name="marca" component="div" className="text-red-500 mt-1" />
           </div>
           <div>
             <label className="">Modelo</label>
-            <input
+            <Field
               type="text"
+              name="modelo"
               className="mt-2 h-10 w-full rounded-md bg-gray-100 px-3"
             />
+            <ErrorMessage name="modelo" component="div" className="text-red-500 mt-1" />
           </div>
         </div>
         <div className="grid gap-3 md:grid-cols-2">
           <div>
             <label className="">Kilometraje</label>
-            <input
+            <Field
               type="text"
+              name="kilometraje"
               className="mt-2 h-10 w-full rounded-md bg-gray-100 px-3"
             />
+            <ErrorMessage name="kilometraje" component="div" className="text-red-500 mt-1" />
           </div>
           <div>
-            <label className="">Transmisión</label>
-            <div className="relative w-56 mt-2 bg-gray-100 rounded-lg">
-              <input
-                className="peer hidden"
-                type="checkbox"
-                name="select-2"
-                id="select-2"
-              />
-              <label
-                for="select-2"
-                className="flex w-full cursor-pointer rounded-lg select-none border p-2 px-3 text-sm text-gray-700 ring-red-300 peer-checked:ring"
-              >
-                Elegir Transmisión
-              </label>
-              <MdKeyboardArrowDown className="pointer-events-none absolute right-5 top-3 h-4 text-gray-600 transition peer-checked:rotate-180" />
-              <ul className="max-h-0 select-none flex-col overflow-hidden rounded-b-lg shadow-md transition-all duration-300 peer-checked:max-h-56 peer-checked:py-3">
-                <li className="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white">
-                  Automatica
-                </li>
-                <li className="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white">
-                  Manual
-                </li>
-              </ul>
-            </div>
+            <label htmlFor="transmision">Transmisión</label>
+            <Field
+              as="select"
+              name="transmision"
+              id="transmision"
+              className="mt-2 h-10 w-full rounded-md bg-gray-100 px-3"
+            >
+              <option value="">Elegir Transmisión</option>
+              <option value="Automatica">Automática</option>
+              <option value="Manual">Manual</option>
+            </Field>
+            <ErrorMessage name="transmision" component="div" className="text-red-500 mt-1" />
           </div>
         </div>
         <div>
           <label className="">Notas / Datos importantes</label>
-            <textarea
-              type="text"
-              className="mt-2 w-full rounded-md bg-gray-100 px-3 py-2 resize-none"
-            />
+          <Field
+            type="text"
+            name="notas"
+            className="mt-2 w-full rounded-md bg-gray-100 px-3 py-2 resize-none"
+          />
+          <ErrorMessage name="notas" component="div" className="text-red-500 mt-1" />
         </div>
         <div>
           <label className="">¿Fue modificado el vehículo?</label>
-            <div className='flex flex-row gap-3 mt-2'>
-              <button type="button" className='border rounded-md px-3 py-2 bg-gray-100'>Stock</button>
-              <button type="button" className='border rounded-md px-3 py-2 bg-gray-100'>Modificado</button>
-            </div>
+          <div className='flex flex-row gap-3 mt-2'>
+            <Field type="radio" name="modificacion" value="stock" id="stock" />
+            <label htmlFor="stock" className="mr-2">Stock</label>
+            <Field type="radio" name="modificacion" value="modificado" id="modificado" />
+            <label htmlFor="modificado">Modificado</label>
+          </div>
+          <ErrorMessage name="modificacion" component="div" className="text-red-500 mt-1" />
         </div>
         <div>
           <label className="">¿Alguna falla mecánica o cosmética que debamos saber?</label>
           <div className='flex flex-row gap-3 mt-2'>
-            <button 
-              type="button" 
-              onClick={() => setShowTextArea(true)} 
-              className='border rounded-md px-3 py-2 bg-gray-100'
-            >
-              Si
-            </button>
-            <button 
-              type="button" 
-              onClick={() => setShowTextArea(false)} 
-              className='border rounded-md px-3 py-2 bg-gray-100'
-            >
-              No
-            </button>
+            <Field type="radio" name="fallaExistente" value="si" id="si" />
+            <label htmlFor="si" className="mr-2">Si</label>
+            <Field type="radio" name="fallaExistente" value="no" id="no" />
+            <label htmlFor="no">No</label>
           </div>
-          <textarea
+          <ErrorMessage name="fallaExistente" component="div" className="text-red-500 mt-1" />
+
+          <Field
             type="text"
-            className={`mt-2 w-full rounded-md bg-gray-100 px-3 py-2 resize-none ${showTextArea ? '' : 'hidden'}`}
+            name="falla"
+            value="fallaDescripcion"
+            className={`mt-2 w-full rounded-md bg-gray-100 px-3 py-2 resize-none ${values.fallaExistente === 'no' ? 'hidden' : ''}`}
           />
         </div>
         <div className="">
@@ -145,15 +130,30 @@ export default function VehicleInfoForm() {
           <div className="grid gap-3 md:grid-cols-2 mt-2">
             <div> 
               <label className="">Provincia</label>
-              <input type="text" className="mt-2 h-10 w-full rounded-md bg-gray-100 px-3" />
+              <Field
+                type="text"
+                name="provincia"
+                className="mt-2 h-10 w-full rounded-md bg-gray-100 px-3"
+              />
+              <ErrorMessage name="provincia" component="div" className="text-red-500 mt-1" />
             </div>
             <div>
               <label className="">Localidad</label>
-              <input type="text" className="mt-2 h-10 w-full rounded-md bg-gray-100 px-3" />
+              <Field
+                type="text"
+                name="localidad"
+                className="mt-2 h-10 w-full rounded-md bg-gray-100 px-3"
+              />
+              <ErrorMessage name="localidad" component="div" className="text-red-500 mt-1" />
             </div>
             <div>
               <label className="">Código Postal</label>
-              <input type="text" className="mt-2 h-10 w-full rounded-md bg-gray-100 px-3" />
+              <Field
+                type="text"
+                name="codigoPostal"
+                className="mt-2 h-10 w-full rounded-md bg-gray-100 px-3"
+              />
+              <ErrorMessage name="codigoPostal" component="div" className="text-red-500 mt-1" />
             </div>
           </div>
         </div>

@@ -19,7 +19,7 @@ export default function Footer() {
       <div className="container px-5 py-10 lg:py-12 mx-auto flex md:items-start md:flex-row md:flex-nowrap flex-wrap flex-col max-w-[1440px]">
         <div className="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left">
           <a className="flex font-medium items-center md:justify-start justify-center text-gray-900">
-            <Image className=' md:mr-8 w-[120px] h-[38px] md:h-[46px] sm:w-[150px]' src="/../public/LogoFooter.png" width={150} height={300}/>
+            <Image className=' md:mr-8 w-[120px] h-[38px] md:h-[46px] sm:w-[150px]' src="/../public/LogoFooter.png" alt="AutoBidLogoFooter" width={150} height={300}/>
           </a>
         </div>
         <div className="flex-grow flex flex-wrap md:pl-15 -mb-10 md:mt-2 mt-10 md:text-left text-center">
