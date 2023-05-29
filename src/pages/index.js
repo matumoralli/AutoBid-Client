@@ -23,7 +23,7 @@ export default function Home() {
         <FiltersBar />
 
         <section className="flex justify-center">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 =">
             {!cars.length && (
               <h1 className="text-xl text-center">
                 At the moment there are no publications available to display
