@@ -5,6 +5,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { decrement, increment } from "../redux/counter/counterSlice";
 import DefButton from "@/common/DefButton";
 import useApi from "../lib/use-api.js";
+import { useGetPokemonByNameQuery } from "@/redux/api/pokeApiSlice";
+import { useState } from "react";
+import { useGetCarsQuery } from "@/redux/api/apiSlice";
 
 export default function Home() {
   const counter = useSelector((state) => state.counter.value);
@@ -16,6 +19,21 @@ export default function Home() {
     console.log(users);
     return users;
   };
+
+  const [pokemonName, setPokemonName] = useState(null);
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    console.log(e.target.previousSibling.value);
+    setPokemonName(e.target.previousSibling.value);
+    const response = useGetPokemonByNameQuery(e.target.previousSibling.value);
+    console.log(response.data);
+  };
+
+  const { data, isFetching } = useGetCarsQuery();
+
+  console.log(data);
+
   return (
     <>
       <Head>
@@ -26,10 +44,15 @@ export default function Home() {
       </Head>
       <main className="container flex h-screen items-center justify-center gap-2">
         <h1>The value of counter is {counter}</h1>
-        <DefButton className="text-white" onClick={() => dispatch(increment())}>
-          Aumentar
-        </DefButton>
-        <DefButton onClick={getUsers}>Restar</DefButton>
+        <DefButton onClick={() => dispatch(increment())}>Aumentar</DefButton>
+        <form>
+          <label>Name</label>
+          <input type="text" id="name" ref={pokemonName} name="name"></input>
+          <DefButton type="submit" onClick={(e) => handleClick(e)}>
+            Search
+          </DefButton>
+          <div></div>
+        </form>
 
         {isLoading && <p>Loading users...</p>}
         {response && (

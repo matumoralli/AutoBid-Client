@@ -1,20 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
-import { useSelector, useDispatch } from "react-redux";
-import { decrement, increment } from "../redux/counter/counterSlice";
-import DefButton from "@/common/DefButton";
-import useApi from "../lib/use-api.js";
 
 export default function Home() {
-  const counter = useSelector((state) => state.counter.value);
-  const dispatch = useDispatch();
-  const { response, error, isLoading } = useApi("./api/user");
-  const getUsers = async () => {
-    const response = await fetch("./api/user");
-    const users = response.json();
-    console.log(users);
-    return users;
-  };
   return (
     <>
       <Head>
@@ -23,33 +10,6 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="container flex h-screen items-center justify-center gap-2">
-        <h1>The value of counter is {counter}</h1>
-        <DefButton className="text-white" onClick={() => dispatch(increment())}>
-          Aumentar
-        </DefButton>
-        <DefButton onClick={getUsers}>Restar</DefButton>
-
-        {isLoading && <p>Loading users...</p>}
-        {response && (
-          <>
-            <p>My users:</p>
-            <div>
-              {JSON.stringify(
-                response.data.map((s) => s.name),
-                null,
-                2
-              )}
-            </div>
-          </>
-        )}
-        {error && (
-          <>
-            <p>Error loading users</p>
-            <pre style={{ color: "red" }}>{JSON.stringify(error, null, 2)}</pre>
-          </>
-        )}
-      </main>
     </>
   );
 }
