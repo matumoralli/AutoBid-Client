@@ -2,11 +2,9 @@ import { useState } from "react";
 
 const FiltersBar = () => {
   const filters = [
-    "Ending soon",
-    "Newly listed",
-    "No reserve",
-    "Lowest mileage",
-    "Closest to me",
+    "Terminando pronto",
+    "Cotizada recientemente",
+    "Sin reserva",
   ];
   const [active, setActive] = useState(0);
 
