@@ -35,13 +35,13 @@ const validationSchema = Yup.object({
   notas: Yup.string().required('Ingresa las notas / datos importantes.'),
   fueModificado: Yup.string().required('Selecciona si el vehículo es modificado o no.'),
   fallaExistente: Yup.string().required('Selecciona si hay alguna falla mecánica o cosmética.'),
-  // fallaDescripcion: Yup.string().test('fallaDescripcion', 'Ingresa la descripción de la falla.', function (value) {
-  //   const { fallaExistente } = this.parent;
-  //   if (fallaExistente === 'si') {
-  //     return Yup.string().required('Ingresa la descripción de la falla.').isValidSync(value);
-  //   }
-  //   return true;
-  // }),
+  fallaDescripcion: Yup.string().test('fallaDescripcion', 'Ingresa la descripción de la falla.', function (value) {
+    const { fallaExistente } = this.parent;
+    if (fallaExistente === 'si') {
+      return Yup.string().required('Ingresa la descripción de la falla.').isValidSync(value);
+    }
+    return true;
+  }),
   provincia: Yup.string()
     .required('Ingresa la provincia.')
     .matches(/^[A-Za-zÁÉÍÓÚáéíóú\s]+$/, 'Ingresa solo letras en el campo de provincia.'),
@@ -50,24 +50,21 @@ const validationSchema = Yup.object({
     .matches(/^[A-Za-zÁÉÍÓÚáéíóú\s]+$/, 'Ingresa solo letras en el campo de localidad.'),
   codigoPostal: Yup.number().required('Ingresa el código postal.'),
   esTitular: Yup.string().required('Selecciona si es titular o no.'),
-  // nombreTitular: Yup.string().test('nombreTitular', 'Cuál es el nombre del titular y tu relación con él.', function (value) {
-  //   const { esTitular } = this.parent;
-  //   if (esTitular === 'si') {
-  //     return Yup.string().required('Ingresa el nombre del titular y tu relación con él.').isValidSync(value);
-  //   }
-  //   return true;
-  // }),
+  nombreTitular: Yup.string().test('nombreTitular', 'Cuál es el nombre del titular y tu relación con él.', function (value) {
+    const { esTitular } = this.parent;
+    if (esTitular === 'no') {
+      return Yup.string().required('Ingresa el nombre del titular y tu relación con él.').isValidSync(value);
+    }
+    return true;
+  }),
   minReservePrice: Yup.string().required('Selecciona si deseas poner un precio mínimo de venta.'),
-  // reservePrice: Yup.number().test('reservePrice', 'Ingresa un precio mínimo para la reserva que sea válido.', function (value) {
-  //   const { minReservePrice } = this.parent;
-  //   if (minReservePrice === 'si') {
-  //     return Yup.number()
-  //       .min(0, 'El precio mínimo no puede ser negativo.')
-  //       .required('Ingresa un precio mínimo para la reserva que sea válido.')
-  //       .isValidSync(value);
-  //   }
-  //   return true;
-  // }),
+  reservePrice: Yup.string().test('reservePrice', 'Ingresa un precio mínimo para la reserva que sea válido.', function (value) {
+    const { minReservePrice } = this.parent;
+    if (minReservePrice === 'si') {
+      return Yup.string().required('Ingresa un precio mínimo para la reserva que sea válido.').isValidSync(value);
+    }
+    return true;
+  }),
   images: Yup.array()
     .required("Por favor carga al menos una imagen.")
     .min(1, "Por favor carga al menos una imagen.")
@@ -77,7 +74,7 @@ const validationSchema = Yup.object({
 export default function Submit() {
   const handleSubmit = (values, { setSubmitting }) => {
     setTimeout(() => {
-      // Realiza la lógica de envío del formulario aquí
+      // La lógica del formulario ira en este lugar
       console.log(values);
       setSubmitting(false);
     }, 500);

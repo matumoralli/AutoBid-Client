@@ -2,7 +2,7 @@ import React from "react";
 import { Field, ErrorMessage } from "formik";
 
 export default function TitleInfoForm({ formikProps }) {
-  const { values, errors, touched } = formikProps;
+  const { values } = formikProps;
 
   return (
     <div className="relative border border-gray-100 space-y-3 mx-auto rounded-md bg-white p-6 shadow-md lg:p-10 my-6">
@@ -24,7 +24,6 @@ export default function TitleInfoForm({ formikProps }) {
         className="text-red-500 mt-1 text-sm"
       />
 
-      {values.esTitular === "no" && (
         <div className="grid gap-3 grid-cols-1">
           <div className="bg-red-100 rounded flex p-4 items-center">
             <span className="font-normal flex items-center text-sm">
@@ -32,25 +31,26 @@ export default function TitleInfoForm({ formikProps }) {
               del titular
             </span>
           </div>
-          <label className="">
+          <label className={`flex ${
+              values.esTitular === 'si' || values.esTitular === '' ? 'hidden' : ''
+            }`}>
             Nombre del titular / Relación con el titular
           </label>
           <Field
-            as="textarea"
+            type="text"
             name="nombreTitular"
-            className={`w-full rounded-md bg-gray-100 px-3 py-2 resize-none ${
-              errors.nombreTitular && touched.nombreTitular
-                ? "border border-red-500"
-                : ""
+            className={`mt-2 w-full rounded-md bg-gray-100 px-3 py-2 resize-none ${
+              values.esTitular === 'no' ? '' : 'hidden'
             }`}
           />
           <ErrorMessage
             name="nombreTitular"
             component="div"
-            className="text-red-500 mt-1 text-sm"
+            className={`flex text-red-500 mt-1 text-sm ${
+              values.esTitular !== 'no' ? 'hidden' : ''
+            }`}
           />
         </div>
-      )}
     </div>
   );
 }
