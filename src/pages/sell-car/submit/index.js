@@ -25,10 +25,10 @@ const validationSchema = Yup.object({
   anio: Yup.string().required('Selecciona el año.'),
   marca: Yup.string()
     .required('Ingresa la marca.')
-    .matches(/^[A-Za-z\s]+$/, 'Ingresa solo letras en el campo de marca.'),
+    .matches(/^[A-Za-zÁÉÍÓÚáéíóú\s]+$/, 'Ingresa solo letras en el campo de marca.'),
   modelo: Yup.string()
     .required('Ingresa el modelo.')
-    .matches(/^[A-Za-z\s]+$/, 'Ingresa solo letras en el campo de modelo.'),
+    .matches(/^[A-Za-zÁÉÍÓÚáéíóú\s]+$/, 'Ingresa solo letras en el campo de modelo.'),
   kilometraje: Yup.number()
     .required('Ingresa el kilometraje.'),
   transmision: Yup.string().required('Selecciona la transmisión.'),
@@ -37,10 +37,10 @@ const validationSchema = Yup.object({
   fallaExistente: Yup.string().required('Selecciona si hay alguna falla mecánica o cosmética.'),
   provincia: Yup.string()
     .required('Ingresa la provincia.')
-    .matches(/^[A-Za-z\s]+$/, 'Ingresa solo letras en el campo de provincia.'),
+    .matches(/^[A-Za-zÁÉÍÓÚáéíóú\s]+$/, 'Ingresa solo letras en el campo de provincia.'),
   localidad: Yup.string()
     .required('Ingresa la localidad.')
-    .matches(/^[A-Za-z\s]+$/, 'Ingresa solo letras en el campo de localidad.'),
+    .matches(/^[A-Za-zÁÉÍÓÚáéíóú\s]+$/, 'Ingresa solo letras en el campo de localidad.'),
   codigoPostal: Yup.number().required('Ingresa el código postal.'),
   esTitular: Yup.string().required('Selecciona si es titular o no.'),
   minReservePrice: Yup.string().required('Selecciona si deseas poner un precio mínimo de venta.'),
