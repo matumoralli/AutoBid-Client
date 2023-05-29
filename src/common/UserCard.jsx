@@ -46,14 +46,14 @@ const UserCard = ({ user, adminOpt = false }) => {
 
       {
         <Modal
-          title={"You're sure?"}
+          title={"¿Estas seguro?"}
           inView={modals.delete.inView}
           handleView={() => handleViewModal("delete")}
         >
           <p>
-            There is no going back on this action, once the user is deleted, you
-            will not be able to get them back and "{name}" will be removed from
-            our database.
+            No hay vuelta atrás en esta acción, una vez que se elimina el
+            usuario, usted no podrá recuperarlos y <b>"{name}"</b> será
+            eliminado de nuestra base de datos.
           </p>
         </Modal>
       }
@@ -97,7 +97,7 @@ const UserCard = ({ user, adminOpt = false }) => {
         className="font-semibold border-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-md mt-4 p-1 transition-all duration-300"
         onClick={() => handleViewModal("update")}
       >
-        View full info
+        Ver perfil
       </button>
     </article>
   );

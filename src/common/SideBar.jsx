@@ -3,7 +3,7 @@ const toEquipmentArray = (eq) => eq.split(",").map((word) => word.trim());
 const SideBar = ({ newListingsCars }) => {
   return (
     <aside className="hidden lg:block">
-      <h3 className="text-lg font-bold mx-2 my-4">New Listings</h3>
+      <h3 className="text-lg font-bold mx-2 my-4">Nuevos listados</h3>
       {newListingsCars?.map(
         ({ model, description, place, images, equipement }) => (
           <article

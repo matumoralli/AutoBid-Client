@@ -160,7 +160,7 @@ const Dashboard = () => {
             value={toSearch}
             onChange={handleChange}
             placeholder={`${
-              toShow.section === "cars" ? "Search pulication" : "Search user"
+              toShow.section === "cars" ? "Buscar publiación" : "Buscar usuario"
             }`}
             className="w-full p-1 bg-gray-50 border-2 border-gray-200 rounded-md outline-none focus:bg-gray-100 focus:border-gray-300 transition-all duration-200"
           />
@@ -170,7 +170,7 @@ const Dashboard = () => {
               <>
                 {!toShow.array.length && (
                   <h1 className="text-2xl">
-                    There is nothing to show in the section - "{toShow.section}"
+                    No hay nada que mostrar en la sección "{toShow.section}"
                   </h1>
                 )}
                 {toShow.array.map((elm) =>
@@ -191,7 +191,7 @@ const Dashboard = () => {
       </main>
 
       <Modal
-        title="Add publication"
+        title="Añadir publicación"
         inView={modals.add.inView}
         handleView={() => handleViewModal("add")}
       >

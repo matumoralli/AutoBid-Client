@@ -51,15 +51,14 @@ const AutoCard = ({ car, adminOpt = false }) => {
 
         {
           <Modal
-            title={"You're sure?"}
+            title={"¿Estas seguro?"}
             inView={modals.delete.inView}
             handleView={() => handleViewModal("delete")}
           >
             <p>
-              There is no going back on this action, once the publication is
-              deleted you will not be able to recover it and{" "}
-              <b>"{brand + " " + model}"</b> will be eliminated from our
-              database
+              No hay vuelta atrás en esta acción, una vez que la publicación es
+              eliminado no podrá recuperarlo y <b>"{brand + " " + model}"</b>{" "}
+              será eliminado de nuestro base de datos
             </p>
           </Modal>
         }
