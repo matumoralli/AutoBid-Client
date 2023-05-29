@@ -7,7 +7,7 @@ export default withApiAuthRequired(async function cars(req, res) {
 
     console.log(process.env.BACKEND_URL)
 
-    // This is a contrived example, normally your external API would exist on another domain.
+
     const response = await fetch(process.env.BACKEND_URL + "/cars/", {
       headers: {
         Authorization: `Bearer ${accessToken}`,
