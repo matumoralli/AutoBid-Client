@@ -26,7 +26,7 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 =">
             {!cars.length && (
               <h1 className="text-xl text-center">
-                At the moment there are no publications available to display
+                Por el momento no hay publicaciones disponibles para mostrar
               </h1>
             )}
             {[...cars]?.splice((page - 1) * 16, 16)?.map((car, indx) => (

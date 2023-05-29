@@ -51,13 +51,13 @@ const Modal = ({
                 className="p-1 rounded-md border-2 border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition-all duration-300"
                 onClick={handleConfirm}
               >
-                Confirm
+                Confirmar
               </button>
               <button
                 className="p-1 font-semibold rounded-md border-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-all duration-300"
                 onClick={handleClose}
               >
-                Cancel
+                Cancelar
               </button>
             </footer>
           </div>
