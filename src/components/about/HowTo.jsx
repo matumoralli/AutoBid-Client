@@ -3,7 +3,7 @@ import React from 'react'
 export default function HowTo() {
   return (
     <div className="self-center mr-6 border-b">
-      <h2 className="font-bold text-4xl mb-8 mt-16">Cómo funciona</h2>
+      <h2 id="sectionComprarAutoHref" className="font-bold text-4xl mb-8 mt-16">Cómo funciona</h2>
       <h3 id="sectionComprarAuto" className="font-bold text-2xl">Comprar un Auto</h3>
       <p className="my-6 text-[14px] md:text-[18px] text-justify">
         Una vez que haya encontrado un vehículo que le interese, estos son los pasos a seguir para ofertar con confianza y, con un poco de suerte, ¡ganar la subasta!
@@ -47,9 +47,9 @@ export default function HowTo() {
       <p className="mb-8 text-[14px] md:text-[18px] text-justify">
         Para comprar un automóvil en AutoBid, debe ganar la subasta teniendo la oferta ganadora y, si la subasta tiene un "Mínimo", haciendo una oferta que alcance o supere el precio mínimo oculto del vendedor. Si la subasta es "Sin Mínimo", entonces el usuario con la oferta más alta gana, independientemente del monto ofertado.
       </p>
-      <p className="mb-20 text-[14px] md:text-[18px] text-justify">
+      <p id="sectionVenderAutoHref" className="mb-20 text-[14px] md:text-[18px] text-justify">
         Una vez que se cierre la subasta y abone el cargo correspondiente, recibirá la información de contacto del vendedor (y viceversa) para finalizar los detalles y completar la transacción. AutoBid les brinda a ambos una lista de tips para llevar a cabo una venta exitosa.{" "}
-        <a className=" underline text-green-500" href="">
+        <a className=" underline text-red-500" href="">
           Obtenga más información sobre cómo finalizar la venta.
         </a>
       </p>
@@ -84,7 +84,7 @@ export default function HowTo() {
         </li>
         <li className="mb-8 text-[14px] md:text-[18px] text-justify">
           Haga{" "}
-          <a className="underline text-green-500" href="">
+          <a className="underline text-red-500" href="">
             inspeccionar su automóvil
           </a>{" "}
           para obtener el mejor precio: puede solicitar su inspección con una empresa especializada y, una vez que apruebe su informe de inspección, podemos incluirlo en su publicación
@@ -117,7 +117,7 @@ export default function HowTo() {
       <p className="my-6 text-[14px] md:text-[18px] text-justify">
         Después del cierre de la subasta, le proporcionaremos una lista de verificación paso a paso para completar su venta. También recibirá la información de contacto del comprador (y viceversa) para finalizar los detalles y la transacción.
       </p>
-      <p className="my-6 text-[14px] md:text-[18px] text-justify">
+      <p id="sectionFinalizarVentaHref" className="my-6 text-[14px] md:text-[18px] text-justify">
         Si su subasta tenía un Mínimo y no se cumplió nos pondremos en contacto, con usted y con el usuario que más ofertó, para ver si podemos ayudarlos a llegar a un acuerdo.
       </p>
       <h3 id="sectionFinalizarVenta" className="font-bold text-2xl">Finalización de la venta</h3>
@@ -131,7 +131,7 @@ export default function HowTo() {
         <li className="mb-8 text-[14px] md:text-[18px] text-justify">
           Recomendamos que el vendedor proporcione prueba de propiedad al comprador; por lo general, es una fotocopia o imagen del título y el registro.
         </li>
-        <li className="mb-20 text-[14px] md:text-[18px] text-justify">
+        <li id='faqHref' className="mb-20 text-[14px] md:text-[18px] text-justify">
           Se espera que los compradores paguen el vehículo en su totalidad dentro de 2 semanas del cierre de la subasta. Dicho esto, será exclusivamente suya la decisión de cuándo y cómo llevar a cabo la transacción.{" "}
         </li>
       </ul>

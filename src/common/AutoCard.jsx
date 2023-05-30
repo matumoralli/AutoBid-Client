@@ -1,19 +1,84 @@
+import { useState } from "react";
 import { FiClock } from "react-icons/fi";
+import { MdVerified, MdDelete, MdBrush } from "react-icons/md";
+import Modal from "../common/Modal";
+import ModifyInfoForm from "./ModifyInfoForm";
 
-const AutoCard = ({ car }) => {
-  const { model, description, place, price, timeLeft, images } = car;
+const handleDelete = () => {};
+const handleUpdate = () => {};
+
+const AutoCard = ({ car, adminOpt = false }) => {
+  const { brand, model, equipement, kilometers, price, year, images, checked } =
+    car;
+
+  const [modals, setModals] = useState({
+    delete: { inView: false, onConfirm: handleDelete },
+    update: { inView: false, onConfirm: handleUpdate },
+  });
+
+  const handleViewModal = (modal) => {
+    setModals({
+      ...modals,
+      [modal]: { ...modals[modal], inView: !modals[modal].inView },
+    });
+  };
 
   return (
-    <article className="m-2 overflow-hidden rounded-md max-w-sm bg-gray-50">
+    <article className="m-2 overflow-hidden rounded-md max-w-sm bg-gray-50 hover:bg-gray-200 transition-all duration-150 group">
       <div className="relative">
-        <img src={images[0]} alt={model + "-image"} />
-        <ul className="m-2 py-1 px-3 absolute bottom-0 left-0 flex gap-4 rounded-md bg-zinc-800">
+        <img src={images[0]} alt={brand + model + "-image"} />
+
+        {adminOpt && (
+          <ul className="absolute top-0 right-0 m-2 flex gap-2 items-center text-white text-lg transition-all duration-300 scale-0 group-hover:scale-100">
+            <li>
+              <button
+                className="p-1 border-2 rounded-md border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-all duration-300"
+                onClick={() => handleViewModal("delete")}
+              >
+                <MdDelete />
+              </button>
+            </li>
+            <li>
+              <button
+                className="p-1 border-2 rounded-md border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white transition-all duration-300"
+                onClick={() => handleViewModal("update")}
+              >
+                <MdBrush />
+              </button>
+            </li>
+          </ul>
+        )}
+
+        {
+          <Modal
+            title={"¿Estas seguro?"}
+            inView={modals.delete.inView}
+            handleView={() => handleViewModal("delete")}
+          >
+            <p>
+              No hay vuelta atrás en esta acción, una vez que la publicación es
+              eliminado no podrá recuperarlo y <b>"{brand + " " + model}"</b>{" "}
+              será eliminado de nuestro base de datos
+            </p>
+          </Modal>
+        }
+        {
+          <Modal
+            title={brand + " " + model}
+            inView={modals.update.inView}
+            handleView={() => handleViewModal("update")}
+          >
+            <ModifyInfoForm obj={car} />
+          </Modal>
+        }
+
+        <ul className="m-2 py-1 px-3 absolute bottom-0 left-0 flex items-center gap-4 rounded-md bg-zinc-800">
           <li>
             <span className="flex items-center gap-2 text-white font-semibold">
               <span className="text-gray-700">
                 <FiClock />
               </span>
-              {timeLeft}
+              {year}
             </span>
           </li>
           <li>
@@ -23,10 +88,21 @@ const AutoCard = ({ car }) => {
           </li>
         </ul>
       </div>
-      <div className="py-3">
-        <h3 className="text-lg font-bold">{model}</h3>
-        <p className="text-sm">{description}</p>
-        <span className="text-sm text-gray-700">{place}</span>
+      <div className="py-3 px-2">
+        <a
+          href="#"
+          className="flex items-center gap-2 text-lg font-bold hover:underline"
+        >
+          {checked && (
+            <span className="text-red-500">
+              <MdVerified />
+            </span>
+          )}
+          {brand + " "}
+          {model}
+        </a>
+        <p className="text-sm">{equipement}</p>
+        <span className="text-sm text-gray-400">{kilometers}km</span>
       </div>
     </article>
   );

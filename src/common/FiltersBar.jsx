@@ -2,11 +2,9 @@ import { useState } from "react";
 
 const FiltersBar = () => {
   const filters = [
-    "Ending soon",
-    "Newly listed",
-    "No reserve",
-    "Lowest mileage",
-    "Closest to me",
+    "Terminando pronto",
+    "Cotizada recientemente",
+    "Sin reserva",
   ];
   const [active, setActive] = useState(0);
 
@@ -16,7 +14,7 @@ const FiltersBar = () => {
     <nav className="p-2">
       <ul className="flex gap-4 text-sm">
         {filters.map((filter, i) => (
-          <li>
+          <li key={filter}>
             <button
               className={`${
                 active === i

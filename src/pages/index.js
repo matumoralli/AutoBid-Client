@@ -1,7 +1,17 @@
+
+import AutoCard from "@/common/AutoCard";
+import FiltersBar from "@/common/FiltersBar";
+import Pagination from "@/common/Pagination";
+import SideBar from "@/common/SideBar";
 import Head from "next/head";
+import { useState } from "react";
+import { cars } from "../db.json";
 import Image from "next/image";
 
 export default function Home() {
+  const [page, setPage] = useState(1);
+  const rst = cars.length / 16 - page;
+
   return (
     <>
       <Head>
@@ -10,6 +20,34 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
+      <main className="mt-20 max-w-[1440px] mx-auto">
+        <FiltersBar />
+
+        <section className="flex justify-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 =">
+            {!cars.length && (
+              <h1 className="text-xl text-center">
+                Por el momento no hay publicaciones disponibles para mostrar
+              </h1>
+            )}
+            {[...cars]?.splice((page - 1) * 16, 16)?.map((car, indx) => (
+              <AutoCard car={car} key={car.model + "-" + indx} />
+            ))}
+          </div>
+
+          <SideBar
+            newListingsCars={[...cars].splice(
+              0,
+              rst > 0 ? 4 : Math.ceil((1 + rst) * 4)
+            )}
+          />
+        </section>
+        <Pagination
+          maxLength={Math.ceil(cars.length / 16)}
+          pageStg={[page, setPage]}
+        />
+      </main>
     </>
   );
 }

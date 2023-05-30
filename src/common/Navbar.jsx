@@ -1,24 +1,42 @@
 import React, { useState } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
+import Link from "next/link";
+import Image from "next/image";
+import { useRouter } from "next/router";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import Link from "next/link";
 import Image from "next/image";
 
 export default function Navbar() {
   const { user, error, isLoading } = useUser();
-
   const [open, setOpen] = useState(false);
+  const router = useRouter();
+
+  const handleMenuLinkClick = (path) => {
+    router.push(path);
+    setOpen(false);
+  };
 
   return (
-    <div className="fixed top-0 left-0 right-0 bg-white">
+    <div className="fixed top-0 left-0 right-0 bg-white z-20">
       <div className="px-4 mx-auto max-w-[1440px] shadow-md md:shadow-none ">
         <div className="flex items-center justify-between py-4 md:border-b ">
+          <Link href="/">
+            <Image
+              className="md:mr-8 w-[120px] h-[38px] md:h-[46px] sm:w-[150px]"
+              src="/../public/Logo.png"
+              alt="AutoBidLogo"
+              width={150}
+              height={300}
+            />
+          </Link>
           <h1 className="text-3xl font-bold text-green-400 md:mr-8 lg:text-4xl">
             Auto
             <span className="text-3xl font-bold text-black lg:text-4xl">
               Bid
             </span>
           </h1>
+
           <ul className="hidden space-x-6 md:flex">
             <li>
               <a className="text-base font-medium hover:text-gray-400" href="#">
@@ -26,14 +44,20 @@ export default function Navbar() {
               </a>
             </li>
             <li>
-              <a className="text-base font-medium hover:text-gray-400" href="#">
-                Vender Tu Auto
-              </a>
+              <Link
+                className="text-base font-medium hover:text-gray-400"
+                href="/sell-car"
+              >
+                Vende tu Auto
+              </Link>
             </li>
             <li>
-              <a className="text-base font-medium hover:text-gray-400" href="#">
+              <Link
+                className="text-base font-medium hover:text-gray-400"
+                href="/about"
+              >
                 ¿Qué es AutoBid?
-              </a>
+              </Link>
             </li>
           </ul>
           {user ? (
@@ -61,6 +85,7 @@ export default function Navbar() {
             } bg-gray-600/50 min-h-screen w-full fixed top-0 left-0 right-0 backdrop-blur-sm z-[3]`}
             onClick={() => setOpen(false)}
           ></div>
+
           <div
             className={`${
               open ? "w-screen" : "w-0"
@@ -81,12 +106,22 @@ export default function Navbar() {
                   <button className="px-4 py-3 text-base font-medium">
                     Subastas
                   </button>
-                  <button className="px-4 py-3 text-base font-medium">
-                    Vender Tu Auto
-                  </button>
-                  <button className="px-4 py-3 text-base font-medium">
-                    ¿Que es AutoBid?
-                  </button>
+                  <Link href="/sell-car">
+                    <button
+                      className="px-4 py-2 text-base font-medium ml-3 bg-red-500 rounded-xl"
+                      onClick={() => handleMenuLinkClick("/sell-car")}
+                    >
+                      Vende tu Auto
+                    </button>
+                  </Link>
+                  <Link href="/about">
+                    <button
+                      className="px-4 py-3 text-base font-medium"
+                      onClick={() => handleMenuLinkClick("/about")}
+                    >
+                      ¿Qué es AutoBid?
+                    </button>
+                  </Link>
                 </li>
               </ul>
             </div>
