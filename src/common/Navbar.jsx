@@ -3,8 +3,12 @@ import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function Navbar() {
+  const { user, error, isLoading } = useUser();
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
@@ -26,6 +30,12 @@ export default function Navbar() {
               height={300}
             />
           </Link>
+          <h1 className="text-3xl font-bold text-green-400 md:mr-8 lg:text-4xl">
+            Auto
+            <span className="text-3xl font-bold text-black lg:text-4xl">
+              Bid
+            </span>
+          </h1>
 
           <ul className="hidden space-x-6 md:flex">
             <li>
@@ -50,16 +60,25 @@ export default function Navbar() {
               </Link>
             </li>
           </ul>
-          <div className="flex items-center ml-auto">
-            <button className=" mx-6 md:mx-auto text-xs px-2 py-3 md:px-4 md:py-[11px] lg:px-6 md:text-base font-semibold border-2 rounded-md border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-all duration-300">
-              Iniciar sesión
-            </button>
-          </div>
-
+          {user ? (
+            <div className="flex items-center ml-auto">
+              <div>
+                Welcome {user.name}!{" "}
+                <button className=" mx-6 md:mx-auto text-sm px-3 py-2 md:px-7 md:py-[10px] md:text-base font-semibold text-black bg-green-400 rounded-md hover:text-gray-200">
+                  <a href="/api/auth/logout">Log out</a>
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="flex items-center ml-auto">
+              <button className=" mx-6 md:mx-auto text-sm px-3 py-2 md:px-7 md:py-[10px] md:text-base font-semibold text-black bg-green-400 rounded-md hover:text-gray-200">
+                <a href="/api/auth/login">Sign Up</a>
+              </button>
+            </div>
+          )}
           <button className=" md:hidden" onClick={() => setOpen(true)}>
             <AiOutlineMenu size={30} className="text-black" />
           </button>
-
           <div
             className={`${
               !open && "hidden"

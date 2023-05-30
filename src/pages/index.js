@@ -1,3 +1,4 @@
+
 import AutoCard from "@/common/AutoCard";
 import FiltersBar from "@/common/FiltersBar";
 import Pagination from "@/common/Pagination";
@@ -5,6 +6,7 @@ import SideBar from "@/common/SideBar";
 import Head from "next/head";
 import { useState } from "react";
 import { cars } from "../db.json";
+import Image from "next/image";
 
 export default function Home() {
   const [page, setPage] = useState(1);
