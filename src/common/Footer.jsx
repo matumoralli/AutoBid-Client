@@ -1,105 +1,170 @@
-import React from 'react';
-import Image from 'next/image';
+import React from "react";
+import Image from "next/image";
 import { AiFillInstagram, AiOutlineTwitter } from "react-icons/ai";
-import { Link as ScrollLink } from 'react-scroll';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-
+import { Link as ScrollLink } from "react-scroll";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function Footer() {
   const router = useRouter();
-  const pdfPath = '/GuiaFotos.pdf';
+  const pdfPath = "/GuiaFotos.pdf";
 
   const isCurrentPage = (pathname) => {
     return router.pathname === pathname;
   };
 
   return (
-    <footer className="text-gray-600 mx-auto bg-[#eeeef0] mt-20">
-      <div className="container px-5 py-10 lg:py-12 mx-auto flex md:items-start md:flex-row md:flex-nowrap flex-wrap flex-col max-w-[1440px]">
-        <div className="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left">
-          <a className="flex font-medium items-center md:justify-start justify-center text-gray-900">
-            <Image className=' md:mr-8 w-[120px] h-[38px] md:h-[46px] sm:w-[150px]' src="/../public/LogoFooter.png" alt="AutoBidLogoFooter" width={150} height={300}/>
+    <footer className="mx-auto mt-20 bg-[#eeeef0] text-gray-600">
+      <div className="container mx-auto flex max-w-[1440px] flex-col flex-wrap px-5 py-10 md:flex-row md:flex-nowrap md:items-start lg:py-12">
+        <div className="mx-auto w-64 flex-shrink-0 text-center md:mx-0 md:text-left">
+          <a className="flex items-center justify-center font-medium text-gray-900 md:justify-start">
+            <Image
+              className="h-[38px] w-[120px] sm:h-auto sm:w-[150px] md:mr-8 md:h-[46px] md:w-auto"
+              src="/../public/LogoFooter.png"
+              alt="AutoBidLogoFooter"
+              width={150}
+              height={300}
+            />
           </a>
         </div>
-        <div className="flex-grow flex flex-wrap md:pl-15 -mb-10 md:mt-2 mt-10 md:text-left text-center">
-          <div className="lg:w-1/4 md:w-1/2 sm:w-1/2 w-full md:px-4">
-            <h2 className="font-medium text-gray-400 text-sm mb-3">CÓMO FUNCIONA</h2>
-            <nav className="list-none mb-10">
+        <div className="md:pl-15 -mb-10 mt-10 flex flex-grow flex-wrap text-center md:mt-2 md:text-left">
+          <div className="w-full sm:w-1/2 md:w-1/2 md:px-4 lg:w-1/4">
+            <h2 className="mb-3 text-sm font-medium text-gray-400">
+              CÓMO FUNCIONA
+            </h2>
+            <nav className="mb-10 list-none">
               <li>
-                {isCurrentPage('/about') ? (
-                  <ScrollLink to="sectionComprarAuto" spy={true} smooth={true} offset={-100} className="text-gray-900 hover:text-gray-800 hover:underline cursor-pointer">
+                {isCurrentPage("/about") ? (
+                  <ScrollLink
+                    to="sectionComprarAuto"
+                    spy={true}
+                    smooth={true}
+                    offset={-100}
+                    className="cursor-pointer text-gray-900 hover:text-gray-800 hover:underline"
+                  >
                     Comprar un Auto
                   </ScrollLink>
                 ) : (
-                  <Link href="/about#sectionComprarAutoHref" className="text-gray-900 hover:text-gray-800 hover:underline cursor-pointer">
+                  <Link
+                    href="/about#sectionComprarAutoHref"
+                    className="cursor-pointer text-gray-900 hover:text-gray-800 hover:underline"
+                  >
                     Comprar un Auto
                   </Link>
                 )}
               </li>
               <li>
-                {isCurrentPage('/about') ? (
-                  <ScrollLink to="sectionVenderAuto" spy={true} smooth={true} offset={-100} className="text-gray-900 hover:text-gray-800 hover:underline cursor-pointer">
+                {isCurrentPage("/about") ? (
+                  <ScrollLink
+                    to="sectionVenderAuto"
+                    spy={true}
+                    smooth={true}
+                    offset={-100}
+                    className="cursor-pointer text-gray-900 hover:text-gray-800 hover:underline"
+                  >
                     Vender un Auto
                   </ScrollLink>
                 ) : (
-                  <Link href="/about#sectionVenderAutoHref" className="text-gray-900 hover:text-gray-800 hover:underline cursor-pointer">
+                  <Link
+                    href="/about#sectionVenderAutoHref"
+                    className="cursor-pointer text-gray-900 hover:text-gray-800 hover:underline"
+                  >
                     Vender un Auto
                   </Link>
                 )}
               </li>
               <li>
-                {isCurrentPage('/about') ? (
-                  <ScrollLink to="sectionFinalizarVenta" spy={true} smooth={true} offset={-100} className="text-gray-900 hover:text-gray-800 hover:underline cursor-pointer">
+                {isCurrentPage("/about") ? (
+                  <ScrollLink
+                    to="sectionFinalizarVenta"
+                    spy={true}
+                    smooth={true}
+                    offset={-100}
+                    className="cursor-pointer text-gray-900 hover:text-gray-800 hover:underline"
+                  >
                     Finalización de la venta
                   </ScrollLink>
                 ) : (
-                  <Link href="/about#sectionFinalizarVentaHref" className="text-gray-900 hover:text-gray-800 hover:underline cursor-pointer">
+                  <Link
+                    href="/about#sectionFinalizarVentaHref"
+                    className="cursor-pointer text-gray-900 hover:text-gray-800 hover:underline"
+                  >
                     Finalización de la venta
                   </Link>
                 )}
               </li>
               <li>
-                {isCurrentPage('/about') ? (
-                  <ScrollLink to="faq" spy={true} smooth={true} offset={-100} className="text-gray-900 hover:text-gray-800 hover:underline cursor-pointer">
+                {isCurrentPage("/about") ? (
+                  <ScrollLink
+                    to="faq"
+                    spy={true}
+                    smooth={true}
+                    offset={-100}
+                    className="cursor-pointer text-gray-900 hover:text-gray-800 hover:underline"
+                  >
                     Preguntas Frecuentes
                   </ScrollLink>
                 ) : (
-                  <Link href="/about#faqHref" className="text-gray-900 hover:text-gray-800 hover:underline cursor-pointer">
+                  <Link
+                    href="/about#faqHref"
+                    className="cursor-pointer text-gray-900 hover:text-gray-800 hover:underline"
+                  >
                     Preguntas Frecuentes
                   </Link>
                 )}
               </li>
             </nav>
           </div>
-          <div className="lg:w-1/4 md:w-1/2 sm:w-1/2 w-full md:px-4">
-            <h2 className="font-medium text-gray-400 text-sm mb-3">VENDEDORES</h2>
-            <nav className="list-none mb-10">
+          <div className="w-full sm:w-1/2 md:w-1/2 md:px-4 lg:w-1/4">
+            <h2 className="mb-3 text-sm font-medium text-gray-400">
+              VENDEDORES
+            </h2>
+            <nav className="mb-10 list-none">
               <li>
-                <Link href="/sell-car" className="text-gray-900 hover:text-gray-800 hover:underline cursor-pointer">
+                <Link
+                  href="/sell-car"
+                  className="cursor-pointer text-gray-900 hover:text-gray-800 hover:underline"
+                >
                   Vende tu Auto
                 </Link>
               </li>
               <li>
-                <Link target="_blank" rel="noopener noreferrer" href={pdfPath} className="text-gray-900 hover:text-gray-800 hover:underline cursor-pointer">
+                <Link
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={pdfPath}
+                  className="cursor-pointer text-gray-900 hover:text-gray-800 hover:underline"
+                >
                   Guía de fotos
                 </Link>
               </li>
             </nav>
           </div>
-          <div className="lg:w-1/4 md:w-1/2 sm:w-1/2 w-full md:px-4">
-            <h2 className="font-medium text-gray-400 text-sm mb-3">LINKS DE AYUDA</h2>
-            <nav className="list-none mb-10">
+          <div className="w-full sm:w-1/2 md:w-1/2 md:px-4 lg:w-1/4">
+            <h2 className="mb-3 text-sm font-medium text-gray-400">
+              LINKS DE AYUDA
+            </h2>
+            <nav className="mb-10 list-none">
               <li>
-                <Link href="/support" className="text-gray-900 hover:text-gray-800 hover:underline cursor-pointer">Soporte</Link>
+                <Link
+                  href="/support"
+                  className="cursor-pointer text-gray-900 hover:text-gray-800 hover:underline"
+                >
+                  Soporte
+                </Link>
               </li>
               <li>
-                <Link href="/inspections" className="text-gray-900 hover:text-gray-800 hover:underline cursor-pointer">Inspecciones</Link>
+                <Link
+                  href="/inspections"
+                  className="cursor-pointer text-gray-900 hover:text-gray-800 hover:underline"
+                >
+                  Inspecciones
+                </Link>
               </li>
             </nav>
           </div>
-          <div className="lg:w-1/4 md:w-1/2 sm:w-1/2 w-full md:px-4">
-            <div className="flex items-center justify-center md:justify-start gap-1">
+          <div className="w-full sm:w-1/2 md:w-1/2 md:px-4 lg:w-1/4">
+            <div className="flex items-center justify-center gap-1 md:justify-start">
               <i className="text-gray-900">
                 <AiFillInstagram size={22} />
               </i>
@@ -107,17 +172,27 @@ export default function Footer() {
                 <AiOutlineTwitter size={22} />
               </i>
             </div>
-            <nav className="list-none mb-10 mt-2">
+            <nav className="mb-10 mt-2 list-none">
               <li>
-                <a className="text-gray-900 hover:text-gray-800 text-xs">
+                <a className="text-xs text-gray-900 hover:text-gray-800">
                   © Copyright 2023 AutoBid{" "}
                 </a>
               </li>
               <li>
-                <Link className="text-gray-900 hover:text-gray-800 hover:underline text-xs" href="/terms-of-use">Terminos de uso</Link>
+                <Link
+                  className="text-xs text-gray-900 hover:text-gray-800 hover:underline"
+                  href="/terms-of-use"
+                >
+                  Terminos de uso
+                </Link>
               </li>
               <li>
-                <Link className="text-gray-900 hover:text-gray-800 hover:underline text-xs" href="/privacy-policy">Política de Privacidad</Link>
+                <Link
+                  className="text-xs text-gray-900 hover:text-gray-800 hover:underline"
+                  href="/privacy-policy"
+                >
+                  Política de Privacidad
+                </Link>
               </li>
             </nav>
           </div>

@@ -15,7 +15,7 @@ export default withApiAuthRequired(async function users(req, res) {
     });
 
     const users = await response.json();
-    console.log(users, accessToken)
+    console.log('este es api', users, accessToken)
     res.status(response.status || 200).json(users);
   } catch (error) {
     console.error(error);
