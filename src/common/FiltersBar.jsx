@@ -1,11 +1,7 @@
 import { useState } from "react";
 
 const FiltersBar = () => {
-  const filters = [
-    "Terminando pronto",
-    "Cotizada recientemente",
-    "Sin reserva",
-  ];
+  const filters = ["Terminando pronto", "Cotizada recientemente", "Sin mínimo"];
   const [active, setActive] = useState(0);
 
   const handleSelect = (i) => setActive(i);
@@ -18,7 +14,7 @@ const FiltersBar = () => {
             <button
               className={`${
                 active === i
-                  ? "text-black relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-full after:bg-black"
+                  ? "relative text-black after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-full after:bg-black after:content-['']"
                   : "text-gray-400 hover:text-black"
               }`}
               onClick={() => handleSelect(i)}
