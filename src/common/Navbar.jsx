@@ -31,13 +31,16 @@ export default function Navbar() {
 
           <ul className="hidden space-x-6 md:flex">
             <li>
-              <a className="text-base font-medium hover:text-gray-400" href="#">
+              <a
+                className="text-base font-medium text-black text-opacity-50 transition-all duration-300 hover:text-opacity-100"
+                href="#"
+              >
                 Subastas
               </a>
             </li>
             <li>
               <Link
-                className="text-base font-medium hover:text-gray-400"
+                className="text-base font-medium text-black text-opacity-50 transition-all duration-300 hover:text-opacity-100"
                 href="/sell-car"
               >
                 Vende tu Auto
@@ -45,7 +48,7 @@ export default function Navbar() {
             </li>
             <li>
               <Link
-                className="text-base font-medium hover:text-gray-400"
+                className="text-base font-medium text-black text-opacity-50 transition-all duration-300 hover:text-opacity-100"
                 href="/about"
               >
                 ¿Qué es AutoBid?
@@ -56,15 +59,15 @@ export default function Navbar() {
             <div className="ml-auto flex items-center">
               <div>
                 Welcome {user.name}!{" "}
-                <button className=" mx-6 rounded-md bg-green-400 px-3 py-2 text-sm font-semibold text-black hover:text-gray-200 md:mx-auto md:px-7 md:py-[10px] md:text-base">
-                  <a href="/api/auth/logout">Log out</a>
+                <button className="rounded-md border-2 border-green-400 p-2 font-medium text-green-400 transition-all duration-300 hover:bg-green-400 hover:text-white">
+                  <a href="/api/auth/logout">Cerrar sesión</a>
                 </button>
               </div>
             </div>
           ) : (
             <div className="ml-auto flex items-center">
-              <button className=" mx-6 rounded-md bg-green-400 px-3 py-2 text-sm font-semibold text-black hover:text-gray-200 md:mx-auto md:px-7 md:py-[10px] md:text-base">
-                <a href="/api/auth/login">Sign Up</a>
+              <button className="rounded-md border-2 border-green-400 p-2 font-medium text-green-400 transition-all duration-300 hover:bg-green-400 hover:text-white">
+                <a href="/api/auth/login">Iniciar sesión</a>
               </button>
             </div>
           )}
