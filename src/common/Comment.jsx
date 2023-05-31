@@ -29,7 +29,7 @@ const Comment = ({ commentData }) => {
           className="h-8 w-8 rounded-full"
         />
         <span className="text-lg font-medium">{name}</span>
-        <span className="text-md text-gray-400">
+        <span className="text-md hidden text-gray-400 md:block">
           Hace {new Date(date).getHours()} hora/s
         </span>
       </div>
