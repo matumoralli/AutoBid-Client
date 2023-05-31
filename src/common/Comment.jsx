@@ -7,18 +7,18 @@ const getUseData = (userId) =>
   users?.find((user) => Number(user.id) === Number(userId));
 
 const Comment = ({ commentData }) => {
+  const { userId, comment, date, answers } = commentData;
+  const { name, image } = getUseData(userId);
+
   const [showAnswers, setShowAnswers] = useState(false);
   const [showResponse, setShowResponse] = useState(false);
   const [newAnswer, setNewAnswer] = useState("");
 
-  const handleShowAnswers = () => setShowAnswers(!showAnswers);
-  const handleShowResponse = () => setShowResponse(!showResponse);
-  const handleChange = (e) => {
-    setNewAnswer(e.target.value);
+  const handleShowAnswers = () => {
+    answers.length && setShowAnswers(!showAnswers);
   };
-
-  const { userId, comment, date, answers } = commentData;
-  const { name, image } = getUseData(userId);
+  const handleShowResponse = () => setShowResponse(!showResponse);
+  const handleChange = (e) => setNewAnswer(e.target.value);
 
   return (
     <li className="mb-3 border-b pb-3">
@@ -47,7 +47,11 @@ const Comment = ({ commentData }) => {
         </li>
         <li>
           <button
-            className="flex items-center gap-1 rounded-md border-2 border-blue-500 p-1 text-xs font-medium text-blue-500 transition-all duration-300 hover:bg-blue-500 hover:text-white"
+            className={`flex items-center gap-1 rounded-md border-2 p-1 text-xs font-medium ${
+              answers.length
+                ? "border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white"
+                : "cursor-default border-gray-500 text-gray-500"
+            } transition-all duration-300`}
             onClick={handleShowAnswers}
           >
             {answers?.length} repuesta/s{" "}
