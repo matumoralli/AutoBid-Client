@@ -30,8 +30,8 @@ const CardDetailID = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="mt-20 p-6">
-        <h2 className="mb-3 text-xl font-bold">{`${car?.year} ${car?.brand} ${car?.model}`}</h2>
+      <main className="mx-auto mt-20 max-w-[1440px] p-6">
+        <h2 className="mb-3 text-xl font-bold lg:text-3xl">{`${car?.year} ${car?.brand} ${car?.model}`}</h2>
 
         <section className="grid max-h-[calc(32rem+0.5rem*3)] grid-cols-4 gap-2 overflow-clip rounded-md">
           <img
@@ -65,7 +65,7 @@ const CardDetailID = () => {
                 alt={`${car?.brand}-${car?.model}-image`}
                 className="max-h-[8rem] w-full"
               />
-              <p className="absolute left-1/2 top-1/2 grid h-full w-full -translate-x-1/2 -translate-y-1/2 place-content-center bg-black bg-opacity-75 text-xs font-semibold text-white md:text-lg">
+              <p className="absolute left-1/2 top-1/2 grid h-full w-full -translate-x-1/2 -translate-y-1/2 place-content-center bg-black bg-opacity-75 text-[.5rem] font-semibold text-white md:text-lg">
                 Más imágines ({car?.images.length})
               </p>
             </div>
