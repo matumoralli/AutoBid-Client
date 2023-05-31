@@ -6,13 +6,17 @@ import AutoInfoList from "@/common/AutoInfoList";
 import Comments from "@/common/Comments";
 import Head from "next/head";
 import { useState } from "react";
+import AutoAllPhotos from "@/common/AutoAllPhotos";
 
 const CardDetailID = () => {
   const { query } = useRouter();
   const car = cars?.find((car) => Number(car.id) === Number(query.id));
 
+  const [viewAllPhotos, setViewAllPhotos] = useState(false);
   const [newComment, setNewComment] = useState("");
+
   const handleChange = (e) => setNewComment(e.target.value);
+  const handleViewAllPhotos = () => setViewAllPhotos(!viewAllPhotos);
 
   if (!car)
     return (
@@ -60,14 +64,20 @@ const CardDetailID = () => {
             />
 
             <div className="relative">
-              <img
-                src={car?.images[0]}
-                alt={`${car?.brand}-${car?.model}-image`}
-                className="max-h-[8rem] w-full"
-              />
-              <p className="absolute left-1/2 top-1/2 grid h-full w-full -translate-x-1/2 -translate-y-1/2 place-content-center bg-black bg-opacity-75 text-[.5rem] font-semibold text-white md:text-lg">
-                Más imágines ({car?.images.length})
-              </p>
+              <AutoAllPhotos
+                inView={viewAllPhotos}
+                handleView={handleViewAllPhotos}
+                images={car?.images}
+              >
+                <img
+                  src={car?.images[0]}
+                  alt={`${car?.brand}-${car?.model}-image`}
+                  className="max-h-[8rem] w-full"
+                />
+                <p className="absolute left-1/2 top-1/2 grid h-full w-full -translate-x-1/2 -translate-y-1/2 place-content-center bg-black bg-opacity-75 text-[.5rem] font-semibold text-white md:text-lg">
+                  Más imágines ({car?.images.length})
+                </p>
+              </AutoAllPhotos>
             </div>
           </div>
         </section>
