@@ -73,7 +73,7 @@ export default function TermsOfUse() {
       </p>
       <h3 className="text-lg font-bold mt-4">¿Qué pasa con mi privacidad?</h3>
       <p>AutoBid se toma muy en serio la privacidad de sus usuarios. Para conocer la Política de privacidad actual de AutoBid, haga click{" "}
-        <a className='underline' href="">aquí.</a>
+        <a className='underline' href="/privacy-policy">aquí.</a>
       </p> 
       <h3 className="text-lg font-bold mt-4">¿Qué pasa con la mensajería?</h3>
       <p>
