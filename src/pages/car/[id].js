@@ -5,10 +5,14 @@ import AutoInfoTable from "@/common/AutoInfoTable";
 import AutoInfoList from "@/common/AutoInfoList";
 import Comments from "@/common/Comments";
 import Head from "next/head";
+import { useState } from "react";
 
 const CardDetailID = () => {
   const { query } = useRouter();
   const car = cars?.find((car) => Number(car.id) === Number(query.id));
+
+  const [newComment, setNewComment] = useState("");
+  const handleChange = (e) => setNewComment(e.target.value);
 
   if (!car)
     return (
@@ -99,16 +103,22 @@ const CardDetailID = () => {
 
         <footer className="mt-8">
           <h3 className="text-2xl font-bold">Comentarios</h3>
-          <form className="mb-4 mt-2 flex gap-2">
+          <form className="relative">
             <input
               type="text"
-              name="toSearch"
+              name="newComment"
+              value={newComment}
+              onChange={handleChange}
               placeholder="Agrega un comentario..."
-              className="w-full rounded-md border-2 border-gray-200 bg-gray-50 p-1 outline-none transition-all duration-200 focus:border-gray-300 focus:bg-gray-100"
+              className="mb-2 mt-3 w-full border-b border-gray-500 border-opacity-25 p-1 text-gray-500 outline-none transition-all duration-300 hover:border-opacity-100 focus:border-opacity-100"
             />
             <button
               type="submit"
-              className="rounded-md border-2 border-blue-500 p-2 text-blue-500 transition-all duration-300 hover:bg-blue-500 hover:text-white"
+              className={`absolute right-0 top-1/2 -translate-y-1/2 text-gray-500 ${
+                newComment
+                  ? "text-opacity-50 hover:scale-105 hover:text-opacity-100"
+                  : "text-opacity-25 hover:cursor-not-allowed"
+              } transition-all duration-300`}
             >
               <FiSend />
             </button>
