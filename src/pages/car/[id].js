@@ -7,6 +7,7 @@ import Comments from "@/common/Comments";
 import Head from "next/head";
 import { useState } from "react";
 import AutoAllPhotos from "@/common/AutoAllPhotos";
+import { MdVerified } from "react-icons/md";
 
 const CardDetailID = () => {
   const { query } = useRouter();
@@ -35,7 +36,14 @@ const CardDetailID = () => {
       </Head>
 
       <main className="mx-auto mt-20 max-w-[1440px] p-6">
-        <h2 className="mb-3 text-xl font-bold lg:text-3xl">{`${car?.year} ${car?.brand} ${car?.model}`}</h2>
+        <h2 className="mb-3 flex items-center gap-2 text-xl font-bold lg:text-3xl">
+          {car?.checked && (
+            <span className="text-red-500">
+              <MdVerified />
+            </span>
+          )}
+          {`${car?.year} ${car?.brand} ${car?.model}`}
+        </h2>
 
         <section className="grid max-h-[calc(32rem+0.5rem*3)] grid-cols-4 gap-2 overflow-clip rounded-md">
           <img
