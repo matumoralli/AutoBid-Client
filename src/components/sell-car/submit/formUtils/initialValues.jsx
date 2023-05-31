@@ -1,0 +1,25 @@
+const initialValues = {
+  sellerType: '',
+  fullName: '',
+  contactNumber: '',
+  dominio: '',
+  anio: '',
+  marca: '',
+  modelo: '',
+  kilometraje: '',
+  transmision: '',
+  notas: '',
+  fueModificado: '',
+  fallaExistente: '',
+  fallaDescripcion: '',
+  provincia: '',
+  localidad: '',
+  codigoPostal: '',
+  esTitular: '',
+  nombreTitular: '',
+  minReservePrice: '',
+  reservePrice: '',
+  images: [],
+};
+
+export default initialValues;
