@@ -1,16 +1,17 @@
-
 import AutoCard from "@/common/AutoCard";
 import FiltersBar from "@/common/FiltersBar";
 import Pagination from "@/common/Pagination";
 import SideBar from "@/common/SideBar";
 import Head from "next/head";
 import { useState } from "react";
-import { cars } from "../db.json";
 import Image from "next/image";
+import { useGetCarsQuery } from "@/redux/api/apiSlice";
 
 export default function Home() {
   const [page, setPage] = useState(1);
-  const rst = cars.length / 16 - page;
+  const { data: response, isFetching, error } = useGetCarsQuery();
+  const carsList = response?.data;
+  const rst = carsList?.length / 16 - page;
 
   return (
     <>
@@ -21,32 +22,43 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="mt-20 max-w-[1440px] mx-auto">
-        <FiltersBar />
+      <main className="mx-auto mt-20 max-w-[1440px]">
+        {isFetching && (
+          <p className="text-center text-xl">
+            Cargando publicaciones...
+          </p>
+        )}
 
-        <section className="flex justify-center">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 =">
-            {!cars.length && (
-              <h1 className="text-xl text-center">
-                Por el momento no hay publicaciones disponibles para mostrar
-              </h1>
-            )}
-            {[...cars]?.splice((page - 1) * 16, 16)?.map((car, indx) => (
-              <AutoCard car={car} key={car.model + "-" + indx} />
-            ))}
-          </div>
+        {error && (
+          <p className="text-center text-xl text-red-700">
+          Por el momento no hay publicaciones disponibles para mostrar
+          </p>
+        )}
 
-          <SideBar
-            newListingsCars={[...cars].splice(
-              0,
-              rst > 0 ? 4 : Math.ceil((1 + rst) * 4)
-            )}
-          />
-        </section>
-        <Pagination
-          maxLength={Math.ceil(cars.length / 16)}
-          pageStg={[page, setPage]}
-        />
+        {response && (
+          <>
+            <FiltersBar />
+
+            <section className="flex justify-center">
+              <div className="= grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+                {[...carsList].splice((page - 1) * 16, 16)?.map((car, indx) => (
+                  <AutoCard car={car} key={car.model + "-" + indx} />
+                ))}
+              </div>
+
+              <SideBar
+                newListingsCars={[...carsList].splice(
+                  0,
+                  rst > 0 ? 4 : Math.ceil((1 + rst) * 4)
+                )}
+              />
+            </section>
+            <Pagination
+              maxLength={Math.ceil(carsList.length / 16)}
+              pageStg={[page, setPage]}
+            />
+          </>
+        )}
       </main>
     </>
   );
