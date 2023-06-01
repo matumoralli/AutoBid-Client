@@ -106,6 +106,10 @@ const CardDetailID = () => {
           </li>
         </ul>
 
+        <button className="w-full rounded-md border-2 border-green-400 p-2 font-medium text-green-400 transition-all duration-300 hover:bg-green-400 hover:text-white">
+          Ofertar
+        </button>
+
         <section className="mt-8">
           <AutoInfoTable car={car} />
         </section>
