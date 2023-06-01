@@ -1,3 +1,4 @@
+import { getTimeAgo } from "@/utils";
 import { users } from "../db.json";
 
 const getUseData = (userId) =>
@@ -23,7 +24,7 @@ const Answers = ({ answers }) => {
                 />
                 <span className="text-lg font-medium">{name}</span>
                 <span className="text-md hidden text-gray-400 md:block">
-                  Hace {new Date(date).getHours()} hora/s
+                  {getTimeAgo(date)}
                 </span>
               </div>
 

@@ -2,6 +2,7 @@ import { FiCornerRightDown, FiCornerRightUp, FiSend } from "react-icons/fi";
 import { users } from "../db.json";
 import { useState } from "react";
 import Answers from "./Answers";
+import { getTimeAgo } from "@/utils";
 
 const getUseData = (userId) =>
   users?.find((user) => Number(user.id) === Number(userId));
@@ -30,7 +31,7 @@ const Comment = ({ commentData, cond }) => {
         />
         <span className="text-lg font-medium">{name}</span>
         <span className="text-md hidden text-gray-400 md:block">
-          Hace {new Date(date).getHours()} hora/s
+          {getTimeAgo(date)}
         </span>
       </div>
 
