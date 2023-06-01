@@ -12,8 +12,8 @@ const Comments = ({ comments }) => {
   return (
     <div className="mt-2 max-h-[50vh] overflow-y-auto rounded-md border p-4">
       <ul className="flex flex-col gap-2">
-        {comments.map((comment) => (
-          <Comment commentData={comment} />
+        {comments.map((comment, index) => (
+          <Comment commentData={comment} cond={index + 1 !== comments.length} />
         ))}
       </ul>
     </div>

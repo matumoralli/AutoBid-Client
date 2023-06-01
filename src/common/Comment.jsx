@@ -6,7 +6,7 @@ import Answers from "./Answers";
 const getUseData = (userId) =>
   users?.find((user) => Number(user.id) === Number(userId));
 
-const Comment = ({ commentData }) => {
+const Comment = ({ commentData, cond }) => {
   const { userId, comment, date, answers } = commentData;
   const { name, image } = getUseData(userId);
 
@@ -21,7 +21,7 @@ const Comment = ({ commentData }) => {
   const handleChange = (e) => setNewAnswer(e.target.value);
 
   return (
-    <li className="mb-3 border-b pb-3">
+    <li className={`${cond && "mb-3 border-b pb-3"}`}>
       <div className="flex items-center gap-2">
         <img
           src={image || "https://source.unsplash.com/random/300/?user"}
