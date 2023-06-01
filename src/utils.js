@@ -26,3 +26,30 @@ export const getTimeAgo = (dateStr) => {
     return `Hace ${difference} segundo${difference > 1 ? "s" : ""}`;
   }
 };
+
+export const leftTime = (dateStr) => {
+  if (!dateStr) return;
+
+  const now = new Date();
+  const date = new Date(dateStr);
+
+  const diference = date - now;
+
+  let days = Math.floor(diference / (1000 * 60 * 60 * 24));
+  let hours = Math.floor(
+    (diference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+  );
+  let minutes = Math.floor((diference % (1000 * 60 * 60)) / (1000 * 60));
+  let seconds = Math.floor((diference % (1000 * 60)) / 1000);
+
+  days = days < 0 ? 0 : days;
+  hours = hours < 0 ? 0 : hours;
+  minutes = minutes < 0 ? 0 : minutes;
+  seconds = seconds < 0 ? 0 : seconds;
+
+  return `${days >= 10 ? days : "0" + days}:${
+    hours >= 10 ? hours : "0" + hours
+  }:${minutes >= 10 ? minutes : "0" + minutes}:${
+    seconds >= 10 ? seconds : "0" + seconds
+  }`;
+};
