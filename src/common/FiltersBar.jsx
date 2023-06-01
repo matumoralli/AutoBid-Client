@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const FiltersBar = () => {
-  const filters = ["Terminando pronto", "Cotizada recientemente", "Sin mínimo"];
+  const filters = ["Terminando pronto", "Agregada recientemente", "Sin mínimo"];
   const [active, setActive] = useState(0);
 
   const handleSelect = (i) => setActive(i);
