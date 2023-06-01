@@ -7,10 +7,14 @@ const Answers = ({ answers }) => {
   return (
     <div className="ml-[2.5rem] mt-2 max-h-[25vh] overflow-y-auto rounded-md border p-4">
       <ul className="flex flex-col gap-2">
-        {answers.map(({ userId, comment, date }) => {
+        {answers.map(({ userId, comment, date }, index) => {
           const { name, image } = getUseData(userId);
           return (
-            <li className="mb-3 border-b pb-3">
+            <li
+              className={`${
+                index + 1 !== answers.length && "mb-3 border-b pb-3"
+              }`}
+            >
               <div className="flex items-center gap-2">
                 <img
                   src={image || "https://source.unsplash.com/random/300/?user"}
