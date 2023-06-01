@@ -5,19 +5,31 @@ import AutoInfoTable from "@/common/AutoInfoTable";
 import AutoInfoList from "@/common/AutoInfoList";
 import Comments from "@/common/Comments";
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AutoAllPhotos from "@/common/AutoAllPhotos";
 import { MdVerified } from "react-icons/md";
+import { leftTime } from "@/utils";
 
 const CardDetailID = () => {
   const { query } = useRouter();
   const car = cars?.find((car) => Number(car.id) === Number(query.id));
 
+  const [timeToEnd, setTimeToEnd] = useState(leftTime(car?.date));
   const [viewAllPhotos, setViewAllPhotos] = useState(false);
   const [newComment, setNewComment] = useState("");
 
   const handleChange = (e) => setNewComment(e.target.value);
   const handleViewAllPhotos = () => setViewAllPhotos(!viewAllPhotos);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimeToEnd(leftTime(car?.date));
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [car?.date]);
 
   if (!car)
     return (
@@ -96,7 +108,7 @@ const CardDetailID = () => {
               <span className="text-gray-700">
                 <FiClock />
               </span>
-              {car?.date}
+              {timeToEnd}
             </span>
           </li>
           <li>

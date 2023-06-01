@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiClock } from "react-icons/fi";
 import { MdVerified, MdDelete, MdBrush } from "react-icons/md";
 import Modal from "../common/Modal";
 import ModifyInfoForm from "./ModifyInfoForm";
 import Link from "next/link";
+import { leftTime } from "@/utils";
 
 const handleDelete = () => {};
 const handleUpdate = () => {};
@@ -19,8 +20,10 @@ const AutoCard = ({ car, adminOpt = false }) => {
     year,
     images,
     checked,
+    date,
   } = car;
 
+  const [timeToEnd, setTimeToEnd] = useState(leftTime(date));
   const [modals, setModals] = useState({
     delete: { inView: false, onConfirm: handleDelete },
     update: { inView: false, onConfirm: handleUpdate },
@@ -32,6 +35,16 @@ const AutoCard = ({ car, adminOpt = false }) => {
       [modal]: { ...modals[modal], inView: !modals[modal].inView },
     });
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimeToEnd(leftTime(date));
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [date]);
 
   return (
     <article className="group m-2 max-w-sm overflow-hidden rounded-md bg-gray-50 transition-all duration-150 hover:bg-gray-200">
@@ -92,7 +105,7 @@ const AutoCard = ({ car, adminOpt = false }) => {
               <span className="text-gray-700">
                 <FiClock />
               </span>
-              {year}
+              {timeToEnd}
             </span>
           </li>
           <li>
@@ -112,8 +125,7 @@ const AutoCard = ({ car, adminOpt = false }) => {
               <MdVerified />
             </span>
           )}
-          {brand + " "}
-          {model}
+          {`${year} ${brand} ${model}`}
         </Link>
         <p className="text-sm">{equipement}</p>
         <span className="text-sm text-gray-400">{kilometers}km</span>
