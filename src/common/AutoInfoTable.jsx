@@ -3,35 +3,23 @@ const toCapitalize = (string) => {
 };
 
 const AutoInfoTable = ({ car }) => {
-  const {
-    brand,
-    model,
-    kilometers,
-    domain,
-    engine,
-    transmission,
-    driveTrain,
-    bodyType,
-    color,
-    owner,
-  } = car;
-  const carInfo = {
-    brand,
-    model,
-    kilometers,
-    domain,
-    engine,
-    transmission,
-    driveTrain,
-    bodyType,
-    color,
-    owner,
+  const carData = {
+    Marca: car.brand,
+    Modelo: car.model,
+    Kilometraje: car.kilometers,
+    Dominio: car.domain,
+    Motor: car.engine,
+    Transmisión: car.transmission,
+    Tracción: car.driveTrain,
+    Tipo: car.bodyType,
+    Color: car.color,
+    Dueño: car.owner,
   };
 
   if (car)
     return (
       <div className="grid grid-cols-1 rounded-md border md:grid-cols-2">
-        {Object.entries(carInfo).map(([key, value]) => (
+        {Object.entries(carData).map(([key, value]) => (
           <ul key={key + value} className="grid grid-cols-3 border ">
             <li className="bg-gray-200 bg-opacity-50 p-2 font-semibold">
               {toCapitalize(key)}
