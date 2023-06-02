@@ -22,20 +22,18 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="mx-auto mt-20 max-w-[1440px]">
+      <main className="mx-auto mt-20 min-h-[70vh] max-w-[1440px] ">
         {isFetching && (
-          <p className="text-center text-xl">
-            Cargando publicaciones...
+          <p className="pt-6 text-center text-xl">Cargando publicaciones...</p>
+        )}
+
+        {(error || carsList?.length === 0) && (
+          <p className="pt-6 text-center text-xl text-red-700">
+            Por el momento no hay publicaciones disponibles para mostrar
           </p>
         )}
 
-        {error && (
-          <p className="text-center text-xl text-red-700">
-          Por el momento no hay publicaciones disponibles para mostrar
-          </p>
-        )}
-
-        {response && (
+        {carsList?.length > 0 && (
           <>
             <FiltersBar />
 

@@ -10,7 +10,7 @@ import {
   AiOutlineAppstoreAdd,
 } from "react-icons/ai";
 import { useGetCarsQuery } from "@/redux/api/apiSlice";
-import useApi from "../../lib/use-api";
+import { useSelector, useDispatch } from "react-redux";
 
 const carModel = {
   id: "",
@@ -38,22 +38,20 @@ const carModel = {
 const handleAdd = () => {};
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
   const [toShow, setToShow] = useState({ section: "users", array: [] });
   const [toSearch, setToSearch] = useState("");
   const [modals, setModals] = useState({
     add: { inView: false, onConfirm: handleAdd },
   });
+  const { users, loading, error } = useSelector((state) => state.users);
 
   useEffect(() => {
-    fetch("/api/user")
-      .then((res) => res.json())
-      .then((data) => {
-        setToShow((prev) => ({
-          ...prev,
-          array: [...data.data].filter((user) => user.isActive && user),
-        }));
-      });
-  }, []);
+    setToShow((prev) => ({
+      ...prev,
+      array: [...users].filter((user) => user.isActive && user),
+    }));
+  }, [users]);
 
   const {
     data: carsResponse,
@@ -74,13 +72,13 @@ const Dashboard = () => {
       case "users":
         setToShow({
           section,
-          array: [...usersList].filter((user) => user.isActive && user),
+          array: [...users].filter((user) => user.isActive && user),
         });
         break;
       case "banned-users":
         setToShow({
           section,
-          array: [...usersList].filter((user) => !user.isActive && user),
+          array: [...users].filter((user) => !user.isActive && user),
         });
         break;
       case "cars":
@@ -89,7 +87,7 @@ const Dashboard = () => {
       default:
         setToShow({
           section: "users",
-          array: [...usersList].filter((user) => user.isActive && user),
+          array: [...users].filter((user) => user.isActive && user),
         });
         break;
     }

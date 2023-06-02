@@ -13,7 +13,7 @@ export default function Test() {
   const dispatch = useDispatch();
 
   //* 1era "NextJS con Auth0"": utilizar el custom Hook useApi o fetch para traer la información de la API (en carpeta "Pages") que necesita autentificación. Debería utilizarse con toda la información privada.
-  const { response, error, isLoading } = useApi("./api/user");
+  // const { response, error, isLoading } = useApi("./api/user");
   console.log(
     "Este es un ejemplo de información privada, la lista de usuarios:",
     response

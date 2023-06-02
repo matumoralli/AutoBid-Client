@@ -1,6 +1,6 @@
 import 'dotenv/config'
 import { withApiAuthRequired, getAccessToken } from '@auth0/nextjs-auth0';
-
+console.log('llegamos a cars')
 export default withApiAuthRequired(async function cars(req, res) {
   try {
     const { accessToken } = await getAccessToken(req, res);
