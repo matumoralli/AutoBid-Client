@@ -9,8 +9,8 @@ export default withApiAuthRequired(async function userAPI(req, res) {
 
     const body = JSON.parse(req.body);
 
-    console.log('este es action', body.action);
-    console.log('este es payload', body.payload);
+    // console.log('este es action', body.action);
+    // console.log('este es payload', body.payload);
 
     const { action, payload } = body;
 
@@ -26,7 +26,7 @@ export default withApiAuthRequired(async function userAPI(req, res) {
 
         fetchOptions = {
           method: "POST",
-          url: process.env.BACKEND_URL + `/users/${email}`,
+          url: process.env.BACKEND_URL + `/users/user/${email}`,
           headers: {
             authorization: `Bearer ${accessToken}`,
           },

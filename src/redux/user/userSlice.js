@@ -2,14 +2,9 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { API_ACTIONS } from "@/dictionary";
 
 const initialState = {
-  createdAt: "",
-  email: "",
-  id: "",
-  isActive: false,
-  isAdmin: false,
-  name: "",
-  password: "",
-  updatedAt: "",
+  loading: false,
+  error: "",
+  user: {}
 };
 
 export const fetchUser = createAsyncThunk(
@@ -18,7 +13,7 @@ export const fetchUser = createAsyncThunk(
     try {
       const response = await fetch("/api/user", {
         method: "POST",
-        body:`{"action":"${API_ACTIONS.LOGIN_REGISTER_USER}", "payload":{"name":"${name}", "email":"${email}"}}`,
+        body: `{"action":"${API_ACTIONS.LOGIN_REGISTER_USER}", "payload":{"name":"${name}", "email":"${email}"}}`,
       });
       return await response.json();
     } catch (error) {
@@ -31,19 +26,19 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {},
-  extraReducers: {
-    [fetchUser.pending]: (state) => {
-      state.loading = true;
-    },
-    [fetchUser.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      state.users = payload;
-    },
-    [fetchUser.rejected]: (state, { error }) => {
-      state.loading = false;
-      state.error = error.message;
-    },
-  },
+  extraReducers: (builder) =>
+    builder
+      .addCase(fetchUser.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(fetchUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload[0];
+      })
+      .addCase(fetchUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.requestStatus;
+      }),
 });
 
 //* Action creators are generated for each case reducer function. Import these actions to use in your component.

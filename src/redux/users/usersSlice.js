@@ -23,19 +23,19 @@ export const usersSlice = createSlice({
   name: "users",
   initialState,
   reducers: {},
-  extraReducers: {
-    [fetchUsers.pending]: (state) => {
-      state.loading = true;
-    },
-    [fetchUsers.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      state.users = payload;
-    },
-    [fetchUsers.rejected]: (state, { error }) => {
-      state.loading = false;
-      state.error = error.message;
-    },
-  },
+  extraReducers: (builder) =>
+    builder
+      .addCase(fetchUsers.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(fetchUsers.fulfilled, (state, action) => {
+        state.loading = false;
+        state.users = action.payload;
+      })
+      .addCase(fetchUsers.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.requestStatus;
+      }),
 });
 
 //* Action creators are generated for each case reducer function. Import these actions to use in your component.
