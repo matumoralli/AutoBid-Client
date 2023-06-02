@@ -11,7 +11,7 @@ export const fetchUser = createAsyncThunk(
   "user/getUser",
   async ({ name, email }) => {
     try {
-      const response = await fetch("/api/user", {
+      const response = await fetch("/api/usersApi", {
         method: "POST",
         body: `{"action":"${API_ACTIONS.LOGIN_REGISTER_USER}", "payload":{"name":"${name}", "email":"${email}"}}`,
       });

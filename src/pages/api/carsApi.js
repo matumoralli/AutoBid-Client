@@ -1,8 +1,9 @@
 import axios from "axios";
 import { API_ACTIONS } from "@/dictionary";
 import { getAccessToken, withApiAuthRequired } from "@auth0/nextjs-auth0";
+//!USAR ESTA API SÓLO PARA INFORMACIÓN PRIVADA, YA QUE SOLICITA AUTORIZACIÓN PREVIA DEL USUARIO. TODA LA INFORMACIÓN PÚBLICA COMO LAS PUBLICACIONES DE AUTOS ACTIVAS TIENE QUE PASAR POR EL "apiSlice.JS" DE REDUX
 
-export default withApiAuthRequired(async function userAPI(req, res) {
+export default withApiAuthRequired(async function carsAPI(req, res) {
   try {
     const { accessToken } = await getAccessToken(req, res);
     let fetchOptions = "";

@@ -9,7 +9,7 @@ const initialState = {
 
 export const fetchUsers = createAsyncThunk("users/getUsers", async () => {
   try {
-    const response = await fetch("/api/user", {
+    const response = await fetch("/api/usersApi", {
       method: "POST",
       body: `{"action":"${API_ACTIONS.GET_ALL_USERS}"}`,
     });

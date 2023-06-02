@@ -1,71 +1,55 @@
-//! NO BORRAR, BACKUP DE LAS FORMAS DE TRAER INFO DESDE LA API
-//* DOS ALTERNATIVAS PARA TRAER INFO DESDE LA API:
-
-import Head from "next/head";
 import { useSelector, useDispatch } from "react-redux";
-import { decrement, increment } from "../../redux/counter/counterSlice";
-import DefButton from "@/common/DefButton";
-import useApi from "../../lib/use-api";
+import { useEffect, useState } from "react";
 import { useGetCarsQuery } from "@/redux/api/apiSlice";
+import { fetchUsers } from "@/redux/users/usersSlice";
+
+//! NO BORRAR, BACKUP DE LAS FORMAS DE TRAER INFO DESDE LA API
+
+//? DOS ALTERNATIVAS PARA TRAER INFO DESDE LA API:
 
 export default function Test() {
-  const counter = useSelector((state) => state.counter.value);
+  //* 1era "useDispatch de Redux": pasa por la API en NextJS que verifica que el usuario se haya autentificado con Auth0 antes de pasar al Backend. Utilizar los métodos en las carpetas "user" y "users" en Redux. Debería utilizarse con toda la información privada.
   const dispatch = useDispatch();
+  const { users, loading, error } = useSelector((state) => state.users);
 
-  //* 1era "NextJS con Auth0"": utilizar el custom Hook useApi o fetch para traer la información de la API (en carpeta "Pages") que necesita autentificación. Debería utilizarse con toda la información privada.
-  // const { response, error, isLoading } = useApi("./api/user");
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, []);
+
   console.log(
-    "Este es un ejemplo de información privada, la lista de usuarios:",
-    response
+    "Este es un ejemplo de información privada que necesita autentificación, la lista de usuarios:",
+    users
   );
 
-  // const getUsers = async () => {
-  //   const response = await fetch("./api/user");
-  //   const users = response.json();
-  //   return users;
-  // };
-
-  //* 2da "Redux con Auth0": utilizar un custom Hook hecho con Redux para traer la información de la API (en carpeta ¨Redux") que NO necesita autentificación. Debería utilizarse con toda la información pública.
-  const { data: carsList, isFetching } = useGetCarsQuery();
+  //* 2da "Redux RTK con Auth0": utilizar un custom Hook hecho con Redux para traer la información de la API (en carpeta ¨Redux") que NO necesita autentificación. Debería utilizarse con toda la información pública.
+  const { data: response, isFetching } = useGetCarsQuery();
+  const carsList = response?.data;
   console.log(
-    "Este es un ejemplo de información pública, la lista de autos:",
+    "Este es un ejemplo de información pública que no necesita autentificación, la lista de autos:",
     carsList
   );
 
   return (
-    <>
-      <main className="container flex h-screen items-center justify-center gap-2">
-        <h1>The value of counter is {counter}</h1>
-        <DefButton onClick={() => dispatch(increment())}>Aumentar</DefButton>
-        <DefButton onClick={() => dispatch(decrement())}>Restar</DefButton>
-        <div>
-          {/* //* Ejemplo de get con Redux */}
-          <div>
-            {carsList &&
-              carsList.data.map((car) => <p key={car.id}>{car.maker}</p>)}
-          </div>
-          {/* //* Ejemplo de get con Auth0 (isLoading y Error Handling opcional). Solo se va a visualizar con un usuario autentificado*/}
-          {isLoading && <p>Loading users...</p>}
-          {response && (
-            <>
-              <h2>My users:</h2>
-              <div style={{ color: "green" }}>
-                {response.data.map((user, index) => (
-                  <p key={index}>{user.name}</p>
-                ))}
-              </div>
-            </>
-          )}
-          {error && (
-            <>
-              <h2>Error loading users</h2>
-              <div style={{ color: "red" }}>
-                {JSON.stringify(error, null, 2)}
-              </div>
-            </>
-          )}
+    <main className="container m-auto flex h-screen flex-col items-center justify-center gap-2">
+      {/* Ejemplo de get con Redux */}
+      <h2>My cars (información pública):</h2>
+      {carsList?.length > 0 && (
+        <div className="flex w-1/2 flex-wrap gap-2">
+          {carsList.map((car) => (
+            <p key={car.id}>{car.brand}</p>
+          ))}
         </div>
-      </main>
-    </>
+      )}
+
+      {/* Ejemplo de get con autentificación de Auth0  */}
+      <h2>My users (información privada):</h2>
+      {users?.length && (
+        <div className="flex w-1/2 flex-wrap gap-2">
+          {users.map((user, index) => (
+            <p key={index}>{user.name}</p>
+          ))}
+        </div>
+      )}
+    </main>
   );
 }
