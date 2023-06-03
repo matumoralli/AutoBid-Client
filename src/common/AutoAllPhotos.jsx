@@ -1,7 +1,22 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
+import {
+  MdOutlineKeyboardArrowLeft,
+  MdOutlineKeyboardArrowRight,
+} from "react-icons/md";
 
 const AutoAllPhotos = ({ images, inView, handleView, children }) => {
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+
+  const handleSelectNext = () => {
+    if (selectedImageIndex < images.length)
+      setSelectedImageIndex(selectedImageIndex + 1);
+  };
+
+  const handleSelectPrev = () => {
+    if (selectedImageIndex > 0) setSelectedImageIndex(selectedImageIndex - 1);
+  };
+
   const handleClose = () => handleView(false);
 
   useEffect(() => {
@@ -24,24 +39,30 @@ const AutoAllPhotos = ({ images, inView, handleView, children }) => {
 
           <div className="relative z-10 h-screen w-screen overflow-y-auto bg-black bg-opacity-75 p-6 shadow-lg">
             <button
-              className="fixed right-8 top-4 rounded-md border-2 border-red-500 p-1 font-semibold text-red-500 transition-all duration-300 hover:bg-red-500 hover:text-white"
+              className="absolute right-2 top-2 rounded-md border-2 border-red-500 p-1 font-semibold text-red-500 transition-all duration-300 hover:bg-red-500 hover:text-white"
               onClick={handleClose}
             >
               <AiOutlineClose />
             </button>
 
-            <header>
-              <h1 className="mt-4 text-xl font-bold text-white">
-                Todas las imágenes ({images.length})
-              </h1>
-            </header>
+            <main className="relative flex h-full w-full flex-col items-center justify-center">
+              <span className="absolute left-0 top-0 rounded-md bg-black bg-opacity-50 p-2 text-sm font-medium text-white">
+                {selectedImageIndex}/{images.length}
+              </span>
 
-            <main className="mb-8 mt-4">
-              <div className="grid grid-cols-2 gap-2 md:grid-cols-4 md:gap-4 lg:grid-cols-6 lg:gap-6">
-                {images.map((route) => (
-                  <img src={route} alt={route} />
-                ))}
-              </div>
+              <button
+                className="absolute left-0 top-1/2 -translate-y-1/2 rounded-md border-2 border-white p-2 text-white transition-all duration-300 hover:bg-white hover:text-black"
+                onClick={handleSelectPrev}
+              >
+                <MdOutlineKeyboardArrowLeft />
+              </button>
+              <img src={images[selectedImageIndex]} alt="Car image" />
+              <button
+                className="absolute right-0 top-1/2 -translate-y-1/2 rounded-md border-2 border-white p-2 text-white transition-all duration-300 hover:bg-white hover:text-black"
+                onClick={handleSelectNext}
+              >
+                <MdOutlineKeyboardArrowRight />
+              </button>
             </main>
           </div>
         </div>
