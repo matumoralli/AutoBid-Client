@@ -24,6 +24,7 @@ const Pagination = ({ maxLength, pageStg }) => {
           firstPage,
           renderPaginationItem(2),
           renderPaginationItem(3),
+          renderPaginationItem(4),
           showEllipsis && renderEllipsis(),
           lastPage,
         ];
@@ -31,6 +32,7 @@ const Pagination = ({ maxLength, pageStg }) => {
         return [
           firstPage,
           showEllipsis && renderEllipsis(),
+          renderPaginationItem(maxLength - 3),
           renderPaginationItem(maxLength - 2),
           renderPaginationItem(maxLength - 1),
           lastPage,
@@ -52,7 +54,7 @@ const Pagination = ({ maxLength, pageStg }) => {
   const renderPaginationItem = (pageNumber) => (
     <li key={pageNumber + "-paginationItem"}>
       <button
-        className={`flex justify-center items-center h-8 w-8 ${
+        className={`flex h-8 w-8 items-center justify-center ${
           page === pageNumber
             ? "bg-red-500 text-white hover:cursor-default"
             : "hover:bg-red-500 hover:text-white"
@@ -65,17 +67,17 @@ const Pagination = ({ maxLength, pageStg }) => {
   );
 
   const renderEllipsis = () => (
-    <li className="flex justify-center items-center h-8 w-8">...</li>
+    <li className="flex h-8 w-8 items-center justify-center">...</li>
   );
 
   return (
     <nav className="mt-8 flex items-center justify-center">
-      <ul className="flex items-center justify-center border-2 border-red-500 rounded-md  text-lg text-red-500">
+      <ul className="flex items-center justify-center rounded-md border-2 border-red-500  text-lg text-red-500">
         <li>
           <button
-            className={`flex justify-center items-center h-8 w-8 transition-all duration-300 ${
+            className={`flex h-8 w-8 items-center justify-center transition-all duration-300 ${
               page === 1
-                ? "text-gray-400 cursor-not-allowed"
+                ? "cursor-not-allowed text-gray-400"
                 : "hover:bg-red-500 hover:text-white"
             }`}
             onClick={handlePrevPage}
@@ -88,9 +90,9 @@ const Pagination = ({ maxLength, pageStg }) => {
 
         <li>
           <button
-            className={`flex justify-center items-center h-8 w-8  transition-all duration-300 ${
+            className={`flex h-8 w-8 items-center justify-center  transition-all duration-300 ${
               page === maxLength
-                ? "text-gray-400 cursor-not-allowed"
+                ? "cursor-not-allowed text-gray-400"
                 : "hover:bg-red-500 hover:text-white"
             }`}
             onClick={handleNextPage}
