@@ -1,0 +1,4 @@
+export const API_ACTIONS = Object.freeze({
+    GET_ALL_USERS: 'GET_ALL_USERS',
+    LOGIN_REGISTER_USER: 'LOGIN_REGISTER_USER',
+})

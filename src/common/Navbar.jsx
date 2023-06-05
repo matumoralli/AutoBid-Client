@@ -1,14 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchUser } from "@/redux/user/userSlice";
 
 export default function Navbar() {
-  const { user, error, isLoading } = useUser();
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const router = useRouter();
+  const {
+    user: userAuth,
+    error: errorAuth,
+    isLoading: isLoadingAuth,
+  } = useUser();
+
+  useEffect(() => {
+    if (userAuth?.email) {
+      dispatch(fetchUser({ name: userAuth.name, email: userAuth.email }));
+    }
+  }, [userAuth]);
+
+  const { user, loading, error } = useSelector((state) => state.user);
 
   const handleMenuLinkClick = (path) => {
     router.push(path);
@@ -21,7 +36,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between py-4 md:border-b ">
           <Link href="/">
             <Image
-              className="h-[38px] w-[120px] sm:w-[150px] sm:h-auto md:mr-8 md:h-[46px] md:w-auto"
+              className="h-[38px] w-[120px] sm:h-auto sm:w-[150px] md:mr-8 md:h-[46px] md:w-auto"
               src="/../public/Logo.png"
               alt="AutoBidLogo"
               width={150}
@@ -51,19 +66,29 @@ export default function Navbar() {
                 ¿Qué es AutoBid?
               </Link>
             </li>
+            {user?.isAdmin === true && (
+              <li>
+                <Link
+                  className="text-base font-medium hover:text-gray-400"
+                  href="/dashboard"
+                >
+                  Dashboard
+                </Link>
+              </li>
+            )}
           </ul>
-          {user ? (
+          {userAuth ? (
             <div className="ml-auto flex items-center">
               <div>
-                Welcome {user.name}!{" "}
-                <button className=" mx-6 rounded-md bg-green-400 px-3 py-2 text-sm font-semibold text-black hover:text-gray-200 md:mx-auto md:px-7 md:py-[10px] md:text-base">
+                Welcome {userAuth.name}!{" "}
+                <button className=" mx-6 rounded-md bg-red-400 px-3 py-2 text-sm font-semibold text-black hover:text-gray-200 md:mx-auto md:px-7 md:py-[10px] md:text-base">
                   <a href="/api/auth/logout">Log out</a>
                 </button>
               </div>
             </div>
           ) : (
             <div className="ml-auto flex items-center">
-              <button className=" mx-6 rounded-md bg-green-400 px-3 py-2 text-sm font-semibold text-black hover:text-gray-200 md:mx-auto md:px-7 md:py-[10px] md:text-base">
+              <button className=" mx-6 rounded-md bg-red-400 px-3 py-2 text-sm font-semibold text-black hover:text-gray-200 md:mx-auto md:px-7 md:py-[10px] md:text-base">
                 <a href="/api/auth/login">Sign Up</a>
               </button>
             </div>
