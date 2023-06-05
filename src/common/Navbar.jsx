@@ -19,7 +19,7 @@ export default function Navbar() {
 
   useEffect(() => {
     if (userAuth?.email) {
-      dispatch(fetchUser({name: userAuth.name, email:userAuth.email}));
+      dispatch(fetchUser({ name: userAuth.name, email: userAuth.email }));
     }
   }, [userAuth]);
 
@@ -66,6 +66,16 @@ export default function Navbar() {
                 ¿Qué es AutoBid?
               </Link>
             </li>
+            {user?.isAdmin === true && (
+              <li>
+                <Link
+                  className="text-base font-medium hover:text-gray-400"
+                  href="/dashboard"
+                >
+                  Dashboard
+                </Link>
+              </li>
+            )}
           </ul>
           {userAuth ? (
             <div className="ml-auto flex items-center">
