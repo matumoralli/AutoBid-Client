@@ -8,6 +8,7 @@ import {
   AiOutlineUserDelete,
   AiOutlineCar,
   AiOutlineAppstoreAdd,
+  AiOutlineEuroCircle,
 } from "react-icons/ai";
 import { cars, users } from "../../db.json";
 
@@ -47,7 +48,8 @@ const Dashboard = () => {
   const [toShow, setToShow] = useState(toShowInitialState());
   const [toSearch, setToSearch] = useState("");
   const [modals, setModals] = useState({
-    add: { inView: false, onConfirm: handleAdd },
+    "add-car": { inView: false, onConfirm: handleAdd },
+    "credits-value": { inView: false, onConfirm: handleAdd },
   });
 
   const handleViewModal = (modal) => {
@@ -107,11 +109,11 @@ const Dashboard = () => {
 
   return (
     <>
-      <main className="h-[80vh] mt-20 flex">
-        <aside className="p-2 h-full w-[10%] max-w-[100px] border-r flex flex-col items-center justify-center gap-10">
+      <main className="mt-20 flex h-[80vh]">
+        <aside className="flex h-full w-[10%] max-w-[100px] flex-col items-center justify-center gap-10 border-r p-2">
           <ul className="flex flex-col gap-10">
             <li
-              className={`text-2xl hover:scale-110 transition-all duration-300 ${
+              className={`text-2xl transition-all duration-300 hover:scale-110 ${
                 toShow.section === "users"
                   ? "text-red-500"
                   : "text-gray-400 hover:text-black"
@@ -122,7 +124,7 @@ const Dashboard = () => {
               </button>
             </li>
             <li
-              className={`text-2xl hover:scale-110 transition-all duration-300 ${
+              className={`text-2xl transition-all duration-300 hover:scale-110 ${
                 toShow.section === "banned-users"
                   ? "text-red-500"
                   : "text-gray-400 hover:text-black"
@@ -133,7 +135,7 @@ const Dashboard = () => {
               </button>
             </li>
             <li
-              className={`text-2xl hover:scale-110 transition-all duration-300 ${
+              className={`text-2xl transition-all duration-300 hover:scale-110 ${
                 toShow.section === "cars"
                   ? "text-red-500"
                   : "text-gray-400 hover:text-black"
@@ -144,16 +146,23 @@ const Dashboard = () => {
               </button>
             </li>
             <li
-              className={`text-2xl hover:scale-110 transition-all duration-300 text-gray-400 hover:text-black`}
+              className={`text-2xl text-gray-400 transition-all duration-300 hover:scale-110 hover:text-black`}
             >
-              <button onClick={() => handleViewModal("add")}>
+              <button onClick={() => handleViewModal("add-car")}>
                 <AiOutlineAppstoreAdd />
+              </button>
+            </li>
+            <li
+              className={`text-2xl text-gray-400 transition-all duration-300 hover:scale-110 hover:text-black`}
+            >
+              <button onClick={() => handleViewModal("credits-value")}>
+                <AiOutlineEuroCircle />
               </button>
             </li>
           </ul>
         </aside>
 
-        <section className="p-2 h-full w-[90%] overflow-y-scroll flex flex-col items-center">
+        <section className="flex h-full w-[90%] flex-col items-center overflow-y-scroll p-2">
           <input
             type="text"
             name="toSearch"
@@ -162,10 +171,10 @@ const Dashboard = () => {
             placeholder={`${
               toShow.section === "cars" ? "Buscar publiación" : "Buscar usuario"
             }`}
-            className="w-full p-1 bg-gray-50 border-2 border-gray-200 rounded-md outline-none focus:bg-gray-100 focus:border-gray-300 transition-all duration-200"
+            className="w-full rounded-md border-2 border-gray-200 bg-gray-50 p-1 outline-none transition-all duration-200 focus:border-gray-300 focus:bg-gray-100"
           />
 
-          <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-2">
+          <div className="grid w-full grid-cols-2 gap-2 lg:grid-cols-4">
             {
               <>
                 {!toShow.array.length && (
@@ -192,10 +201,18 @@ const Dashboard = () => {
 
       <Modal
         title="Añadir publicación"
-        inView={modals.add.inView}
-        handleView={() => handleViewModal("add")}
+        inView={modals["add-car"].inView}
+        handleView={() => handleViewModal("add-car")}
       >
         <ModifyInfoForm obj={carModel} />
+      </Modal>
+
+      <Modal
+        title="Valor de los créditos"
+        inView={modals["credits-value"].inView}
+        handleView={() => handleViewModal("credits-value")}
+      >
+        <ModifyInfoForm obj={{ creditValue: 32 }} />
       </Modal>
     </>
   );
