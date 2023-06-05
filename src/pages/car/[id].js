@@ -9,10 +9,14 @@ import { useEffect, useState } from "react";
 import AutoAllPhotos from "@/common/AutoAllPhotos";
 import { MdVerified } from "react-icons/md";
 import { leftTime } from "@/utils";
+import Tooltip from "@/common/Tooltip";
 
 const CardDetailID = () => {
   const { query } = useRouter();
   const car = cars?.find((car) => Number(car.id) === Number(query.id));
+
+  const isLogged = false;
+  const haveCredits = false;
 
   const [timeToEnd, setTimeToEnd] = useState(leftTime(car?.date));
   const [viewAllPhotos, setViewAllPhotos] = useState(false);
@@ -118,9 +122,20 @@ const CardDetailID = () => {
           </li>
         </ul>
 
-        <button className="w-full rounded-md border-2 border-green-400 p-2 font-medium text-green-400 transition-all duration-300 hover:bg-green-400 hover:text-white">
-          Ofertar
-        </button>
+        <Tooltip
+          text="Necesitas estar registrado y tener créditos suficientes para poder ofertar"
+          view={!isLogged || !haveCredits}
+        >
+          <button
+            className={`w-full rounded-md border-2 p-2 font-medium transition-all duration-300 ${
+              !isLogged || !haveCredits
+                ? "border-gray-200 bg-gray-50 text-gray-500 hover:cursor-not-allowed"
+                : "border-green-400 text-green-400 hover:bg-green-400 hover:text-white"
+            }`}
+          >
+            Ofertar
+          </button>
+        </Tooltip>
 
         <section className="mt-8">
           <AutoInfoTable car={car} />
