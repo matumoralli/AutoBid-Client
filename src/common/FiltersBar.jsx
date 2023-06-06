@@ -8,7 +8,7 @@ const FiltersBar = () => {
 
   return (
     <nav className="p-2">
-      <ul className="flex gap-4 text-sm">
+      <ul className="flex gap-4 text-xs md:text-sm">
         {filters.map((filter, i) => (
           <li key={filter}>
             <button
