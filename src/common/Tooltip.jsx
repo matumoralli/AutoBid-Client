@@ -15,7 +15,7 @@ const Tooltip = ({ text, view = true, children }) => {
     >
       {children}
       {showTooltip && view && (
-        <div className="absolute left-1/2 top-12 -translate-x-1/2 rounded-md bg-zinc-800 bg-opacity-90 p-2 text-xs text-white">
+        <div className="absolute left-1/2 top-12 min-w-[100px] -translate-x-1/2 rounded-md bg-zinc-800 bg-opacity-90 p-2 text-center text-xs text-white">
           {text}
         </div>
       )}
