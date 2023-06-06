@@ -1,13 +1,35 @@
+import { AiOutlineInfoCircle } from "react-icons/ai";
+import Tooltip from "./Tooltip";
+
 const toEquipmentArray = (eq) => eq.split(",").map((word) => word.trim());
 
 const SideBar = ({ newListingsCars }) => {
+  const isLogged = true;
+
   return (
     <aside className="hidden lg:block">
-      <h3 className="text-lg font-bold mx-2 my-4">Nuevos listados</h3>
+      {isLogged && (
+        <div className="mt-2 flex flex-col items-center justify-center gap-2 border-b p-6">
+          <span className="grid h-16 w-16 place-content-center rounded-full border-2 border-red-500 text-2xl font-semibold text-red-500">
+            5
+          </span>
+          <span className="flex items-center justify-center gap-1">
+            <h3 className="text-xl font-bold">Créditos</h3>
+            <Tooltip
+              text={
+                "Regístrese y abone un crédito para participar en subastas."
+              }
+            >
+              <AiOutlineInfoCircle className="textl-lg fill-gray-500 transition-all duration-300 hover:fill-gray-800" />
+            </Tooltip>
+          </span>
+        </div>
+      )}
+      <h3 className="mx-2 mt-2 text-lg font-bold">Nuevos listados</h3>
       {newListingsCars?.map(
         ({ model, description, place, images, equipement }) => (
           <article
-            className="max-w-xs m-2 overflow-hidden rounded-md bg-gray-50"
+            className="m-2 max-w-xs overflow-hidden rounded-md bg-gray-50"
             key={"sideBar" + model}
           >
             <div className="grid grid-cols-3 grid-rows-2 gap-2">
@@ -20,10 +42,10 @@ const SideBar = ({ newListingsCars }) => {
               <img src={images[2]} alt="" className="h-full" />
             </div>
 
-            <div className="py-1 px-3">
+            <div className="px-3 py-1">
               <h4 className="text-lg font-bold">{model}</h4>
               <p className="text-sm">{description}</p>
-              <ul className="ml-5 text-sm list-disc">
+              <ul className="ml-5 list-disc text-sm">
                 {toEquipmentArray(equipement)?.map((item, indx) => (
                   <li key={item + indx}>{item}</li>
                 ))}
