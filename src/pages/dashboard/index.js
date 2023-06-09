@@ -9,9 +9,11 @@ import {
   AiOutlineCar,
   AiOutlineAppstoreAdd,
 } from "react-icons/ai";
+
 import { useGetCarsQuery } from "@/redux/api/apiSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUsers } from "@/redux/users/usersSlice";
+
 
 const carModel = {
   id: "",
@@ -46,6 +48,8 @@ const Dashboard = () => {
     add: { inView: false, onConfirm: handleAdd },
   });
   const { users, loading, error } = useSelector((state) => state.users);
+
+
 
   useEffect(() => {
     dispatch(fetchUsers());

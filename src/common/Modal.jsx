@@ -29,15 +29,15 @@ const Modal = ({
   return (
     <>
       {inView && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
           <div
             className="absolute inset-0 bg-gray-500 opacity-75"
             onClick={handleClose}
           ></div>
 
-          <div className="relative bg-gray-50 w-1/2 p-6 rounded-md shadow-lg z-10 max-h-[75vh] overflow-y-auto">
+          <div className="relative z-10 max-h-[75vh] w-1/2 overflow-y-auto rounded-md bg-gray-50 p-6 shadow-lg">
             <button
-              className="absolute top-0 right-0 m-2 p-1 font-semibold rounded-md border-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-all duration-300"
+              className="absolute right-0 top-0 m-2 rounded-md border-2 border-red-500 p-1 font-semibold text-red-500 transition-all duration-300 hover:bg-red-500 hover:text-white"
               onClick={handleClose}
             >
               <AiOutlineClose />
@@ -45,16 +45,16 @@ const Modal = ({
             <header>
               <h1 className="mt-4 text-xl font-bold">{title}</h1>
             </header>
-            <main className="mt-4 mb-8">{children}</main>
-            <footer className="flex justify-center items-center gap-4">
+            <main className="mb-8 mt-4">{children}</main>
+            <footer className="flex items-center justify-center gap-4">
               <button
-                className="p-1 rounded-md border-2 border-green-500 text-green-500 hover:bg-green-500 hover:text-white transition-all duration-300"
+                className="rounded-md border-2 border-green-500 p-1 text-green-500 transition-all duration-300 hover:bg-green-500 hover:text-white"
                 onClick={handleConfirm}
               >
                 Confirmar
               </button>
               <button
-                className="p-1 font-semibold rounded-md border-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-all duration-300"
+                className="rounded-md border-2 border-red-500 p-1 font-semibold text-red-500 transition-all duration-300 hover:bg-red-500 hover:text-white"
                 onClick={handleClose}
               >
                 Cancelar

@@ -17,8 +17,6 @@ export default function Navbar() {
     isLoading: isLoadingAuth,
   } = useUser();
 
-  console.log('este es userAuth', userAuth);
-
   useEffect(() => {
     if (userAuth?.email) {
       dispatch(fetchUser({ name: userAuth.name, email: userAuth.email }));
