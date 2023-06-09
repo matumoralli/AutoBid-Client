@@ -22,29 +22,77 @@ export const fetchUser = createAsyncThunk(
   }
 );
 
-export const giveCredit = createAsyncThunk("user/giveCredit", async (email) => {
-  try {
-    const response = await fetch("/api/usersApi", {
-      method: "POST",
-      body: `{"action":"${API_ACTIONS.GIVE_USER_CREDIT}", "payload":{"email":"${email}"}}`,
-    });
-    return await response.json();
-  } catch (error) {
-    console.log("There has been a problem with giveCredit:", error.message);
+export const giveUserCredit = createAsyncThunk(
+  "user/giveUserCredit",
+  async (email) => {
+    try {
+      const response = await fetch("/api/usersApi", {
+        method: "POST",
+        body: `{"action":"${API_ACTIONS.GIVE_USER_CREDIT}", "payload":{"email":"${email}"}}`,
+      });
+      return await response.json();
+    } catch (error) {
+      console.log(
+        "There has been a problem with giveUserCredit:",
+        error.message
+      );
+    }
   }
-});
+);
 
-export const removeCredit = createAsyncThunk("user/removeCredit", async (email) => {
-  try {
-    const response = await fetch("/api/usersApi", {
-      method: "POST",
-      body: `{"action":"${API_ACTIONS.REMOVE_USER_CREDIT}", "payload":{"email":"${email}"}}`,
-    });
-    return await response.json();
-  } catch (error) {
-    console.log("There has been a problem with removeCredit:", error.message);
+export const deleteUserCredit = createAsyncThunk(
+  "user/deleteUserCredit",
+  async (email) => {
+    try {
+      const response = await fetch("/api/usersApi", {
+        method: "POST",
+        body: `{"action":"${API_ACTIONS.DELETE_USER_CREDIT}", "payload":{"email":"${email}"}}`,
+      });
+      return await response.json();
+    } catch (error) {
+      console.log(
+        "There has been a problem with deleteUserCredit:",
+        error.message
+      );
+    }
   }
-});
+);
+
+export const assignAuctionCredit = createAsyncThunk(
+  "user/assignAuctionCredit",
+  async ({ email, auctionId }) => {
+    try {
+      const response = await fetch("/api/usersApi", {
+        method: "POST",
+        body: `{"action":"${API_ACTIONS.ASSIGN_AUCTION_CREDIT}", "payload":{"email":"${email}", "auctionId":"${auctionId}"}}`,
+      });
+      return await response.json();
+    } catch (error) {
+      console.log(
+        "There has been a problem with assignAuctionCredit:",
+        error.message
+      );
+    }
+  }
+);
+
+export const removeAuctionCredit = createAsyncThunk(
+  "user/removeAuctionCredit",
+  async ({ email, auctionId }) => {
+    try {
+      const response = await fetch("/api/usersApi", {
+        method: "POST",
+        body: `{"action":"${API_ACTIONS.REMOVE_AUCTION_CREDIT}", "payload":{"email":"${email}", "auctionId":"${auctionId}"}}`,
+      });
+      return await response.json();
+    } catch (error) {
+      console.log(
+        "There has been a problem with removeAuctionCredit:",
+        error.message
+      );
+    }
+  }
+);
 
 export const userSlice = createSlice({
   name: "user",
