@@ -1,18 +1,24 @@
 import { useState } from "react";
 import { MdCircle, MdVerified, MdDelete, MdBrush } from "react-icons/md";
+import { BiCoin } from "react-icons/bi";
 import Modal from "./Modal";
 import ModifyInfoForm from "./ModifyInfoForm";
+import { giveCredit, removeCredit } from "@/redux/user/userSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 const handleDelete = () => {};
 const handleUpdate = () => {};
+const handleGiveCredit = () => {};
 
 const UserCard = ({ user, adminOpt = false }) => {
-  const { name, email, image, isAdmin, isActive } = user;
-
+  const { name, email, image, isAdmin, isActive, Credits } = user;
+  const dispatch = useDispatch();
   const [modals, setModals] = useState({
     delete: { inView: false, onConfirm: handleDelete },
     update: { inView: false, onConfirm: handleUpdate },
+    giveCredit: { inView: false, onConfirm: handleGiveCredit },
   });
+
 
   const handleViewModal = (modal) => {
     setModals({
@@ -22,12 +28,12 @@ const UserCard = ({ user, adminOpt = false }) => {
   };
 
   return (
-    <article className="relative w-full p-6 my-2 mx-1 rounded-md flex flex-col items-center bg-gray-50 transition-all duration-15 group">
+    <article className="duration-15 group relative mx-1 my-2 flex w-full flex-col items-center rounded-md bg-gray-50 p-6 transition-all">
       {adminOpt && (
-        <ul className="absolute top-0 right-0 m-2 flex gap-2 items-center text-white text-lg transition-all duration-300 scale-0 group-hover:scale-100">
+        <ul className="absolute right-0 top-0 m-2 flex scale-0 items-center gap-2 text-lg text-white transition-all duration-300 group-hover:scale-100">
           <li>
             <button
-              className="p-1 border-2 rounded-md border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-all duration-300"
+              className="rounded-md border-2 border-red-500 p-1 text-red-500 transition-all duration-300 hover:bg-red-500 hover:text-white"
               onClick={() => handleViewModal("delete")}
             >
               <MdDelete />
@@ -35,10 +41,18 @@ const UserCard = ({ user, adminOpt = false }) => {
           </li>
           <li>
             <button
-              className="p-1 border-2 rounded-md border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white transition-all duration-300"
+              className="rounded-md border-2 border-blue-500 p-1 text-blue-500 transition-all duration-300 hover:bg-blue-500 hover:text-white"
               onClick={() => handleViewModal("update")}
             >
               <MdBrush />
+            </button>
+          </li>
+          <li>
+            <button
+              className="rounded-md border-2 border-emerald-500 p-1 text-emerald-500 transition-all duration-300 hover:bg-emerald-500 hover:text-white"
+              onClick={() => handleViewModal("giveCredit")}
+            >
+              <BiCoin />
             </button>
           </li>
         </ul>
@@ -67,8 +81,38 @@ const UserCard = ({ user, adminOpt = false }) => {
         </Modal>
       }
 
+      {
+        <Modal
+          title={"Otorgar crédito"}
+          inView={modals.giveCredit.inView}
+          handleView={() => handleViewModal("giveCredit")}
+        >
+          <p>
+            Dar crédito a <b>"{name}"</b>. Los créditos son necesarios para
+            poder participar en subastas.
+          </p>
+          <p className="font-bold">
+            Número de créditos actuales: <b>{Credits?.length}</b>
+          </p>
+          <div className="mt-4 flex place-content-center gap-2">
+            <button
+              className="rounded-md border-2 border-green-500 px-3 py-1 text-green-500 transition-all duration-300 hover:bg-green-500 hover:text-white active:bg-green-600"
+              onClick={() => dispatch(giveCredit(email))}
+            >
+              +
+            </button>
+            <button
+              className="rounded-md border-2 border-red-500 px-3 py-1   font-semibold text-red-500 transition-all duration-300 hover:bg-red-500 hover:text-white  active:bg-red-600"
+              onClick={() => dispatch(removeCredit(email))}
+            >
+              -
+            </button>
+          </div>
+        </Modal>
+      }
+
       <span
-        className={`absolute top-0 left-0 m-2 ${
+        className={`absolute left-0 top-0 m-2 ${
           isActive ? "text-green-500" : "text-red-500"
         }`}
       >
@@ -78,11 +122,11 @@ const UserCard = ({ user, adminOpt = false }) => {
       <img
         src={image || "https://source.unsplash.com/random/300/?user"}
         alt={name + "-image"}
-        className="max-h-36 rounded-md mx-4 my-6"
+        className="mx-4 my-6 max-h-36 rounded-md"
       />
 
       <div className="text-center">
-        <h2 className="text-lg font-bold flex items-center justify-center gap-2">
+        <h2 className="flex items-center justify-center gap-2 text-lg font-bold">
           {isAdmin && (
             <span className="text-red-500">
               <MdVerified />
@@ -94,7 +138,7 @@ const UserCard = ({ user, adminOpt = false }) => {
       </div>
 
       <button
-        className="font-semibold border-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-md mt-4 p-1 transition-all duration-300"
+        className="mt-4 rounded-md border-2 border-red-500 p-1 font-semibold text-red-500 transition-all duration-300 hover:bg-red-500 hover:text-white"
         onClick={() => handleViewModal("update")}
       >
         Ver perfil

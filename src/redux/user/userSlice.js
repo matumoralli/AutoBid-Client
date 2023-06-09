@@ -4,7 +4,7 @@ import { API_ACTIONS } from "@/dictionary";
 const initialState = {
   loading: false,
   error: "",
-  user: {}
+  user: {},
 };
 
 export const fetchUser = createAsyncThunk(
@@ -21,6 +21,30 @@ export const fetchUser = createAsyncThunk(
     }
   }
 );
+
+export const giveCredit = createAsyncThunk("user/giveCredit", async (email) => {
+  try {
+    const response = await fetch("/api/usersApi", {
+      method: "POST",
+      body: `{"action":"${API_ACTIONS.GIVE_USER_CREDIT}", "payload":{"email":"${email}"}}`,
+    });
+    return await response.json();
+  } catch (error) {
+    console.log("There has been a problem with giveCredit:", error.message);
+  }
+});
+
+export const removeCredit = createAsyncThunk("user/removeCredit", async (email) => {
+  try {
+    const response = await fetch("/api/usersApi", {
+      method: "POST",
+      body: `{"action":"${API_ACTIONS.REMOVE_USER_CREDIT}", "payload":{"email":"${email}"}}`,
+    });
+    return await response.json();
+  } catch (error) {
+    console.log("There has been a problem with removeCredit:", error.message);
+  }
+});
 
 export const userSlice = createSlice({
   name: "user",
