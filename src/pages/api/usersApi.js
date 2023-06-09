@@ -50,7 +50,7 @@ export default withApiAuthRequired(async function usersAPI(req, res) {
 
       case API_ACTIONS.GIVE_USER_CREDIT:
         fetchOptions = {
-          method: "PUT",
+          method: "POST",
           url: process.env.BACKEND_URL + `/users/user/${payload.email}/credit`,
           headers: {
             authorization: `Bearer ${accessToken}`,
@@ -59,16 +59,44 @@ export default withApiAuthRequired(async function usersAPI(req, res) {
 
         break;
 
-        case API_ACTIONS.REMOVE_USER_CREDIT:
-          fetchOptions = {
-            method: "PUT",
-            url: process.env.BACKEND_URL + `/users/user/${payload.email}/remove-credit`,
-            headers: {
-              authorization: `Bearer ${accessToken}`,
-            },
-          };
-  
-          break;
+      case API_ACTIONS.DELETE_USER_CREDIT:
+        fetchOptions = {
+          method: "DELETE",
+          url:
+            process.env.BACKEND_URL +
+            `/users/user/${payload.email}/delete-credit`,
+          headers: {
+            authorization: `Bearer ${accessToken}`,
+          },
+        };
+
+        break;
+
+      case API_ACTIONS.ASSIGN_AUCTION_CREDIT:
+        fetchOptions = {
+          method: "PUT",
+          url:
+            process.env.BACKEND_URL +
+            `/users/user/${payload.email}/auction/${payload.auctionId}/assign`,
+          headers: {
+            authorization: `Bearer ${accessToken}`,
+          },
+        };
+
+        break;
+
+      case API_ACTIONS.REMOVE_AUCTION_CREDIT:
+        fetchOptions = {
+          method: "PUT",
+          url:
+            process.env.BACKEND_URL +
+            `/users/user/${payload.email}/auction/${payload.auctionId}/remove`,
+          headers: {
+            authorization: `Bearer ${accessToken}`,
+          },
+        };
+
+        break;
 
       default:
         console.log("No action was specified in Switch");
