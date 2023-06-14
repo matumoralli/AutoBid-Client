@@ -10,7 +10,7 @@ export default function Auction() {
     router.query.auctionId
   );
   const car = auction?.CarDetail;
-  const seller = auction?.User
+  const seller = auction?.User;
 
   return (
     car && (
@@ -64,13 +64,9 @@ export default function Auction() {
             </dd>
             <dt className="border-y border-e ps-2 font-semibold">Dominio</dt>
             <dd className="flex items-center border-y ps-2">{car.domain}</dd>
-            <dt className="border-y border-e ps-2 font-semibold">
-              Titular
-            </dt>
+            <dt className="border-y border-e ps-2 font-semibold">Titular</dt>
             <dd className="flex items-center border-y ps-2">{car.owner}</dd>
-            <dt className="border-y border-e ps-2 font-semibold">
-              Vendedor
-            </dt>
+            <dt className="border-y border-e ps-2 font-semibold">Vendedor</dt>
             <dd className="flex items-center border-y ps-2">{seller.name}</dd>
             <dt className="border-y border-e ps-2 font-semibold">Motor</dt>
             <dd className="flex items-center border-y ps-2">{car.engine}</dd>
@@ -80,9 +76,7 @@ export default function Auction() {
             <dd className="flex items-center border-y ps-2">
               {car.transmission}
             </dd>
-            <dt className="border-y border-e ps-2 font-semibold">
-              Tracción
-            </dt>
+            <dt className="border-y border-e ps-2 font-semibold">Tracción</dt>
             <dd className="flex items-center border-y ps-2">
               {car.driveTrain}
             </dd>
