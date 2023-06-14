@@ -1,14 +1,21 @@
-
 import AutoCard from "@/common/AutoCard";
 import FiltersBar from "@/common/FiltersBar";
 import Pagination from "@/common/Pagination";
 import SideBar from "@/common/SideBar";
+import { getCars } from "@/redux/slices/cars";
 import Head from "next/head";
-import { useState } from "react";
-import { cars } from "../db.json";
-import Image from "next/image";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Spinner from "@/common/Spinner";
 
 export default function Home() {
+  const dispatch = useDispatch();
+  const { cars, isLoading } = useSelector(({ cars }) => cars);
+
+  useEffect(() => {
+    dispatch(getCars());
+  }, []);
+
   const [page, setPage] = useState(1);
   const rst = cars.length / 16 - page;
 
@@ -21,32 +28,40 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="mt-20 max-w-[1440px] mx-auto">
+      <main className="mx-auto mt-20 max-w-[1440px]">
         <FiltersBar />
 
-        <section className="flex justify-center">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 =">
-            {!cars.length && (
-              <h1 className="text-xl text-center">
-                Por el momento no hay publicaciones disponibles para mostrar
-              </h1>
-            )}
-            {[...cars]?.splice((page - 1) * 16, 16)?.map((car, indx) => (
-              <AutoCard car={car} key={car.model + "-" + indx} />
-            ))}
-          </div>
+        {isLoading ? (
+          <section className="flex min-h-[30vh] items-center justify-center">
+            <Spinner />
+          </section>
+        ) : (
+          <>
+            <section className="flex justify-center">
+              <div className="= grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+                {!cars.length && (
+                  <h1 className="text-center text-xl">
+                    Por el momento no hay publicaciones disponibles para mostrar
+                  </h1>
+                )}
+                {[...cars]?.splice((page - 1) * 16, 16)?.map((car, indx) => (
+                  <AutoCard car={car} key={car.model + "-" + indx} />
+                ))}
+              </div>
 
-          <SideBar
-            newListingsCars={[...cars].splice(
-              0,
-              rst > 0 ? 4 : Math.ceil((1 + rst) * 4)
-            )}
-          />
-        </section>
-        <Pagination
-          maxLength={Math.ceil(cars.length / 16)}
-          pageStg={[page, setPage]}
-        />
+              <SideBar
+                newListingsCars={[...cars].splice(
+                  0,
+                  rst > 0 ? 4 : Math.ceil((1 + rst) * 4)
+                )}
+              />
+            </section>
+            <Pagination
+              maxLength={Math.ceil(cars.length / 16)}
+              pageStg={[page, setPage]}
+            />
+          </>
+        )}
       </main>
     </>
   );

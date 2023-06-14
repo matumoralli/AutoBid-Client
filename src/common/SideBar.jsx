@@ -1,5 +1,6 @@
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import Tooltip from "./Tooltip";
+import { v4 } from "uuid";
 
 const toEquipmentArray = (eq) => eq.split(",").map((word) => word.trim());
 
@@ -30,7 +31,7 @@ const SideBar = ({ newListingsCars }) => {
         ({ model, description, place, images, equipement }) => (
           <article
             className="m-2 max-w-xs overflow-hidden rounded-md bg-gray-50"
-            key={"sideBar" + model}
+            key={"sideBar" + model + v4()}
           >
             <div className="grid grid-cols-3 grid-rows-2 gap-2">
               <img
