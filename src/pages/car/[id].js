@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import { cars } from "../../db.json";
 import { FiClock, FiSend } from "react-icons/fi";
 import AutoInfoTable from "@/common/AutoInfoTable";
 import AutoInfoList from "@/common/AutoInfoList";
@@ -10,10 +9,24 @@ import AutoAllPhotos from "@/common/AutoAllPhotos";
 import { MdVerified } from "react-icons/md";
 import { leftTime } from "@/utils";
 import Tooltip from "@/common/Tooltip";
+import { useDispatch, useSelector } from "react-redux";
+import Spinner from "@/common/Spinner";
+import { findCarById } from "@/redux/slices/cars";
 
 const CardDetailID = () => {
-  const { query } = useRouter();
-  const car = cars?.find((car) => Number(car.id) === Number(query.id));
+  const { query: carID } = useRouter();
+
+  const dispatch = useDispatch();
+  const {
+    data: car,
+    isLoading,
+    isError,
+    error,
+  } = useSelector(({ cars }) => cars.res);
+
+  useEffect(() => {
+    dispatch(findCarById(carID));
+  }, [carID]);
 
   const isLogged = false;
   const haveCredits = false;
@@ -35,12 +48,9 @@ const CardDetailID = () => {
     };
   }, [car?.date]);
 
-  if (!car)
-    return (
-      <div className="mt-20 flex min-h-[50vh] items-center justify-center text-2xl">
-        No se encontró ninguna coincidencia con el id: <b>{query?.id}</b>
-      </div>
-    );
+  if (isLoading) return <Spinner />;
+  if (isError)
+    return <h1 className="text-center text-xl font-medium">{error}</h1>;
 
   return (
     <>
