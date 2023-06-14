@@ -11,9 +11,18 @@ export const apiSlice = createApi({
     getCars: builder.query({
       query: () => ({ url: `cars/`, method: "get" }),
     }),
+    getCar: builder.query({
+      query: (id) => ({ url: `cars/car/${id}`, method: "get" }),
+      transformResponse: (response, meta, arg) => response.data[0],
+    }),
+    getAuction: builder.query({
+      query: (id) => ({ url: `auctions/${id}`, method: "get" }),
+      transformResponse: (response, meta, arg) => response.data,
+    }),
   }),
+  
 });
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetCarsQuery } = apiSlice;
+export const { useGetCarsQuery, useGetCarQuery, useGetAuctionQuery } = apiSlice;
