@@ -41,8 +41,8 @@ const SideBar = ({ newListingsCars }) => {
                 alt=""
                 className="col-span-2 row-span-2 h-full"
               />
-              <img src={images[0]} alt="" className="h-full" />
-              <img src={images[0]} alt="" className="h-full" />
+              <img src={images[1]} alt="" className="h-full" />
+              <img src={images[2]} alt="" className="h-full" />
             </div>
 
             <div className="px-3 py-1">

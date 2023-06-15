@@ -12,13 +12,40 @@ export const getCars = () => {
     try {
       const { data } = await carsApi.get();
 
-      console.log(await data);
-
       dispatch(setCars(data));
     } catch (error) {
       dispatch(setError(error));
     } finally {
       dispatch(handleLoadingCars(false));
+    }
+  };
+};
+
+export const getCarByID = (carID) => {
+  return async (dispatch) => {
+    dispatch(
+      setRes({ data: {}, isLoading: true, isError: false, error: null })
+    );
+
+    try {
+      const { data } = await axios.get("../db/cars.json");
+
+      const car = data.find((elm) => Number(elm.id) === Number(carID));
+
+      if (!car) throw Error(`No existe el vehículo con el id: ${carID}`);
+
+      return dispatch(
+        setRes({ data: car, isLoading: false, isError: false, error: null })
+      );
+    } catch (error) {
+      dispatch(
+        setRes({
+          data: {},
+          isLoading: false,
+          isError: true,
+          error: error.message,
+        })
+      );
     }
   };
 };

@@ -9,12 +9,14 @@ import AutoAllPhotos from "@/common/AutoAllPhotos";
 import { MdVerified } from "react-icons/md";
 import { leftTime } from "@/utils";
 import Tooltip from "@/common/Tooltip";
-import { useDispatch, useSelector } from "react-redux";
 import Spinner from "@/common/Spinner";
-import { findCarById } from "@/redux/slices/cars";
+import { useDispatch, useSelector } from "react-redux";
+import { getCarByID } from "@/redux/slices/cars";
 
 const CardDetailID = () => {
-  const { query: carID } = useRouter();
+  const {
+    query: { id: carID },
+  } = useRouter();
 
   const dispatch = useDispatch();
   const {
@@ -25,7 +27,7 @@ const CardDetailID = () => {
   } = useSelector(({ cars }) => cars.res);
 
   useEffect(() => {
-    dispatch(findCarById(carID));
+    dispatch(getCarByID(carID));
   }, [carID]);
 
   const isLogged = false;
@@ -48,9 +50,8 @@ const CardDetailID = () => {
     };
   }, [car?.date]);
 
-  if (isLoading) return <Spinner />;
-  if (isError)
-    return <h1 className="text-center text-xl font-medium">{error}</h1>;
+  if (isLoading || !Object.entries(car).length) return <Spinner />;
+  if (isError) return <h1>{error}</h1>;
 
   return (
     <>
@@ -80,19 +81,19 @@ const CardDetailID = () => {
 
           <div className="col-span-1 flex flex-col gap-2 overflow-hidden">
             <img
-              src={car?.images[0]}
+              src={car?.images[1]}
               alt={`${car?.brand}-${car?.model}-image`}
               className="max-h-[8rem] w-full"
             />
 
             <img
-              src={car?.images[0]}
+              src={car?.images[2]}
               alt={`${car?.brand}-${car?.model}-image`}
               className="max-h-[8rem] w-full"
             />
 
             <img
-              src={car?.images[0]}
+              src={car?.images[3]}
               alt={`${car?.brand}-${car?.model}-image`}
               className="max-h-[8rem] w-full"
             />
@@ -104,7 +105,7 @@ const CardDetailID = () => {
                 images={car?.images}
               >
                 <img
-                  src={car?.images[0]}
+                  src={car?.images[4]}
                   alt={`${car?.brand}-${car?.model}-image`}
                   className="max-h-[8rem] w-full"
                 />

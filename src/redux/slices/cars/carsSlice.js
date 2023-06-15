@@ -28,40 +28,10 @@ export const carsSlice = createSlice({
       state.error = payload;
     },
     setRes: (state, { payload }) => {
-      state.res = { ...state.res, payload };
-    },
-    findCarById: (state, { payload }) => {
-      if (!state.cars.length)
-        state.res = {
-          data: {},
-          isLoading: false,
-          isError: true,
-          error: "No se encuentra cargado el estado global",
-        };
-      else if (!payload)
-        state.res = {
-          data: {},
-          isLoading: false,
-          isError: true,
-          error: "Faltan parámetros en la función",
-        };
-      else {
-        const car = [...state.cars].find(
-          (car) => Number(car.id) === Number(payload)
-        );
-
-        car
-          ? (state.res.data = car)
-          : (state.res = {
-              data: {},
-              isLoading: false,
-              isError: true,
-              error: `No se encuentró ningún vehículo con el id: ${payload}`,
-            });
-      }
+      state.res = payload;
     },
   },
 });
 
-export const { handleLoadingCars, setCars, setError, setRes, findCarById } =
+export const { handleLoadingCars, setCars, setError, setRes } =
   carsSlice.actions;
