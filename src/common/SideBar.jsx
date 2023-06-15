@@ -1,6 +1,7 @@
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import Tooltip from "./Tooltip";
 import { v4 } from "uuid";
+import DolarPrice from "./DolarPrice";
 
 const toEquipmentArray = (eq) => eq.split(",").map((word) => word.trim());
 
@@ -10,7 +11,7 @@ const SideBar = ({ newListingsCars }) => {
   return (
     <aside className="hidden lg:block">
       {isLogged && (
-        <div className="mt-2 flex flex-col items-center justify-center gap-2 border-b p-6">
+        <div className="mt-2 flex flex-col items-center justify-center gap-2 p-6">
           <span className="grid h-16 w-16 place-content-center rounded-full border-2 border-red-500 text-2xl font-semibold text-red-500">
             5
           </span>
@@ -26,6 +27,7 @@ const SideBar = ({ newListingsCars }) => {
           </span>
         </div>
       )}
+      <DolarPrice />
       <h3 className="mx-2 mt-2 text-lg font-bold">Nuevos listados</h3>
       {newListingsCars?.map(
         ({ model, description, place, images, equipement }) => (
@@ -39,8 +41,8 @@ const SideBar = ({ newListingsCars }) => {
                 alt=""
                 className="col-span-2 row-span-2 h-full"
               />
-              <img src={images[1]} alt="" className="h-full" />
-              <img src={images[2]} alt="" className="h-full" />
+              <img src={images[0]} alt="" className="h-full" />
+              <img src={images[0]} alt="" className="h-full" />
             </div>
 
             <div className="px-3 py-1">
