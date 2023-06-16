@@ -6,35 +6,9 @@ import { FiClock } from "react-icons/fi";
 import { HiDocumentArrowDown } from "react-icons/hi2";
 import CountDownTimer from "@/common/CountDownTimer";
 import { useEffect, useMemo, useState } from "react";
-
-function mergeAndSort(act) {
-  if (!act.Comments && !act.Bids) {
-    return;
-  }
-  let combinedArr = [...act?.Comments, ...act?.Bids];
-
-  return mergeSort(combinedArr);
-
-  function mergeSort(arr) {
-    if (arr.length <= 1) return arr;
-    let mid = Math.floor(arr.length / 2);
-    let left = mergeSort(arr.slice(0, mid));
-    let right = mergeSort(arr.slice(mid));
-    return merge(left, right);
-  }
-
-  function merge(left, right) {
-    let sortedArr = [];
-    while (left.length && right.length) {
-      if (left[0].createdAt < right[0].createdAt) {
-        sortedArr.push(left.shift());
-      } else {
-        sortedArr.push(right.shift());
-      }
-    }
-    return [...sortedArr, ...left, ...right];
-  }
-}
+import commentDate from "@/utils/commentDate";
+import formattedDate from "@/utils/formattedDate";
+import sortCommentsAndBids from "@/helpers/sortCommentsAndBids";
 
 export default function Auction() {
   const router = useRouter();
@@ -49,11 +23,9 @@ export default function Auction() {
 
   const car = auction.CarDetail;
   const seller = auction.User;
-  const formattedDate = (date) => {
-    return new Date(date).toLocaleString("es-AR");
-  };
+
   const commentsBids = useMemo(() => {
-    const memoizedValue = mergeAndSort(auction);
+    const memoizedValue = sortCommentsAndBids(auction?.Comments, auction?.Bids);
     console.log("useMemo ran:", memoizedValue);
     return memoizedValue;
   }, [auction]);
@@ -69,7 +41,7 @@ export default function Auction() {
               </span>
               <CountDownTimer endDate={auction.endTime} />
             </span>
-            <span className="mx-auto font-semibold">
+            <span className="mx-auto text-lg font-semibold">
               $
               {auction.Bids?.length > 1
                 ? auction.Bids[auction.Bids.length - 1].ammount.toLocaleString()
@@ -97,10 +69,14 @@ export default function Auction() {
               {car.year} {car.brand} {car.model}
             </h1>
             <p className="">
-              {car.kilometers.toLocaleString()} kilometros, {car.highlights}
+              {car.kilometers.toLocaleString()} kilometros,{" "}
+              {car.highlights.map((h) => `${h.toLowerCase()}, `)}
             </p>
           </div>
-          <p className="text-gray-600">Termina el 21 de Junio a las 8:30 PM</p>
+          <p className="text-end text-gray-600">
+            Termina el {formattedDate(auction.endTime).split(",")[0]} a las{" "}
+            {formattedDate(auction.endTime).split(",")[1]}
+          </p>
         </section>
 
         <section className="flex flex-col pt-5 ">
@@ -241,18 +217,18 @@ export default function Auction() {
         </section>
 
         <section className="mx-2 border-b-[1px] py-6">
-          <h1 className="text-left text-3xl font-bold">
+          <h1 className="mb-4 text-left text-3xl font-bold">
             Comentarios y ofertas
           </h1>
-          <ul className="flex flex-col gap-6">
+          <ul className="flex flex-col gap-4">
             {commentsBids.toReversed().map((c) => {
               if (c?.ammount) {
                 return (
-                  <li className=" ms-2 flex flex-col" key={c.id}>
+                  <li className=" mb-2 ms-2 flex flex-col" key={c.id}>
                     <div className="flex items-center gap-2">
                       <a className="font-semibold">{c.User.name}</a>
                       <p className="text-sm text-gray-400">
-                        {formattedDate(c.createdAt)}
+                        {commentDate(c.createdAt)}
                       </p>
                     </div>
                     <div className="my-1 mr-auto ms-1 flex flex-col items-center  text-sm">
@@ -270,7 +246,7 @@ export default function Auction() {
                     <div className="flex items-center gap-2">
                       <a className="font-semibold">{c.User.name}</a>
                       <p className="text-sm text-gray-400">
-                        {formattedDate(c.createdAt)}
+                        {commentDate(c.createdAt)}
                       </p>
                     </div>
                     <div className="my-1 mr-auto ms-1 flex flex-col items-center  text-sm ">
