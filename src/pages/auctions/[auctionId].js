@@ -5,6 +5,32 @@ import DefButton from "@/common/DefButton";
 import { FiClock } from "react-icons/fi";
 import { HiDocumentArrowDown } from "react-icons/hi2";
 import CountDownTimer from "@/common/CountDownTimer";
+import { useEffect, useMemo, useState } from "react";
+
+function merge(left, right) {
+  let sortedArr = [];
+  while (left.length && right.length) {
+    if (left[0].createdAt < right[0].createdAt) {
+      sortedArr.push(left.shift());
+    } else {
+      sortedArr.push(right.shift());
+    }
+  }
+  return [...sortedArr, ...left, ...right];
+}
+
+function mergeSort(arr) {
+  if (arr.length <= 1) return arr;
+  let mid = Math.floor(arr.length / 2);
+  let left = mergeSort(arr.slice(0, mid));
+  let right = mergeSort(arr.slice(mid));
+  return merge(left, right);
+}
+
+function mergeAndSort(act) {
+  let combinedArr = [...act?.Comments, ...act?.Bids];
+  return mergeSort(combinedArr);
+}
 
 export default function Auction() {
   const router = useRouter();
@@ -13,8 +39,15 @@ export default function Auction() {
   );
   const car = auction?.CarDetail;
   const seller = auction?.User;
+  const [commentsBids, setCommentsBids] = useState([])
 
-  const formattedDate = (new Date(auction?.endTime)).toLocaleString('es-AR')
+  const formattedDate = new Date(auction?.endTime).toLocaleString("es-AR");
+
+  useEffect(() => {
+    if (auction) {
+      setCommentsBids((prev) => [...prev, mergeAndSort(auction)]);
+    }
+  }, [auction]);
 
 
   return (
@@ -56,7 +89,7 @@ export default function Auction() {
               {car.kilometers.toLocaleString()} kilometros, {car.highlights}
             </p>
           </div>
-          <p class="text-gray-600">Termina el 21 de Junio a las 8:30 PM</p>
+          <p className="text-gray-600">Termina el 21 de Junio a las 8:30 PM</p>
         </section>
 
         <section className="flex flex-col pt-5 ">
@@ -105,8 +138,8 @@ export default function Auction() {
         <section className="mx-2 border-b-[1px] py-6">
           <h2 className="mb-2 px-2 text-lg font-bold">Destacado</h2>
           <ul className="list-disc pe-1 ps-6 text-[15px] text-zinc-800">
-            {car.highlights.map((h) => (
-              <li>{h}</li>
+            {car.highlights.map((h, index) => (
+              <li key={h}>{h}</li>
             ))}
           </ul>
         </section>
@@ -114,8 +147,8 @@ export default function Auction() {
         <section className="mx-2 border-b-[1px] py-6">
           <h2 className="mb-2 px-2 text-lg font-bold">Equipamiento</h2>
           <ul className="list-disc pe-1 ps-6 text-[15px] text-zinc-800">
-            {car.equipement.map((e) => (
-              <li>{e}</li>
+            {car.equipement.map((e, index) => (
+              <li key={e}>{e}</li>
             ))}
           </ul>
         </section>
@@ -124,7 +157,7 @@ export default function Auction() {
           <h2 className="mb-2 px-2 text-lg font-bold">Modificaciones</h2>
           <ul className="list-disc pe-1 ps-6 text-[15px] text-zinc-800">
             {car.modifications.map((m) => (
-              <li>{m}</li>
+              <li key={m}>{m}</li>
             ))}
           </ul>
         </section>
@@ -133,7 +166,7 @@ export default function Auction() {
           <h2 className="mb-2 px-2 text-lg font-bold">Fallas conocidas</h2>
           <ul className="list-disc pe-1 ps-6 text-[15px] text-zinc-800">
             {car.knownFlaws.map((k) => (
-              <li>{k}</li>
+              <li key={k}>{k}</li>
             ))}
           </ul>
         </section>
@@ -144,7 +177,7 @@ export default function Auction() {
           </h2>
           <ul className="list-disc pe-1 ps-6 text-[15px] text-zinc-800">
             {car.services.map((s) => (
-              <li>{s}</li>
+              <li key={s}>{s}</li>
             ))}
           </ul>
         </section>
@@ -155,7 +188,7 @@ export default function Auction() {
           </h2>
           <ul className="list-disc pe-1 ps-6 text-[15px] text-zinc-800">
             {car.addedItems.map((i) => (
-              <li>{i}</li>
+              <li key={i}>{i}</li>
             ))}
           </ul>
         </section>
@@ -179,15 +212,15 @@ export default function Auction() {
           </h1>
           <dl className="mx-1 my-2 grid grid-cols-[40%,_60%] gap-y-2 text-sm leading-10">
             <dt className="text-sm font-semibold">Oferta actual</dt>
-            <dd className="flex  items-center text-sm font-semibold ">${(auction.minPrice).toLocaleString()}</dd>
+            <dd className="flex  items-center text-sm font-semibold ">
+              ${auction.minPrice.toLocaleString()}
+            </dd>
 
             <dt className="text-sm font-semibold">Vendedor</dt>
             <dd className="flex items-center text-sm ">{seller.name}</dd>
 
             <dt className="text-sm font-semibold">Finaliza</dt>
-            <dd className="flex items-center text-sm ">
-              {formattedDate}
-            </dd>
+            <dd className="flex items-center text-sm ">{formattedDate}</dd>
           </dl>
         </section>
 
@@ -195,10 +228,7 @@ export default function Auction() {
           <h1 className="text-left text-3xl font-bold">
             Comentarios y ofertas
           </h1>
-          
-          
         </section>
-        
       </main>
     )
   );
