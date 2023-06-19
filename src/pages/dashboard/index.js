@@ -50,7 +50,6 @@ const Dashboard = () => {
   const { users, loading, error } = useSelector((state) => state.users);
 
 
-
   useEffect(() => {
     dispatch(fetchUsers());
   }, []);

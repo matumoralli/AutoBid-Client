@@ -35,7 +35,7 @@ const Modal = ({
             onClick={handleClose}
           ></div>
 
-          <div className="relative z-10 max-h-[75vh] w-1/2 overflow-y-auto rounded-md bg-gray-50 p-6 shadow-lg">
+          <div className="relative z-10 max-h-[75vh] mx-2 md:w-1/2 overflow-y-auto rounded-md bg-gray-50 p-6 shadow-lg">
             <button
               className="absolute right-0 top-0 m-2 rounded-md border-2 border-red-500 p-1 font-semibold text-red-500 transition-all duration-300 hover:bg-red-500 hover:text-white"
               onClick={handleClose}

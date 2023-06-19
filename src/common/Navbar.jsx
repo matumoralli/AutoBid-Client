@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUser } from "@/redux/user/userSlice";
-
+import DefButton from "./DefButton";
 
 export default function Navbar() {
   const dispatch = useDispatch();
@@ -83,9 +83,9 @@ export default function Navbar() {
               )}
             </ul>
             {userAuth ? (
-              <div className="ml-auto flex items-center">
+              <div className="ml-auto hidden items-center md:flex">
                 <div>
-                  Welcome {userAuth.name}!{" "}
+                  {userAuth.name.split(" ")[0]}
                   <button className=" mx-6 rounded-md bg-red-400 px-3 py-2 text-sm font-semibold text-black hover:text-gray-200 md:mx-auto md:px-7 md:py-[10px] md:text-base">
                     <a href="/api/auth/logout">Log out</a>
                   </button>
@@ -94,7 +94,7 @@ export default function Navbar() {
             ) : (
               <div className="ml-auto flex items-center">
                 <button className=" mx-6 rounded-md bg-red-400 px-3 py-2 text-sm font-semibold text-black hover:text-gray-200 md:mx-auto md:px-7 md:py-[10px] md:text-base">
-                  <a href="/api/auth/login">Sign Up</a>
+                  <a href="/api/auth/login">Log in</a>
                 </button>
               </div>
             )}
@@ -144,6 +144,33 @@ export default function Navbar() {
                         ¿Qué es AutoBid?
                       </button>
                     </Link>
+                    {user?.isAdmin === true && (
+                      <Link href="/dashboard">
+                        <button className="px-4 py-3 text-base font-medium">
+                          Dashboard
+                        </button>
+                      </Link>
+                    )}
+                    {userAuth ? (
+                      <>
+                        <Link href="#">
+                          <button className="px-4 py-3 text-base font-medium">
+                            Perfil {userAuth.name.split(" ")[0]}
+                          </button>
+                        </Link>
+                        <a href="/api/auth/logout">
+                          <DefButton className={`mx-4 bg-red-400`}>
+                            Log out
+                          </DefButton>
+                        </a>
+                      </>
+                    ) : (
+                      <a href="/api/auth/login">
+                        <DefButton className={`mx-4 bg-red-400`}>
+                          Log in
+                        </DefButton>
+                      </a>
+                    )}
                   </li>
                 </ul>
               </div>
