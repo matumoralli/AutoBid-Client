@@ -1,4 +1,4 @@
-const toEquipmentArray = (eq) => eq.split(",").map((word) => word.trim());
+
 
 const SideBar = ({ newListingsCars }) => {
   return (
@@ -24,7 +24,7 @@ const SideBar = ({ newListingsCars }) => {
               <h4 className="text-lg font-bold">{model}</h4>
               <p className="text-sm">{description}</p>
               <ul className="ml-5 text-sm list-disc">
-                {toEquipmentArray(equipement)?.map((item, indx) => (
+                {equipement?.map((item, indx) => (
                   <li key={item + indx}>{item}</li>
                 ))}
               </ul>

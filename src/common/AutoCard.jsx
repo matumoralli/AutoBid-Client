@@ -8,8 +8,17 @@ const handleDelete = () => {};
 const handleUpdate = () => {};
 
 const AutoCard = ({ car, adminOpt = false }) => {
-  const { brand, model, equipement, kilometers, price, year, images, checked } =
-    car;
+  const {
+    brand,
+    model,
+    equipement,
+    kilometers,
+    price,
+    year,
+    images,
+    checked,
+    AuctionId,
+  } = car;
 
   const [modals, setModals] = useState({
     delete: { inView: false, onConfirm: handleDelete },
@@ -24,15 +33,15 @@ const AutoCard = ({ car, adminOpt = false }) => {
   };
 
   return (
-    <article className="m-2 overflow-hidden rounded-md max-w-sm bg-gray-50 hover:bg-gray-200 transition-all duration-150 group">
+    <article className="group m-2 max-w-sm overflow-hidden rounded-md bg-gray-50 transition-all duration-150 hover:bg-gray-200">
       <div className="relative">
         <img src={images[0]} alt={brand + model + "-image"} />
 
         {adminOpt && (
-          <ul className="absolute top-0 right-0 m-2 flex gap-2 items-center text-white text-lg transition-all duration-300 scale-0 group-hover:scale-100">
+          <ul className="absolute right-0 top-0 m-2 flex scale-0 items-center gap-2 text-lg text-white transition-all duration-300 group-hover:scale-100">
             <li>
               <button
-                className="p-1 border-2 rounded-md border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-all duration-300"
+                className="rounded-md border-2 border-red-500 p-1 text-red-500 transition-all duration-300 hover:bg-red-500 hover:text-white"
                 onClick={() => handleViewModal("delete")}
               >
                 <MdDelete />
@@ -40,7 +49,7 @@ const AutoCard = ({ car, adminOpt = false }) => {
             </li>
             <li>
               <button
-                className="p-1 border-2 rounded-md border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white transition-all duration-300"
+                className="rounded-md border-2 border-blue-500 p-1 text-blue-500 transition-all duration-300 hover:bg-blue-500 hover:text-white"
                 onClick={() => handleViewModal("update")}
               >
                 <MdBrush />
@@ -72,9 +81,9 @@ const AutoCard = ({ car, adminOpt = false }) => {
           </Modal>
         }
 
-        <ul className="m-2 py-1 px-3 absolute bottom-0 left-0 flex items-center gap-4 rounded-md bg-zinc-800">
+        <ul className="absolute bottom-0 left-0 m-2 flex items-center gap-4 rounded-md bg-zinc-800 px-3 py-1">
           <li>
-            <span className="flex items-center gap-2 text-white font-semibold">
+            <span className="flex items-center gap-2 font-semibold text-white">
               <span className="text-gray-700">
                 <FiClock />
               </span>
@@ -82,25 +91,40 @@ const AutoCard = ({ car, adminOpt = false }) => {
             </span>
           </li>
           <li>
-            <span className="flex items-center gap-2 text-white font-semibold">
+            <span className="flex items-center gap-2 font-semibold text-white">
               <span className="text-gray-700">Bid</span> ${price}
             </span>
           </li>
         </ul>
       </div>
-      <div className="py-3 px-2">
-        <a
-          href="#"
-          className="flex items-center gap-2 text-lg font-bold hover:underline"
-        >
-          {checked && (
-            <span className="text-red-500">
-              <MdVerified />
-            </span>
-          )}
-          {brand + " "}
-          {model}
-        </a>
+      <div className="px-2 py-3">
+        {AuctionId ? (
+          <a
+            href={`/auctions/${AuctionId}`}
+            className="flex items-center gap-2 text-lg font-bold hover:underline"
+          >
+            {checked && (
+              <span className="text-red-500">
+                <MdVerified />
+              </span>
+            )}
+            {brand + " "}
+            {model}
+          </a>
+        ) : (
+          <a
+            href=""
+            className="flex items-center gap-2 text-lg font-bold hover:underline"
+          >
+            {checked && (
+              <span className="text-red-500">
+                <MdVerified />
+              </span>
+            )}
+            {brand + " "}
+            {model}
+          </a>
+        )}
         <p className="text-sm">{equipement}</p>
         <span className="text-sm text-gray-400">{kilometers}km</span>
       </div>
