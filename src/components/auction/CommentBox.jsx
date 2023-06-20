@@ -4,7 +4,10 @@ import DefButton from "@/common/DefButton";
 import { postComment, postReply } from "@/redux/auction/auctionSlice";
 import sortCommentsAndBids from "@/helpers/sortCommentsAndBids";
 import commentDate from "@/utils/commentDate";
-import { useLazyGetCommentQuery } from "@/redux/api/apiSlice";
+import {
+  useLazyGetCommentQuery,
+  useLazyGetReplyQuery,
+} from "@/redux/api/apiSlice";
 
 export default function CommentBox({ auction, user, router }) {
   const dispatch = useDispatch();
@@ -13,7 +16,10 @@ export default function CommentBox({ auction, user, router }) {
   const [comments, setComments] = useState([]);
   const [reply, setReply] = useState("");
   const [replies, setReplies] = useState([]);
-  const [trigger, result, lastPromiseInfo] = useLazyGetCommentQuery();
+  const [getComment, getCommentResult, getCommentLastPromise] =
+    useLazyGetCommentQuery();
+  const [getReply, getReplyResult, getReplyLastPromise] =
+    useLazyGetReplyQuery();
 
   const countReplies = (comment = {}, repliesState = []) => {
     const commentRepliesAmmount = Math.max(
@@ -49,7 +55,7 @@ export default function CommentBox({ auction, user, router }) {
     const { payload } = await dispatch(
       postComment({ auctionId: auction.id, userId: user.id, comment: comment })
     );
-    const newComment = await trigger(payload.id).unwrap();
+    const newComment = await getComment(payload.id).unwrap();
     setComments((prev) => [...prev, newComment]);
     return setComment("");
   };
@@ -59,16 +65,8 @@ export default function CommentBox({ auction, user, router }) {
     const { payload } = await dispatch(
       postReply({ commentId: replyShowing, userId: user.id, reply: reply })
     );
-    setReplies((prev) => [
-      ...prev,
-      {
-        id: payload?.id,
-        createdAt: payload?.createdAt,
-        CommentId: replyShowing,
-        UserId: user.id,
-        content: reply,
-      },
-    ]);
+    const newReply = await getReply(payload.id).unwrap();
+    setReplies((prev) => [...prev, newReply]);
     return setReply("");
   };
 
