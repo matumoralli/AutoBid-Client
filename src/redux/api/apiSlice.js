@@ -19,10 +19,18 @@ export const apiSlice = createApi({
       query: (id) => ({ url: `auctions/${id}`, method: "get" }),
       transformResponse: (response, meta, arg) => response.data,
     }),
+    getComment: builder.query({
+      query: (id) => ({ url: `comments/${id}`, method: "get" }),
+      transformResponse: (response, meta, arg) => response.data,
+    }),
+    getReply: builder.query({
+      query: (id) => ({ url: `replies/reply/${id}`, method: "get" }),
+      transformResponse: (response, meta, arg) => response.data,
+    }),
   }),
   
 });
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetCarsQuery, useGetCarQuery, useGetAuctionQuery } = apiSlice;
+export const { useGetCarsQuery, useGetCarQuery, useGetAuctionQuery, useLazyGetCommentQuery, useLazyGetReplyQuery } = apiSlice;
