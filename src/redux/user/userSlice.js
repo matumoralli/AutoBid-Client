@@ -22,6 +22,7 @@ export const fetchUser = createAsyncThunk(
   }
 );
 
+//! Función de admin. El usuario adquiere créditos a traves de la función "buyCredit"
 export const giveUserCredit = createAsyncThunk(
   "user/giveUserCredit",
   async (email) => {
@@ -39,6 +40,18 @@ export const giveUserCredit = createAsyncThunk(
     }
   }
 );
+
+export const buyCredit = createAsyncThunk("user/buyCredit", async ({userId}) => {
+  try {
+    const response = await fetch("/api/usersApi", {
+      method: "POST",
+      body: `{"action":"${API_ACTIONS.BUY_CREDIT}", "payload":{"userId":"${userId}"}}`,
+    });
+    return await response.json();
+  } catch (error) {
+    console.log("There has been a problem with buyCredit:", error.message);
+  }
+});
 
 export const deleteUserCredit = createAsyncThunk(
   "user/deleteUserCredit",

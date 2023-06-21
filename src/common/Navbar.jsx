@@ -84,7 +84,7 @@ export default function Navbar() {
             </ul>
             {userAuth ? (
               <div className="ml-auto hidden items-center md:flex">
-                <div className="flex gap-2 items-center">
+                <div className="flex items-center gap-2">
                   <p>{userAuth.name.split(" ")[0]}</p>
                   <button className=" mx-6 rounded-md bg-red-400 px-3 py-2 text-sm font-semibold text-black hover:text-gray-200 md:mx-auto md:px-7 md:py-[10px] md:text-base">
                     <a href="/api/auth/logout">Log out</a>
@@ -94,7 +94,9 @@ export default function Navbar() {
             ) : (
               <div className="ml-auto flex items-center">
                 <button className=" mx-6 rounded-md bg-red-400 px-3 py-2 text-sm font-semibold text-black hover:text-gray-200 md:mx-auto md:px-7 md:py-[10px] md:text-base">
-                  <a href={`/api/auth/login?returnTo=${router.pathname}`}>Log in</a>
+                  <a href={`/api/auth/login?returnTo=${router.asPath}`}>
+                    Log in
+                  </a>
                 </button>
               </div>
             )}
@@ -154,7 +156,7 @@ export default function Navbar() {
                     {userAuth ? (
                       <>
                         <Link href="#">
-                          <button className="px-4 me-2 py-3 text-base font-medium">
+                          <button className="me-2 px-4 py-3 text-base font-medium">
                             Perfil {userAuth.name.split(" ")[0]}
                           </button>
                         </Link>
@@ -165,7 +167,7 @@ export default function Navbar() {
                         </a>
                       </>
                     ) : (
-                      <a href={`/api/auth/login?returnTo=${router.pathname}`}>
+                      <a href={`/api/auth/login?returnTo=${router.asPath}`}>
                         <DefButton className={`mx-4 bg-red-400`}>
                           Log in
                         </DefButton>

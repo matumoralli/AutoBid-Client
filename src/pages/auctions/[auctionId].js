@@ -1,18 +1,28 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import CountDownBar from "@/components/auction/CountDownBar";
 import CommentBox from "@/components/auction/CommentBox";
 import { useGetAuctionQuery } from "@/redux/api/apiSlice";
 import formattedDate from "@/utils/formattedDate";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { HiDocumentArrowDown } from "react-icons/hi2";
 
+const Responsive = dynamic(
+  () => {
+    return import("../../common/Responsive");
+  },
+  { ssr: false }
+);
+
 export default function Auction() {
+  const dispatch = useDispatch();
   const router = useRouter();
   const { data, isFetching } = useGetAuctionQuery(router.query.auctionId);
   const [auction, setAuction] = useState({});
   const { user, loading, error } = useSelector((state) => state.user);
+  const [width, setWidth] = useState(0);
 
   useEffect(() => {
     setAuction((prev) => {
@@ -26,7 +36,15 @@ export default function Auction() {
   return (
     car && (
       <main className="mx-auto min-h-[70vh] max-w-[1440px] text-zinc-800 ">
-        <CountDownBar user={user} auction={auction} />
+        <Responsive displayIn={["Mobile"]}>
+          <CountDownBar
+            className="sticky top-[70px] md:hidden"
+            user={user}
+            router={router}
+            auction={auction}
+            dispatch={dispatch}
+          />
+        </Responsive>
 
         <section>
           <Image
@@ -37,6 +55,16 @@ export default function Auction() {
             priority
           />
         </section>
+
+        <Responsive displayIn={["Tablet", "Laptop"]}>
+          <CountDownBar
+            className="hidden md:block"
+            user={user}
+            router={router}
+            auction={auction}
+            dispatch={dispatch}
+          />
+        </Responsive>
 
         <section className="mx-4">
           <div className="flex flex-col items-start">

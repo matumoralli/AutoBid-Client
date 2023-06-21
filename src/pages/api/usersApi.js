@@ -59,6 +59,18 @@ export default withApiAuthRequired(async function usersAPI(req, res) {
 
         break;
 
+      case API_ACTIONS.BUY_CREDIT:
+        fetchOptions = {
+          method: "POST",
+          url: process.env.BACKEND_URL + `/payment/buyCredit/`,
+          headers: {
+            authorization: `Bearer ${accessToken}`,
+          },
+          data: { buyerId: payload.userId },
+        };
+
+        break;
+
       case API_ACTIONS.DELETE_USER_CREDIT:
         fetchOptions = {
           method: "DELETE",
