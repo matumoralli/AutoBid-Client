@@ -1,21 +1,20 @@
-import Image from "next/image";
-import { useGetAuctionQuery } from "@/redux/api/apiSlice";
-import { useRouter } from "next/router";
-import DefButton from "@/common/DefButton";
-import { FiClock } from "react-icons/fi";
-import { HiDocumentArrowDown } from "react-icons/hi2";
-import CountDownTimer from "@/common/CountDownTimer";
-import { useEffect, useMemo, useState } from "react";
-import commentDate from "@/utils/commentDate";
-import formattedDate from "@/utils/formattedDate";
-import sortCommentsAndBids from "@/helpers/sortCommentsAndBids";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Modal from "@/common/Modal";
-import { postComment, postReply } from "@/redux/auction/auctionSlice";
+import CountDownBar from "@/components/auction/CountDownBar";
+import CommentBox from "@/components/auction/CommentBox";
+import { useGetAuctionQuery } from "@/redux/api/apiSlice";
+import formattedDate from "@/utils/formattedDate";
+import Image from "next/image";
+import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
+import { HiDocumentArrowDown } from "react-icons/hi2";
 
-const handleBuy = () => {};
-const handleRegister = () => {};
-const handleAssignCredit = () => {};
+const Responsive = dynamic(
+  () => {
+    return import("../../common/Responsive");
+  },
+  { ssr: false }
+);
 
 export default function Auction() {
   const dispatch = useDispatch();
@@ -23,24 +22,6 @@ export default function Auction() {
   const { data, isFetching } = useGetAuctionQuery(router.query.auctionId);
   const [auction, setAuction] = useState({});
   const { user, loading, error } = useSelector((state) => state.user);
-  const [comment, setComment] = useState("");
-  const [comments, setComments] = useState([]);
-  const [replyShowing, setReplyShowing] = useState("");
-  const [reply, setReply] = useState("");
-  const [replies, setReplies] = useState([]);
-
-  const [modals, setModals] = useState({
-    buyCredit: { inView: false, onConfirm: handleBuy },
-    register: { inView: false, onConfirm: handleRegister },
-    assignCredit: { inView: false, onConfirm: handleAssignCredit },
-  });
-
-  const handleViewModal = (modal) => {
-    setModals({
-      ...modals,
-      [modal]: { ...modals[modal], inView: !modals[modal].inView },
-    });
-  };
 
   useEffect(() => {
     setAuction((prev) => {
@@ -51,130 +32,30 @@ export default function Auction() {
   const car = auction.CarDetail;
   const seller = auction.User;
 
-  const commentsBids = useMemo(() => {
-    setComments(sortCommentsAndBids(auction?.Comments, auction?.Bids));
-    console.log("useMemo ran:", comments);
-    return comments;
-  }, [auction]);
+  const calculateOffer = (auctionObject) => {
 
-  const handleComment = async (e) => {
-    e.preventDefault();
-    const { payload } = await dispatch(
-      postComment({ auctionId: auction.id, userId: user.id, comment: comment })
-    );
-    setComments((prev) => [
-      ...prev,
-      {
-        id: payload?.id,
-        content: comment,
-        createdAt: payload?.createdAt,
-        UserId: user.id,
-        AuctionId: auction.id,
-        User: { name: user?.name },
-      },
-    ]);
-    return setComment("");
-  };
+    if (auctionObject.Bids?.length > 0) {
+      return auctionObject.Bids[
+          auctionObject.Bids.length - 1
+        ].ammount;
+    }
 
-  const handleReply = async (e) => {
-    e.preventDefault();
-    const { payload } = await dispatch(
-      postReply({ commentId: replyShowing, userId: user.id, reply: reply })
-    );
-    setReplies((prev) => [
-      ...prev,
-      {
-        id: payload?.id,
-        createdAt: payload?.createdAt,
-        CommentId: replyShowing,
-        UserId: user.id,
-        content: reply,
-      },
-    ]);
-    return setReply("");
-  };
-
-  const showReplies = (e) => {
-    e.preventDefault();
-    replyShowing === e.target.parentElement.parentElement.attributes.id.value
-      ? setReplyShowing("")
-      : setReplyShowing(
-          e.target.parentElement.parentElement.attributes.id.value
-        );
+    return auctionObject.minPrice;
   };
 
   return (
     car && (
       <main className="mx-auto min-h-[70vh] max-w-[1440px] text-zinc-800 ">
-        <a href="#scrollDown" className=" active: sticky top-[70px]">
-          <div className="grid grid-cols-[30%,_40%,_30%] items-center bg-zinc-800 py-1 pe-1 ps-2 text-white">
-            <span className="flex items-center gap-1 font-semibold text-white">
-              <span className="text-gray-700">
-                <FiClock />
-              </span>
-              <CountDownTimer endDate={auction.endTime} />
-            </span>
-            <span className="mx-auto text-lg font-semibold">
-              $
-              {auction.Bids?.length > 1
-                ? auction.Bids[auction.Bids.length - 1].ammount.toLocaleString()
-                : auction.minPrice.toLocaleString()}
-            </span>
-            {user?.Credits ? (
-              user.Credits?.find((credit) => credit.AuctionId === null) ? (
-                <DefButton
-                  onClick={() => handleViewModal("assignCredit")}
-                  className={"bg-green-600 text-white hover:bg-green-700"}
-                >
-                  Participar
-                </DefButton>
-              ) : (
-                <DefButton
-                  onClick={() => handleViewModal("buyCredit")}
-                  className={"bg-red-700 text-white"}
-                >
-                  Participar
-                </DefButton>
-              )
-            ) : (
-              <DefButton
-                onClick={() => handleViewModal("register")}
-                className={"bg-gray-600 text-white hover:bg-gray-700"}
-              >
-                Participar
-              </DefButton>
-            )}
-          </div>
-        </a>
-
-        <Modal
-          title="Participar en subastas"
-          inView={modals.assignCredit.inView}
-          handleView={() => handleViewModal("assignCredit")}
-        >
-          Participar en una subasta requerirá uno de tus créditos disponibles.
-          Recuerda que sólo puedes participar en una subasta por crédito.
-          Siempre puedes recuperar tu crédito si cambies de opinion sobre la
-          subasta actual.
-        </Modal>
-
-        <Modal
-          title="Participar en subastas"
-          inView={modals.buyCredit.inView}
-          handleView={() => handleViewModal("buyCredit")}
-        >
-          Para participar en una subasta, primero debes comprar un crédito.
-          Recuerda que un crédito sólo te habilita a participar en una subasta.
-        </Modal>
-
-        <Modal
-          title="Participar en subastas"
-          inView={modals.register.inView}
-          handleView={() => handleViewModal("register")}
-        >
-          Para participar en una subasta debes ser un usuario registrado y
-          comprar un crédito.
-        </Modal>
+        <Responsive displayIn={["Mobile"]}>
+          <CountDownBar
+            className="sticky top-[70px] md:hidden"
+            user={user}
+            router={router}
+            auction={auction}
+            dispatch={dispatch}
+            calculateOffer={calculateOffer}
+          />
+        </Responsive>
 
         <section>
           <Image
@@ -185,6 +66,17 @@ export default function Auction() {
             priority
           />
         </section>
+
+        <Responsive displayIn={["Tablet", "Laptop"]}>
+          <CountDownBar
+            className="hidden md:block"
+            user={user}
+            router={router}
+            auction={auction}
+            dispatch={dispatch}
+            calculateOffer={calculateOffer}
+          />
+        </Responsive>
 
         <section className="mx-4">
           <div className="flex flex-col items-start">
@@ -324,9 +216,7 @@ export default function Auction() {
             <dt className="text-sm font-semibold">Oferta actual</dt>
             <dd className="flex  items-center text-sm font-semibold ">
               $
-              {auction.Bids?.length > 1
-                ? auction.Bids[auction.Bids.length - 1].ammount.toLocaleString()
-                : auction.minPrice.toLocaleString()}
+              {calculateOffer(auction)}
             </dd>
 
             <dt className="text-sm font-semibold">Vendedor</dt>
@@ -339,164 +229,7 @@ export default function Auction() {
           </dl>
         </section>
 
-        <section className="mx-2 border-b-[1px] py-6">
-          <h1 className="mb-4 text-left text-3xl font-bold">
-            Comentarios y ofertas
-          </h1>
-          <form id="commentTextArea">
-            <textarea
-              onChange={(e) => setComment(e.target.value)}
-              className=" w-full rounded-md border-2 border-gray-800"
-              maxLength={255}
-              name="comment"
-              form="commentTextArea"
-              rows="4"
-              value={comment}
-            ></textarea>
-            <div className="flex justify-end ">
-              <DefButton
-                type="submit"
-                onClick={(e) => handleComment(e)}
-                className={`mx-0 bg-gray-800 text-xs text-white hover:bg-gray-900`}
-              >
-                Comentar
-              </DefButton>
-            </div>
-          </form>
-          <ul className="flex flex-col gap-4">
-            {comments.toReversed().map((c) => {
-              if (c?.ammount) {
-                return (
-                  <li className=" mb-2 ms-2 flex flex-col" key={c.id}>
-                    <div className="flex items-center gap-2">
-                      <a className="font-semibold">{c.User.name}</a>
-                      <p className="text-sm text-gray-400">
-                        {commentDate(c.createdAt)}
-                      </p>
-                    </div>
-                    <div className="my-1 mr-auto ms-1 flex flex-col items-center  text-sm">
-                      <p className="mr-auto rounded-lg bg-zinc-800 px-2 py-1 font-semibold text-white">
-                        Oferta ${c.ammount.toLocaleString()}
-                      </p>
-                    </div>
-                  </li>
-                );
-              }
-
-              if (c?.content) {
-                return (
-                  <li className=" ms-2 flex flex-col" key={c.id} id={c.id}>
-                    <div className="flex items-center gap-2">
-                      <a className="font-semibold">{c.User.name}</a>
-                      <p className="text-sm text-gray-400">
-                        {commentDate(c.createdAt)}
-                      </p>
-                    </div>
-                    <div className="my-1 mr-auto ms-1 flex flex-col items-center  text-sm ">
-                      <p>{c.content}</p>
-                    </div>
-                    <div className="flex justify-between">
-                      <button
-                        onClick={(e) => showReplies(e)}
-                        className=" text-sm font-light text-gray-400"
-                      >
-                        {c?.Replies?.length +
-                          replies?.filter((reply) => reply.CommentId === c.id)
-                            .length >
-                        0
-                          ? c?.Replies?.length +
-                            replies?.filter((reply) => reply.CommentId === c.id)
-                              .length
-                          : ""}{" "}
-                        {c?.Replies?.length +
-                          replies?.filter((reply) => reply.CommentId === c.id)
-                            .length >
-                        0
-                          ? c?.Replies?.length +
-                              replies?.filter(
-                                (reply) => reply.CommentId === c.id
-                              ).length ===
-                            1
-                            ? "respuesta"
-                            : "respuestas"
-                          : ""}
-                      </button>
-                      <button
-                        onClick={(e) => showReplies(e)}
-                        className=" text-sm font-light text-gray-400"
-                      >
-                        Responder
-                      </button>
-                    </div>
-                    {replyShowing === c.id && (
-                      <ul>
-                        {c?.Replies?.map((reply) => {
-                          return (
-                            <ol
-                              className=" mb-2 ms-3 flex flex-col text-sm text-zinc-700"
-                              key={reply.id}
-                            >
-                              <div className="flex items-center gap-2">
-                                <a className="font-semibold">{c.User.name}</a>
-                                <p className=" text-gray-400">
-                                  {commentDate(reply.createdAt)}
-                                </p>
-                              </div>
-                              <div className="my-1 mr-auto ms-1 flex flex-col items-center  ">
-                                <p>{reply.content}</p>
-                              </div>
-                            </ol>
-                          );
-                        })}
-                        {replies
-                          ?.filter((reply) => reply.CommentId === c.id)
-                          .map((reply) => {
-                            return (
-                              <ol
-                                className=" mb-2 ms-3 flex flex-col text-sm text-zinc-700"
-                                key={reply.id}
-                              >
-                                <div className="flex items-center gap-2">
-                                  <a className="font-semibold">{c.User.name}</a>
-                                  <p className=" text-gray-400">
-                                    {commentDate(reply.createdAt)}
-                                  </p>
-                                </div>
-                                <div className="my-1 mr-auto ms-1 flex flex-col items-center  ">
-                                  <p>{reply.content}</p>
-                                </div>
-                              </ol>
-                            );
-                          })}
-                        <form className="w-full" id="replyTextArea">
-                          <textarea
-                            onChange={(e) => setReply(e.target.value)}
-                            className=" mx-auto mb-1 block w-10/12 rounded-md border-2 border-gray-800"
-                            maxLength={255}
-                            name="reply"
-                            form="replyTextArea"
-                            rows="2"
-                            value={reply}
-                          ></textarea>
-
-                          <div className="flex justify-end ">
-                            <DefButton
-                              type="submit"
-                              onClick={(e) => handleReply(e)}
-                              className={`mx-0 bg-gray-800 text-xs text-white hover:bg-gray-900`}
-                            >
-                              Responder
-                            </DefButton>
-                          </div>
-                        </form>
-                      </ul>
-                    )}
-                  </li>
-                );
-              }
-            })}
-          </ul>
-        </section>
+        <CommentBox router={router} user={user} auction={auction} />
       </main>
     )
   );

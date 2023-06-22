@@ -41,6 +41,18 @@ export default withApiAuthRequired(async function auctionAPI(req, res) {
   
           break;
 
+          case API_ACTIONS.POST_BID:
+            fetchOptions = {
+              method: "POST",
+              url: process.env.BACKEND_URL + `/auctions/bid/${payload.userId}`,
+              headers: {
+                authorization: `Bearer ${accessToken}`,
+              },
+              data: { ammount: payload.ammount, auctionId: payload.auctionId },
+            };
+    
+            break;
+
 
       default:
         console.log("No action was specified in Switch"); 

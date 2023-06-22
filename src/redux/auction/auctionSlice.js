@@ -33,6 +33,21 @@ export const postReply = createAsyncThunk(
   }
 );
 
+export const postBid = createAsyncThunk(
+  "auction/postBid",
+  async ({ auctionId, userId, ammount }) => {
+    try {
+      const response = await fetch("/api/auctionApi", {
+        method: "POST",
+        body: `{"action":"${API_ACTIONS.POST_BID}", "payload":{"ammount":"${ammount}", "userId":"${userId}", "auctionId":"${auctionId}"}}`,
+      });
+      return await response.json();
+    } catch (error) {
+      console.log("There has been a problem with postBid:", error.message);
+    }
+  }
+);
+
 export const auctionSlice = createSlice({
   name: "auction",
   initialState,

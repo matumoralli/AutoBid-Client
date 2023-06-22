@@ -3,19 +3,19 @@ import { AiOutlineClose } from "react-icons/ai";
 
 const Modal = ({
   inView,
-  handleView,
+  handleView = () => {},
   onConfirm = () => {},
   onCancel = () => {},
   title,
   children,
 }) => {
   const handleClose = () => {
-    handleView(false);
+    handleView();
     onCancel();
   };
 
   const handleConfirm = () => {
-    handleView(true);
+    handleView();
     onConfirm();
   };
 
