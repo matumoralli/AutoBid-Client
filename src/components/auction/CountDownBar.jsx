@@ -5,6 +5,7 @@ import Modal from "@/common/Modal";
 import { FiClock } from "react-icons/fi";
 import { twMerge } from "tailwind-merge";
 import { assignAuctionCredit, buyCredit } from "@/redux/user/userSlice";
+import { postBid } from "@/redux/auction/auctionSlice";
 
 export default function CountDownBar({
   user,
@@ -42,12 +43,12 @@ export default function CountDownBar({
     },
     offer: {
       inView: false,
-      onConfirm: async function (offer) {
-        const check = offer < (calculateOffer(auction) + 100);
+      onConfirm: async function (offer, user) {
+        const check = offer < calculateOffer(auction) + 100;
         if (check) {
-          const error = `Su oferta debe ser al menos 100 USD mayor a la oferta actual. Oferta mínima: $${calculateOffer(
-            auction
-          ) + 100}`;
+          const error = `Su oferta debe ser al menos 100 USD mayor a la oferta actual. Oferta mínima: $${
+            calculateOffer(auction) + 100
+          }`;
           setError(error);
           return setModals((prev) => {
             return {
@@ -57,12 +58,18 @@ export default function CountDownBar({
           });
         }
         setError("");
+        await dispatch(
+          postBid({ auctionId: auction.id, ammount: offer, userId: user.id })
+        );
+
         setModals((prev) => {
           return {
             ...prev,
             offer: { ...prev.offer, inView: false },
           };
         });
+
+        location.reload();
       },
     },
   });
@@ -70,10 +77,6 @@ export default function CountDownBar({
   const [assignedCredit, setAssignedCredit] = useState({});
   const [newOffer, setNewOffer] = useState(0);
   const [error, setError] = useState("");
-
-  useEffect(() => {
-    console.log(modals);
-  }, [modals]);
 
   const renderAuctionButton = (userObject = {}, auctionObject = {}) => {
     if (
@@ -146,10 +149,7 @@ export default function CountDownBar({
             <CountDownTimer endDate={auction.endTime} />
           </span>
           <span className="mx-auto text-lg font-semibold">
-            $
-            {auction.Bids?.length > 1
-              ? auction.Bids[auction.Bids.length - 1].ammount.toLocaleString()
-              : auction.minPrice.toLocaleString()}
+            ${calculateOffer(auction)}
           </span>
 
           {renderAuctionButton(user, auction)}
@@ -191,7 +191,7 @@ export default function CountDownBar({
         title="Ofertar"
         inView={modals.offer.inView}
         handleView={() => handleViewModal("offer")}
-        onConfirm={() => modals.offer.onConfirm(newOffer)}
+        onConfirm={() => modals.offer.onConfirm(newOffer, user)}
       >
         <form className="flex gap-2">
           <label htmlFor="ammountInput">Ingresa tu oferta</label>
@@ -201,7 +201,7 @@ export default function CountDownBar({
             type="number"
             value={newOffer}
             onChange={(e) => setNewOffer(Number(e.target.value))}
-            min={calculateOffer(auction)}
+            min={calculateOffer(auction) + 100}
           />
         </form>
         <p className="  text-red-800">{error}</p>

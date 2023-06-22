@@ -36,7 +36,7 @@ export default function Auction() {
 
   const calculateOffer = (auctionObject) => {
 
-    if (auctionObject.Bids?.length > 1) {
+    if (auctionObject.Bids?.length > 0) {
       return auctionObject.Bids[
           auctionObject.Bids.length - 1
         ].ammount;
