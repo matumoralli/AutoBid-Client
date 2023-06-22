@@ -23,6 +23,7 @@ export default function Auction() {
   const [auction, setAuction] = useState({});
   const { user, loading, error } = useSelector((state) => state.user);
   const [width, setWidth] = useState(0);
+  const [currentOffer, setCurrentOffer] = useState(0);
 
   useEffect(() => {
     setAuction((prev) => {
@@ -32,6 +33,17 @@ export default function Auction() {
 
   const car = auction.CarDetail;
   const seller = auction.User;
+
+  const calculateOffer = (auctionObject) => {
+
+    if (auctionObject.Bids?.length > 1) {
+      return auctionObject.Bids[
+          auctionObject.Bids.length - 1
+        ].ammount;
+    }
+
+    return auctionObject.minPrice;
+  };
 
   return (
     car && (
@@ -43,6 +55,7 @@ export default function Auction() {
             router={router}
             auction={auction}
             dispatch={dispatch}
+            calculateOffer={calculateOffer}
           />
         </Responsive>
 
@@ -63,6 +76,7 @@ export default function Auction() {
             router={router}
             auction={auction}
             dispatch={dispatch}
+            calculateOffer={calculateOffer}
           />
         </Responsive>
 
@@ -204,9 +218,7 @@ export default function Auction() {
             <dt className="text-sm font-semibold">Oferta actual</dt>
             <dd className="flex  items-center text-sm font-semibold ">
               $
-              {auction.Bids?.length > 1
-                ? auction.Bids[auction.Bids.length - 1].ammount.toLocaleString()
-                : auction.minPrice.toLocaleString()}
+              {calculateOffer(auction)}
             </dd>
 
             <dt className="text-sm font-semibold">Vendedor</dt>

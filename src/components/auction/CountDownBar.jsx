@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import CountDownTimer from "@/common/CountDownTimer";
 import DefButton from "@/common/DefButton";
 import Modal from "@/common/Modal";
@@ -12,6 +12,7 @@ export default function CountDownBar({
   router,
   className,
   dispatch,
+  calculateOffer,
 }) {
   const [modals, setModals] = useState({
     buyCredit: {
@@ -41,17 +42,38 @@ export default function CountDownBar({
     },
     offer: {
       inView: false,
-      onConfirm: async function () {
-        const response = await dispatch(
-          assignAuctionCredit({ email: user.email, auctionId: auction.id })
-        );
-        setAssignedCredit((prev) => {
-          return { ...prev, id: response.payload.id };
+      onConfirm: async function (offer) {
+        const check = offer < (calculateOffer(auction) + 100);
+        if (check) {
+          const error = `Su oferta debe ser al menos 100 USD mayor a la oferta actual. Oferta mínima: $${calculateOffer(
+            auction
+          ) + 100}`;
+          setError(error);
+          return setModals((prev) => {
+            return {
+              ...prev,
+              offer: { ...prev.offer, inView: true },
+            };
+          });
+        }
+        setError("");
+        setModals((prev) => {
+          return {
+            ...prev,
+            offer: { ...prev.offer, inView: false },
+          };
         });
       },
     },
   });
+
   const [assignedCredit, setAssignedCredit] = useState({});
+  const [newOffer, setNewOffer] = useState(0);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    console.log(modals);
+  }, [modals]);
 
   const renderAuctionButton = (userObject = {}, auctionObject = {}) => {
     if (
@@ -102,8 +124,6 @@ export default function CountDownBar({
     );
   };
 
-  const c = twMerge("", className);
-
   const handleViewModal = useCallback((modal) => {
     setModals((prev) => {
       return {
@@ -112,6 +132,8 @@ export default function CountDownBar({
       };
     });
   }, []);
+
+  const c = twMerge("", className);
 
   return (
     <>
@@ -169,19 +191,20 @@ export default function CountDownBar({
         title="Ofertar"
         inView={modals.offer.inView}
         handleView={() => handleViewModal("offer")}
-        onConfirm={modals.offer.onConfirm}
+        onConfirm={() => modals.offer.onConfirm(newOffer)}
       >
-        <form className="flex gap-2" action="submit">
-          <label for="ammount">Ingresa tu oferta</label>
+        <form className="flex gap-2">
+          <label htmlFor="ammountInput">Ingresa tu oferta</label>
           <input
             className="rounded-sm border-2 border-gray-300"
-            id="ammount"
+            id="ammountInput"
             type="number"
+            value={newOffer}
+            onChange={(e) => setNewOffer(Number(e.target.value))}
+            min={calculateOffer(auction)}
           />
         </form>
-        <p className="  text-red-800">
-          Recuerda que tu oferta debe ser mayor a la oferta actual.
-        </p>
+        <p className="  text-red-800">{error}</p>
       </Modal>
     </>
   );
