@@ -22,6 +22,24 @@ export const fetchUser = createAsyncThunk(
   }
 );
 
+export const getUserAuctions = createAsyncThunk(
+  "user/getUserAuctions",
+  async ({ userId }) => {
+    try {
+      const response = await fetch("/api/usersApi", {
+        method: "POST",
+        body: `{"action":"${API_ACTIONS.GET_USER_AUCTIONS}", "payload":{"userId":"${userId}"}}`,
+      });
+      return await response.json();
+    } catch (error) {
+      console.log(
+        "There has been a problem with getUserAuctions:",
+        error.message
+      );
+    }
+  }
+);
+
 //! Función de admin. El usuario adquiere créditos a traves de la función "buyCredit"
 export const giveUserCredit = createAsyncThunk(
   "user/giveUserCredit",
@@ -41,17 +59,20 @@ export const giveUserCredit = createAsyncThunk(
   }
 );
 
-export const buyCredit = createAsyncThunk("user/buyCredit", async ({userId}) => {
-  try {
-    const response = await fetch("/api/usersApi", {
-      method: "POST",
-      body: `{"action":"${API_ACTIONS.BUY_CREDIT}", "payload":{"userId":"${userId}"}}`,
-    });
-    return await response.json();
-  } catch (error) {
-    console.log("There has been a problem with buyCredit:", error.message);
+export const buyCredit = createAsyncThunk(
+  "user/buyCredit",
+  async ({ userId }) => {
+    try {
+      const response = await fetch("/api/usersApi", {
+        method: "POST",
+        body: `{"action":"${API_ACTIONS.BUY_CREDIT}", "payload":{"userId":"${userId}"}}`,
+      });
+      return await response.json();
+    } catch (error) {
+      console.log("There has been a problem with buyCredit:", error.message);
+    }
   }
-});
+);
 
 export const deleteUserCredit = createAsyncThunk(
   "user/deleteUserCredit",
@@ -123,7 +144,7 @@ export const userSlice = createSlice({
       .addCase(fetchUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.requestStatus;
-      }),
+      })
 });
 
 //* Action creators are generated for each case reducer function. Import these actions to use in your component.

@@ -22,8 +22,6 @@ export default function Auction() {
   const { data, isFetching } = useGetAuctionQuery(router.query.auctionId);
   const [auction, setAuction] = useState({});
   const { user, loading, error } = useSelector((state) => state.user);
-  const [width, setWidth] = useState(0);
-  const [currentOffer, setCurrentOffer] = useState(0);
 
   useEffect(() => {
     setAuction((prev) => {

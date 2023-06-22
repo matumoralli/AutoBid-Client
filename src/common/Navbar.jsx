@@ -85,7 +85,13 @@ export default function Navbar() {
             {userAuth ? (
               <div className="ml-auto hidden items-center md:flex">
                 <div className="flex items-center gap-2">
-                  <p>{userAuth.name.split(" ")[0]}</p>
+                  <Link
+                    className="text-base font-medium hover:text-gray-400"
+                    href={`/profile/${user.id}`}
+                  >
+                    {userAuth.name.split(" ")[0]}
+                  </Link>
+
                   <button className=" mx-6 rounded-md bg-red-400 px-3 py-2 text-sm font-semibold text-black hover:text-gray-200 md:mx-auto md:px-7 md:py-[10px] md:text-base">
                     <a href="/api/auth/logout">Log out</a>
                   </button>

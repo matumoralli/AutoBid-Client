@@ -10,9 +10,9 @@ export default withApiAuthRequired(async function usersAPI(req, res) {
 
     const body = JSON.parse(req.body);
 
-    // console.log("este es action", body.action);
-    // console.log("este es payload", body.payload);
-    // console.log("este es accesstoken", accessToken);
+    console.log("este es action", body.action);
+    console.log("este es payload", body.payload);
+    console.log("este es accesstoken", accessToken);
 
     const { action, payload } = body;
 
@@ -47,6 +47,18 @@ export default withApiAuthRequired(async function usersAPI(req, res) {
         };
 
         break;
+
+        case API_ACTIONS.GET_USER_AUCTIONS:
+          fetchOptions = {
+            method: "GET",
+            url: process.env.BACKEND_URL + `/users/user/auctions/${payload.userId}`,
+            headers: {
+              authorization: `Bearer ${accessToken}`,
+            },
+            
+          };
+  
+          break;
 
       case API_ACTIONS.GIVE_USER_CREDIT:
         fetchOptions = {

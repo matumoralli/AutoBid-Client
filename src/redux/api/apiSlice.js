@@ -27,10 +27,23 @@ export const apiSlice = createApi({
       query: (id) => ({ url: `replies/reply/${id}`, method: "get" }),
       transformResponse: (response, meta, arg) => response.data,
     }),
+    getUserAuctions: builder.query({
+      query: (userId) => ({ url: `users/user/auctions/${userId}`, method: "get" }),
+      transformResponse: (response, meta, arg) => response.data,
+    }),
   }),
   
 });
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetCarsQuery, useGetCarQuery, useGetAuctionQuery, useLazyGetCommentQuery, useLazyGetReplyQuery } = apiSlice;
+export const { useGetCarsQuery, useGetCarQuery, useGetAuctionQuery, useLazyGetCommentQuery, useLazyGetReplyQuery, useGetUserAuctionsQuery } = apiSlice;
+
+
+//* ESTOS HOOKS SE GENERAN AUTOMATICAMENTE (TENES QUE EMPEZAR A ESCRIBIRLOS). AQUELLOS QUE INCLUYAN "LAZY" SON ACTIVADOS CON UN TRIGER, Y LOS QUE NO, SE ACTIVAN AL MOMENTO DE INICIAR LA APLICACIÓN
+
+//? Este es un ejemplo de cómo llamarlo en un componente. No se puede hacer destructuring ni assignment de los métodos.
+// const [trigger, result, lastPromiseInfo] = useLazyGetCarsAuthorizedQuery()
+
+//? Este es un ejemplo de cómo llamarlo en un componente. Con esta función sí se puede hacer destructuring y assignment de los métodos.
+  //const { data: response, isFetching, error } = useGetCarsAuthorizedQuery();
