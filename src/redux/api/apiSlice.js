@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { env } from "../../../next.config";
 //!USAR ESTA API SÓLO PARA INFORMACIÓN PÚBLICA, YA QUE NO SOLICITA AUTORIZACIÓN PREVIA DEL USUARIO. TODA LA INFORMACIÓN PRIVADA COMO LA INFORMACIÓN DE LOS USUARIO TIENE QUE PASAR POR "carsApi.js" O "usersApi.js" DE LA CARPETA "API" EN PAGES
 
 // Define a service using a base URL and expected endpoints
 export const apiSlice = createApi({
   reducerPath: "apiSlice",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000" }),
+  baseQuery: fetchBaseQuery({ baseUrl: env.BACKEND_URL }),
   // transformResponse: (response, meta, arg) =>
   // response.some.deeply.nested.collection,
   endpoints: (builder) => ({
