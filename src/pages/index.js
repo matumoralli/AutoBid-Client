@@ -23,6 +23,7 @@ export default function Home() {
       </Head>
 
       <main className="mx-auto mt-20 min-h-[70vh] max-w-[1440px] ">
+      <p>Test de pull desde PM2</p>
         {isFetching && (
           <p className="pt-6 text-center text-xl">Cargando publicaciones...</p>
         )}

@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  env: {
+    // declare here all your variables
+    BACKEND_URL: process.env.BACKEND_URL,
+  },
   images: {
     remotePatterns: [
       {
