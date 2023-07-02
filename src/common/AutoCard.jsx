@@ -3,6 +3,7 @@ import { FiClock } from "react-icons/fi";
 import { MdVerified, MdDelete, MdBrush } from "react-icons/md";
 import Modal from "../common/Modal";
 import ModifyInfoForm from "./ModifyInfoForm";
+import Image from "next/image";
 
 const handleDelete = () => {};
 const handleUpdate = () => {};
@@ -35,7 +36,8 @@ const AutoCard = ({ car, adminOpt = false }) => {
   return (
     <article className="group m-2 max-w-sm overflow-hidden rounded-md bg-gray-50 transition-all duration-150 hover:bg-gray-200">
       <div className="relative">
-        <img src={images[0]} alt={brand + model + "-image"} />
+        <Image       width={400}
+      height={350} src={images[0]} alt={brand + model + "-image"} />
 
         {adminOpt && (
           <ul className="absolute right-0 top-0 m-2 flex scale-0 items-center gap-2 text-lg text-white transition-all duration-300 group-hover:scale-100">

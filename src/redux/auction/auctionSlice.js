@@ -18,6 +18,21 @@ export const postComment = createAsyncThunk(
   }
 );
 
+export const getAuction = createAsyncThunk(
+  "auction/getAuction",
+  async ({ auctionId }) => {
+    try {
+      const response = await fetch("/api/auctionApi", {
+        method: "POST",
+        body: `{"action":"${API_ACTIONS.GET_AUCTION}", "payload":{"auctionId":"${auctionId}"}}`,
+      });
+      return await response.json();
+    } catch (error) {
+      console.log("There has been a problem with getAuction:", error.message);
+    }
+  }
+);
+
 export const postReply = createAsyncThunk(
   "auction/postReply",
   async ({ commentId, userId, reply }) => {

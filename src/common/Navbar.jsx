@@ -43,6 +43,7 @@ export default function Navbar() {
                 alt="AutoBidLogo"
                 width={150}
                 height={300}
+                priority={true}
               />
             </Link>
 
