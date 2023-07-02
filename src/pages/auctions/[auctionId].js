@@ -16,10 +16,17 @@ const Responsive = dynamic(
   { ssr: false }
 );
 
-export default function Auction() {
+export async function getServerSideProps(context) {
+  // context value contains the query params
+  const { auctionId } = context.query;
+
+  return { props: { auctionId } };
+}
+
+export default function Auction({ auctionId }) {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { data, isFetching } = useGetAuctionQuery(router.query.auctionId);
+  const { data, isFetching } = useGetAuctionQuery(auctionId);
   const [auction, setAuction] = useState({});
   const { user, loading, error } = useSelector((state) => state.user);
 
@@ -33,11 +40,8 @@ export default function Auction() {
   const seller = auction.User;
 
   const calculateOffer = (auctionObject) => {
-
     if (auctionObject.Bids?.length > 0) {
-      return auctionObject.Bids[
-          auctionObject.Bids.length - 1
-        ].ammount;
+      return auctionObject.Bids[auctionObject.Bids.length - 1].ammount;
     }
 
     return auctionObject.minPrice;
@@ -215,8 +219,7 @@ export default function Auction() {
           <dl className="mx-1 my-2 grid grid-cols-[40%,_60%] gap-y-2 text-sm leading-10">
             <dt className="text-sm font-semibold">Oferta actual</dt>
             <dd className="flex  items-center text-sm font-semibold ">
-              $
-              {calculateOffer(auction)}
+              ${calculateOffer(auction)}
             </dd>
 
             <dt className="text-sm font-semibold">Vendedor</dt>

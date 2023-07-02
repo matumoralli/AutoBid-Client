@@ -61,7 +61,8 @@ export default function PhotosForm({ formikProps }) {
           {formikProps.values.images &&
             formikProps.values.images.map((image, index) => (
               <div key={index}>
-                <img
+              <Image       width={400}
+      height={350}
                   src={image.preview}
                   alt={`Preview ${index}`}
                   className="w-32 h-32 object-cover rounded"

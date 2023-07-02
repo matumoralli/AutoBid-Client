@@ -3,8 +3,9 @@ import { MdCircle, MdVerified, MdDelete, MdBrush } from "react-icons/md";
 import { BiCoin } from "react-icons/bi";
 import Modal from "./Modal";
 import ModifyInfoForm from "./ModifyInfoForm";
-import { giveCredit, removeCredit } from "@/redux/user/userSlice";
+import { giveUserCredit, deleteUserCredit } from "@/redux/user/userSlice";
 import { useSelector, useDispatch } from "react-redux";
+import Image from "next/image";
 
 const handleDelete = () => {};
 const handleUpdate = () => {};
@@ -103,7 +104,7 @@ const UserCard = ({ user, adminOpt = false }) => {
             </button>
             <button
               className="rounded-md border-2 border-red-500 px-3 py-1   font-semibold text-red-500 transition-all duration-300 hover:bg-red-500 hover:text-white  active:bg-red-600"
-              onClick={() => dispatch(removeCredit(email))}
+              onClick={() => dispatch(deleteUserCredit(email))}
             >
               -
             </button>
@@ -119,7 +120,8 @@ const UserCard = ({ user, adminOpt = false }) => {
         <MdCircle />
       </span>
 
-      <img
+      <Image       width={400}
+      height={350}
         src={image || "https://source.unsplash.com/random/300/?user"}
         alt={name + "-image"}
         className="mx-4 my-6 max-h-36 rounded-md"

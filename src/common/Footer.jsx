@@ -24,6 +24,7 @@ export default function Footer() {
               alt="AutoBidLogoFooter"
               width={150}
               height={300}
+              priority={true}
             />
           </a>
         </div>

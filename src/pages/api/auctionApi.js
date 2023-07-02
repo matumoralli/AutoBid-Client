@@ -17,6 +17,18 @@ export default withApiAuthRequired(async function auctionAPI(req, res) {
     const { action, payload } = body;
 
     switch (action) {
+      case API_ACTIONS.GET_AUCTION:
+        fetchOptions = {
+          method: "GET",
+          url: process.env.BACKEND_URL + `/auctions/${payload.auctionId}`,
+          headers: {
+            authorization: `Bearer ${accessToken}`,
+          },
+        };
+
+        break;
+
+
       case API_ACTIONS.POST_COMMENT:
         fetchOptions = {
           method: "POST",
