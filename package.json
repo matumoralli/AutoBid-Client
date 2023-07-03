@@ -2,6 +2,7 @@
   "name": "autobid-client",
   "version": "0.1.0",
   "homepage": ".",
+  "license": "UNLICENSED",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
