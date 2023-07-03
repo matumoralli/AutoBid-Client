@@ -4,6 +4,7 @@ import { AiFillInstagram, AiOutlineTwitter } from "react-icons/ai";
 import { Link as ScrollLink } from "react-scroll";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import logo from "../../public/LogoFooter.png";
 
 export default function Footer() {
   const router = useRouter();
@@ -20,7 +21,7 @@ export default function Footer() {
           <a className="flex items-center justify-center font-medium text-gray-900 md:justify-start">
             <Image
               className="h-[38px] w-[120px] sm:h-auto sm:w-[150px] md:mr-8 md:h-[46px] md:w-auto"
-              src="/../public/LogoFooter.png"
+              src={logo}
               alt="AutoBidLogoFooter"
               width={150}
               height={300}

@@ -7,6 +7,7 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUser } from "@/redux/user/userSlice";
 import DefButton from "./DefButton";
+import logo from "../../public/Logo.png";
 
 export default function Navbar() {
   const dispatch = useDispatch();
@@ -39,7 +40,7 @@ export default function Navbar() {
             <Link href="/">
               <Image
                 className="h-[38px] w-[120px] sm:h-auto sm:w-[150px] md:mr-8 md:h-[46px] md:w-auto"
-                src="/../public/Logo.png"
+                src={logo}
                 alt="AutoBidLogo"
                 width={150}
                 height={300}
