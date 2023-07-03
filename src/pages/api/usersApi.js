@@ -10,8 +10,9 @@ export default withApiAuthRequired(async function usersAPI(req, res) {
 
     const body = JSON.parse(req.body);
 
-    // console.log('este es action', body.action);
-    // console.log('este es payload', body.payload);
+    console.log("este es action", body.action);
+    console.log("este es payload", body.payload);
+    console.log("este es accesstoken", accessToken);
 
     const { action, payload } = body;
 
@@ -40,6 +41,80 @@ export default withApiAuthRequired(async function usersAPI(req, res) {
         fetchOptions = {
           method: "GET",
           url: process.env.BACKEND_URL + `/users/`,
+          headers: {
+            authorization: `Bearer ${accessToken}`,
+          },
+        };
+
+        break;
+
+        case API_ACTIONS.GET_USER_AUCTIONS:
+          fetchOptions = {
+            method: "GET",
+            url: process.env.BACKEND_URL + `/users/user/auctions/${payload.userId}`,
+            headers: {
+              authorization: `Bearer ${accessToken}`,
+            },
+            
+          };
+  
+          break;
+
+      case API_ACTIONS.GIVE_USER_CREDIT:
+        fetchOptions = {
+          method: "POST",
+          url: process.env.BACKEND_URL + `/users/user/${payload.email}/credit`,
+          headers: {
+            authorization: `Bearer ${accessToken}`,
+          },
+        };
+
+        break;
+
+      case API_ACTIONS.BUY_CREDIT:
+        fetchOptions = {
+          method: "POST",
+          url: process.env.BACKEND_URL + `/payment/buyCredit/`,
+          headers: {
+            authorization: `Bearer ${accessToken}`,
+          },
+          data: { buyerId: payload.userId },
+        };
+
+        break;
+
+      case API_ACTIONS.DELETE_USER_CREDIT:
+        fetchOptions = {
+          method: "DELETE",
+          url:
+            process.env.BACKEND_URL +
+            `/users/user/${payload.email}/delete-credit`,
+          headers: {
+            authorization: `Bearer ${accessToken}`,
+          },
+        };
+
+        break;
+
+      case API_ACTIONS.ASSIGN_AUCTION_CREDIT:
+        fetchOptions = {
+          method: "PUT",
+          url:
+            process.env.BACKEND_URL +
+            `/users/user/${payload.email}/auction/${payload.auctionId}/assign`,
+          headers: {
+            authorization: `Bearer ${accessToken}`,
+          },
+        };
+
+        break;
+
+      case API_ACTIONS.REMOVE_AUCTION_CREDIT:
+        fetchOptions = {
+          method: "PUT",
+          url:
+            process.env.BACKEND_URL +
+            `/users/user/${payload.email}/auction/${payload.auctionId}/remove`,
           headers: {
             authorization: `Bearer ${accessToken}`,
           },
