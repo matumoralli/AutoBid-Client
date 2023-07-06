@@ -21,7 +21,14 @@ export default function Navbar() {
 
   useEffect(() => {
     if (userAuth?.email) {
-      dispatch(fetchUser({ name: userAuth.name, email: userAuth.email }));
+      dispatch(
+        fetchUser({
+          name: userAuth.name,
+          userName: userAuth.nickname,
+          profilePicture: userAuth.picture,
+          email: userAuth.email,
+        })
+      );
     }
   }, [userAuth]);
 
@@ -52,7 +59,7 @@ export default function Navbar() {
               <li>
                 <a
                   className="text-base font-medium hover:text-gray-400"
-                  href="#"
+                  href="/"
                 >
                   Subastas
                 </a>
@@ -84,14 +91,21 @@ export default function Navbar() {
                 </li>
               )}
             </ul>
-            {user ? (
+            {user?.email ? (
               <div className="ml-auto hidden items-center md:flex">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-4">
                   <Link
-                    className="text-base font-medium hover:text-gray-400"
+                    className="flex flex-col items-center justify-center text-xs font-medium hover:text-gray-400"
                     href={`/profile/${user.id}`}
                   >
-                    {userAuth?.name.split(" ")[0]}
+                    <Image
+                      height={40}
+                      width={40}
+                      alt="Foto de perfil"
+                      className="rounded-full"
+                      src={user.profilePicture}
+                    />
+                    <p>{user.userName}</p>
                   </Link>
 
                   <button className=" mx-6 rounded-md bg-red-400 px-3 py-2 text-sm font-semibold text-black hover:text-gray-200 md:mx-auto md:px-7 md:py-[10px] md:text-base">
@@ -135,9 +149,11 @@ export default function Navbar() {
                 </div>
                 <ul className="flex p-1 text-[#18171c]">
                   <li className="flex flex-col items-start py-2 text-xl">
-                    <button className="px-4 py-3 text-base font-medium">
-                      Subastas
-                    </button>
+                    <Link href="/">
+                      <button className="px-4 py-3 text-base font-medium">
+                        Subastas
+                      </button>
+                    </Link>
                     <Link href="/sell-car">
                       <button
                         className="ml-3 rounded-xl bg-red-500 px-4 py-2 text-base font-medium"
@@ -161,19 +177,27 @@ export default function Navbar() {
                         </button>
                       </Link>
                     )}
-                    {userAuth ? (
-                      <>
-                        <Link href="#">
-                          <button className="me-2 px-4 py-3 text-base font-medium">
-                            Perfil {userAuth.name.split(" ")[0]}
-                          </button>
+                    {user?.email ? (
+                      <div>
+                        <Link
+                          className="flex flex-col items-center justify-start px-4 pb-3 text-xs font-medium hover:text-gray-400"
+                          href={`/profile/${user.id}`}
+                        >
+                          <Image
+                            height={40}
+                            width={40}
+                            alt="Foto de perfil"
+                            className="rounded-full"
+                            src={user.profilePicture}
+                          />
+                          <p>{user.userName}</p>
                         </Link>
                         <a href="/api/auth/logout">
                           <DefButton className={`mx-4 bg-red-400`}>
                             Log out
                           </DefButton>
                         </a>
-                      </>
+                      </div>
                     ) : (
                       <a href={`/api/auth/login?returnTo=${router.asPath}`}>
                         <DefButton className={`mx-4 bg-red-400`}>

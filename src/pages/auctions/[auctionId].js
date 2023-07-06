@@ -4,7 +4,6 @@ import CountDownBar from "@/components/auction/CountDownBar";
 import CommentBox from "@/components/auction/CommentBox";
 import { useGetAuctionQuery } from "@/redux/api/apiSlice";
 import formattedDate from "@/utils/formattedDate";
-import Image from "next/image";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { HiDocumentArrowDown } from "react-icons/hi2";
@@ -71,7 +70,7 @@ export default function Auction({ auctionId }) {
 
         <Responsive displayIn={["Tablet", "Laptop"]}>
           <CountDownBar
-            className="hidden md:block"
+            className="hidden md:sticky md:top-[88.8px] md:block"
             user={user}
             router={router}
             auction={auction}
@@ -97,14 +96,16 @@ export default function Auction({ auctionId }) {
         </section>
 
         <div className=" md:flex md:flex-row-reverse">
-          <Responsive displayIn={["Tablet", "Laptop"]}>
-            <SideBar
-              newListingsCars={[...carsList].splice(
-                0,
-                rst > 0 ? 4 : Math.ceil((1 + rst) * 4)
-              )}
-            />
-          </Responsive>
+          {carsList && (
+            <Responsive displayIn={["Tablet", "Laptop"]}>
+              <SideBar
+                newListingsCars={[...carsList].splice(
+                  0,
+                  rst > 0 ? 4 : Math.ceil((1 + rst) * 4)
+                )}
+              />
+            </Responsive>
+          )}
 
           <div className="md:w-5/6">
             <section className="flex flex-col pt-5 ">
@@ -225,11 +226,11 @@ export default function Auction({ auctionId }) {
             <section id="scrollDown" className="mx-2 border-b-[1px] py-6">
               <ul className="flex place-content-center gap-4">
                 <a href={car.domain}>
-                  <HiDocumentArrowDown className="mx-auto md:text-5xl text-4xl text-zinc-800" />
+                  <HiDocumentArrowDown className="mx-auto text-4xl text-zinc-800 md:text-5xl" />
                   <h2>Informe de dominio</h2>
                 </a>
                 <a href={car.inspection}>
-                  <HiDocumentArrowDown className="mx-auto md:text-5xl text-4xl text-zinc-800" />
+                  <HiDocumentArrowDown className="mx-auto text-4xl text-zinc-800 md:text-5xl" />
                   <h2>Informe de Inspección</h2>
                 </a>
               </ul>

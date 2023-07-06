@@ -131,8 +131,8 @@ export default function ImagesCarrousel({ imagesArray, carModel }) {
                 <Image
                   key={image + "key3"}
                   src={image}
-                  height={180}
-                  width={180}
+                  height={200}
+                  width={200}
                   sizes="40vw"
                   alt={carModel}
                   className="aspect-square  max-w-full object-scale-down"
@@ -154,8 +154,8 @@ export default function ImagesCarrousel({ imagesArray, carModel }) {
                   <Image
                     key={image + "key3"}
                     src={image}
-                    height={180}
-                    width={180}
+                    height={200}
+                    width={200}
                     sizes="40vw"
                     alt={carModel}
                     className="aspect-square  max-w-full object-scale-down "

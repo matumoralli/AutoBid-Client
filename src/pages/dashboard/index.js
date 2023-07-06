@@ -14,7 +14,6 @@ import { useGetCarsQuery } from "@/redux/api/apiSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUsers } from "@/redux/users/usersSlice";
 
-
 const carModel = {
   id: "",
   brand: "",
@@ -38,17 +37,19 @@ const carModel = {
   image: "",
 };
 
-const handleAdd = () => {};
+
 
 const Dashboard = () => {
   const dispatch = useDispatch();
   const [toShow, setToShow] = useState({ section: "users", array: [] });
   const [toSearch, setToSearch] = useState("");
   const [modals, setModals] = useState({
-    add: { inView: false, onConfirm: handleAdd },
+    add: { inView: false, onConfirm: async function () {
+      const response = await dispatch(createCarDetail({carModel}))
+    } },
+    createAuction: {}
   });
   const { users, loading, error } = useSelector((state) => state.users);
-
 
   useEffect(() => {
     dispatch(fetchUsers());
