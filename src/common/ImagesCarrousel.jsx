@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import ImagesViewer from "./ImagesViewer";
-// Update the count down every 1 second
+
 export default function ImagesCarrousel({ imagesArray, carModel }) {
   const [selected, setSelected] = useState("");
   const [inView, setInview] = useState(false);
@@ -25,37 +25,40 @@ export default function ImagesCarrousel({ imagesArray, carModel }) {
           setCurrentIndex={setCurrentIndex}
         />
       )}
-      <section className="xl:flex xl:max-h-[768px] ">
-        <Image
-          key={imagesArray[0] + "key"}
-          src={imagesArray[0]}
-          width={1024}
-          height={768}
-          alt={carModel}
-          className="object-cover"
-          imagesarray={imagesArray}
-          priority
-          onClick={() => handleSelected(imagesArray[0], 0)}
-        />
+      <section className="xl:flex xl:justify-between ">
+        <div className="xl:w-4/6 ">
+          <Image
+            key={imagesArray[0] + "key0 "}
+            src={imagesArray[0]}
+            width={1024}
+            height={768}
+            alt={carModel}
+            className="object-cover"
+            imagesarray={imagesArray}
+            priority
+            onClick={() => handleSelected(imagesArray[0], 0)}
+          />
+        </div>
+
         <div className=" flex justify-around overflow-hidden md:hidden">
           {imagesArray.slice(1, 5).map((image, index) => {
             if (index < 3) {
               return (
                 <Image
-                  key={image + "key"}
+                  key={image + "key1"}
                   src={image}
                   height={80}
                   width={80}
                   sizes="(max-width: 768px) 20vw, 40vw"
                   alt={carModel}
-                  className="aspect-square min-h-full max-w-full place-self-center object-scale-down"
+                  className="aspect-square min-h-full  max-w-full place-self-center object-scale-down"
                   onClick={() => handleSelected(image, index + 1)}
                 />
               );
             }
             if (index === 3) {
               return (
-                <div className="relative w-fit">
+                <div  key={image + "key1"} className="relative w-fit">
                   <div className="absolute flex h-full w-full place-content-center place-items-center bg-black  opacity-75">
                     <p
                       onClick={() => handleSelected(image, index + 1)}
@@ -65,7 +68,7 @@ export default function ImagesCarrousel({ imagesArray, carModel }) {
                     </p>
                   </div>
                   <Image
-                    key={image + "key"}
+                    key={image + "key1"}
                     src={image}
                     height={80}
                     width={80}
@@ -78,15 +81,16 @@ export default function ImagesCarrousel({ imagesArray, carModel }) {
             }
           })}
         </div>
+
         <div className=" hidden justify-around overflow-hidden md:flex xl:hidden">
           {imagesArray.slice(1, 10).map((image, index) => {
             if (index < 9) {
               return (
                 <Image
-                  key={image + "key"}
+                  key={image + "key2"}
                   src={image}
-                  height={80}
-                  width={80}
+                  height={100}
+                  width={100}
                   sizes="(max-width: 768px) 20vw, 40vw"
                   alt={carModel}
                   className="aspect-square min-h-full max-w-full place-self-center object-scale-down"
@@ -96,7 +100,7 @@ export default function ImagesCarrousel({ imagesArray, carModel }) {
             }
             if (index === 9) {
               return (
-                <div className="relative w-fit">
+                <div  key={image + "key2"} className="relative w-fit">
                   <div className="absolute flex h-full w-full place-content-center place-items-center bg-black  opacity-75">
                     <p
                       onClick={() => handleSelected(image, index + 1)}
@@ -106,10 +110,10 @@ export default function ImagesCarrousel({ imagesArray, carModel }) {
                     </p>
                   </div>
                   <Image
-                    key={image + "key"}
+                    key={image + "key2"}
                     src={image}
-                    height={80}
-                    width={80}
+                    height={100}
+                    width={100}
                     sizes="(max-width: 768px) 20vw, 40vw"
                     alt={carModel}
                     className="object-cover"
@@ -119,25 +123,26 @@ export default function ImagesCarrousel({ imagesArray, carModel }) {
             }
           })}
         </div>
-        <div className="hidden flex-wrap flex-col justify-around xl:flex">
-          {imagesArray.slice(1, 10).map((image, index) => {
-            if (index < 9) {
+
+        <div className="hidden w-2/6 place-items-center grid-cols-[50%,_50%] xl:grid">
+          {imagesArray.slice(1, 9).map((image, index) => {
+            if (index < 7) {
               return (
                 <Image
-                  key={image + "key"}
+                  key={image + "key3"}
                   src={image}
-                  height={160}
-                  width={160}
+                  height={180}
+                  width={180}
                   sizes="40vw"
                   alt={carModel}
-                  className="aspect-square min-h-full xl:min-h-fit max-w-full place-self-center object-scale-down"
+                  className="aspect-square  max-w-full object-scale-down"
                   onClick={() => handleSelected(image, index + 1)}
                 />
               );
             }
-            if (index === 9) {
+            if (index === 7) {
               return (
-                <div className="relative w-fit">
+                <div  key={image + "key3"} className="relative h-fit w-fit">
                   <div className="absolute flex h-full w-full place-content-center place-items-center bg-black  opacity-75">
                     <p
                       onClick={() => handleSelected(image, index + 1)}
@@ -147,13 +152,13 @@ export default function ImagesCarrousel({ imagesArray, carModel }) {
                     </p>
                   </div>
                   <Image
-                    key={image + "key"}
+                    key={image + "key3"}
                     src={image}
-                    height={80}
-                    width={80}
-                    sizes="(max-width: 768px) 20vw, 40vw"
+                    height={180}
+                    width={180}
+                    sizes="40vw"
                     alt={carModel}
-                    className="object-cover max-h-fit"
+                    className="aspect-square  max-w-full object-scale-down "
                   />
                 </div>
               );
@@ -163,28 +168,4 @@ export default function ImagesCarrousel({ imagesArray, carModel }) {
       </section>
     </>
   );
-}
-
-{
-  /* {restImages && (
-            <div className="relative w-fit">
-              <div className="absolute flex h-full w-full place-content-center place-items-center bg-black  opacity-75">
-                <p
-                  onClick={() => handleSelected(restImages, 4)}
-                  className="  text-center text-white"
-                >
-                  Ver {imagesArray.length}
-                </p>
-              </div>
-              <Image
-                key={restImages + "key"}
-                src={restImages}
-                height={80}
-                width={80}
-                sizes="(max-width: 768px) 20vw, 40vw"
-                alt={carModel}
-                className="object-cover"
-              />
-            </div>
-          )} */
 }

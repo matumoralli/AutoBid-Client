@@ -63,15 +63,6 @@ export default function Auction({ auctionId }) {
         </Responsive>
 
         <ImagesCarrousel imagesArray={car.images} carModel={car.model} />
-        {/* <section>
-          <Image
-            src={car.images[0]}
-            width={1024}
-            height={768}
-            alt={car.model}
-            priority
-          />
-        </section> */}
 
         <Responsive displayIn={["Tablet", "Laptop"]}>
           <CountDownBar
