@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useDropzone } from "react-dropzone";
 import { TiDeleteOutline } from "react-icons/ti";
+import imageFile from "../../../../public/imageFile.png";
 
 const pdfPath = "/GuiaFotos.pdf";
 
@@ -46,7 +47,7 @@ export default function PhotosForm({ formikProps }) {
           } p-5 text-center`}
         >
           <Image
-            src="/../public/imageFile.png"
+            src={imageFile}
             alt="imgNotFound"
             className="h-16 w-16"
             width={64}

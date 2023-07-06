@@ -4,6 +4,7 @@ import DefButton from "@/common/DefButton";
 import { postComment, postReply } from "@/redux/auction/auctionSlice";
 import sortCommentsAndBids from "@/helpers/sortCommentsAndBids";
 import commentDate from "@/utils/commentDate";
+import Image from "next/image";
 import {
   useLazyGetCommentQuery,
   useLazyGetReplyQuery,
@@ -110,7 +111,13 @@ export default function CommentBox({ auction, user, router }) {
             return (
               <li className=" mb-2 ms-1 flex flex-col" key={c.id}>
                 <div className="flex items-center gap-2">
-                  <a className="font-semibold">{c.User.name}</a>
+                  <Image
+                    src={c.User.profilePicture}
+                    alt={`Foto de perfil de usuario ${c.User.userName}`}
+                    height={20}
+                    width={20}
+                  />
+                  <a className="font-semibold">{c.User.userName}</a>
                   <p className="text-sm text-gray-400">
                     {commentDate(c.createdAt)}
                   </p>
@@ -128,7 +135,13 @@ export default function CommentBox({ auction, user, router }) {
             return (
               <li className=" ms-1 flex flex-col" key={c.id} id={c.id}>
                 <div className="flex items-center gap-2">
-                  <a className="font-semibold">{c.User.name}</a>
+                  <Image
+                    src={c.User.profilePicture}
+                    alt={`Foto de perfil de usuario ${c.User.userName}`}
+                    height={20}
+                    width={20}
+                  />
+                  <a className="font-semibold">{c.User.userName}</a>
                   <p className="text-sm text-gray-400">
                     {commentDate(c.createdAt)}
                   </p>
@@ -159,7 +172,13 @@ export default function CommentBox({ auction, user, router }) {
                           key={reply.id}
                         >
                           <div className="flex items-center gap-2">
-                            <a className="font-semibold">{c.User.name}</a>
+                            <Image
+                              src={c.User.profilePicture}
+                              alt={`Foto de perfil de usuario ${c.User.userName}`}
+                              height={20}
+                              width={20}
+                            />
+                            <a className="font-semibold">{c.User.userName}</a>
                             <p className=" text-gray-400">
                               {commentDate(reply.createdAt)}
                             </p>
@@ -179,7 +198,13 @@ export default function CommentBox({ auction, user, router }) {
                             key={reply.id}
                           >
                             <div className="flex items-center gap-2">
-                              <a className="font-semibold">{c.User.name}</a>
+                              <Image
+                                src={c.User.profilePicture}
+                                alt={`Foto de perfil de usuario ${c.User.userName}`}
+                                height={20}
+                                width={20}
+                              />
+                              <a className="font-semibold">{c.User.userName}</a>
                               <p className=" text-gray-400">
                                 {commentDate(reply.createdAt)}
                               </p>

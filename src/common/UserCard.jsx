@@ -12,7 +12,7 @@ const handleUpdate = () => {};
 const handleGiveCredit = () => {};
 
 const UserCard = ({ user, adminOpt = false }) => {
-  const { name, email, image, isAdmin, isActive, Credits } = user;
+  const { name, email, profilePicture, isAdmin, isActive, Credits } = user;
   const dispatch = useDispatch();
   const [modals, setModals] = useState({
     delete: { inView: false, onConfirm: handleDelete },
@@ -122,7 +122,7 @@ const UserCard = ({ user, adminOpt = false }) => {
 
       <Image       width={400}
       height={350}
-        src={image || "https://source.unsplash.com/random/300/?user"}
+        src={profilePicture }
         alt={name + "-image"}
         className="mx-4 my-6 max-h-36 rounded-md"
       />

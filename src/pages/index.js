@@ -4,12 +4,12 @@ import Pagination from "@/common/Pagination";
 import SideBar from "@/common/SideBar";
 import Head from "next/head";
 import { useState } from "react";
-import { useGetCarsQuery } from "@/redux/api/apiSlice";
+import { useGetAuctionsQuery } from "@/redux/api/apiSlice";
 
 export default function Home() {
   const [page, setPage] = useState(1);
-  const { data: response, isFetching, error } = useGetCarsQuery();
-  const carsList = response?.data;
+  const { data: response, isFetching, error } = useGetAuctionsQuery();
+  const carsList = response?.data.content.map(auction => auction.CarDetail);
   const rst = carsList?.length / 16 - page;
 
   return (
@@ -26,7 +26,7 @@ export default function Home() {
           <p className="pt-6 text-center text-xl">Cargando publicaciones...</p>
         )}
 
-        {(error || carsList?.length === 0) && (
+        {(error || carsList?.length === 0 ) && (
           <p className="pt-6 text-center text-xl text-red-700">
             Por el momento no hay publicaciones disponibles para mostrar
           </p>

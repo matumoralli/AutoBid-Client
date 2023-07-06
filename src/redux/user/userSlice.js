@@ -9,11 +9,11 @@ const initialState = {
 
 export const fetchUser = createAsyncThunk(
   "user/getUser",
-  async ({ name, email }) => {
+  async ({ name, userName, profilePicture, email }) => {
     try {
       const response = await fetch("/api/usersApi", {
         method: "POST",
-        body: `{"action":"${API_ACTIONS.LOGIN_REGISTER_USER}", "payload":{"name":"${name}", "email":"${email}"}}`,
+        body: `{"action":"${API_ACTIONS.LOGIN_REGISTER_USER}", "payload":{"name":"${name}", "userName":"${userName}", "profilePicture":"${profilePicture}", "email":"${email}"}}`,
       });
       return await response.json();
     } catch (error) {
@@ -138,13 +138,14 @@ export const userSlice = createSlice({
         state.loading = true;
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
+        console.log(action)
         state.loading = false;
-        state.user = action.payload[0];
+        state.user = action.payload;
       })
       .addCase(fetchUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.requestStatus;
-      })
+      }),
 });
 
 //* Action creators are generated for each case reducer function. Import these actions to use in your component.
