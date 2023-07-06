@@ -136,7 +136,7 @@ export default function CountDownBar({
     });
   }, []);
 
-  const c = twMerge("", className);
+  const c = twMerge("z-20", className);
 
   return (
     <>

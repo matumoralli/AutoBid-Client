@@ -11,19 +11,17 @@ const SideBar = ({ newListingsCars }) => {
             key={"sideBar" + model}
           >
             <div className="grid grid-cols-3 grid-rows-2 gap-2">
-              {images.map((image, index) => {
-                return (
+
                   <Image
-                    key={image + index}
+                    key={images[0] + 'key'}
                     width={400}
                     height={350}
-                    src={image}
+                    src={images[0]}
                     alt=""
                     className="col-span-2 row-span-2 h-full"
                     priority={true}
                   />
-                );
-              })}
+
             </div>
 
             <div className="px-3 py-1">

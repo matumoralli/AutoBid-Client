@@ -8,6 +8,7 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { HiDocumentArrowDown } from "react-icons/hi2";
+import ImagesCarrousel from "@/common/ImagesCarrousel";
 
 const Responsive = dynamic(
   () => {
@@ -61,7 +62,8 @@ export default function Auction({ auctionId }) {
           />
         </Responsive>
 
-        <section>
+        <ImagesCarrousel imagesArray={car.images} carModel={car.model} />
+        {/* <section>
           <Image
             src={car.images[0]}
             width={1024}
@@ -69,7 +71,7 @@ export default function Auction({ auctionId }) {
             alt={car.model}
             priority
           />
-        </section>
+        </section> */}
 
         <Responsive displayIn={["Tablet", "Laptop"]}>
           <CountDownBar
