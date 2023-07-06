@@ -39,14 +39,14 @@ export default function ImagesViewer({
       onClick={(e) => handleClose(e.target.localName)}
       className="fixed inset-0 z-50 flex h-screen w-screen flex-col place-content-center place-items-center bg-black"
     >
-      <div className="relative h-80 w-full">
-        <div className="flex h-full w-full">
+      <div className="relative h-80 w-full bg-slate-900 md:h-5/6 md:w-5/6">
+        <div className="flex h-full w-full justify-center">
           <div
-            className="z-50 h-full w-1/2"
+            className="z-50 h-full w-1/2  opacity-50"
             onClick={() => handleButtons(true, false)}
           ></div>
           <div
-            className="z-50 h-full w-1/2 "
+            className="z-50 h-full w-1/2  opacity-50"
             onClick={() => handleButtons(false, true)}
           ></div>
         </div>
@@ -54,10 +54,10 @@ export default function ImagesViewer({
           src={current}
           fill
           alt={carModel}
-          className="object-scale-down"
+          className="object-scale-down md:object-contain"
         />
       </div>
-      <div className="flex gap-1 overflow-x-scroll ">
+      <div className="flex gap-1 overflow-x-scroll bg-slate-900">
         {imagesarray &&
           imagesarray.map((img, index) => {
             return (
@@ -66,7 +66,7 @@ export default function ImagesViewer({
                 src={img}
                 height={80}
                 width={80}
-                sizes="(max-width: 768px) 20vw, 40vw"
+                sizes="(max-width: 768px) 20vw, 80vw"
                 alt={carModel}
                 className="aspect-square min-h-full max-w-full object-scale-down"
                 onClick={() => handleSelect(img, index)}
