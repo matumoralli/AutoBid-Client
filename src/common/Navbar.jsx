@@ -95,12 +95,12 @@ export default function Navbar() {
               <div className="ml-auto hidden items-center md:flex">
                 <div className="flex items-center gap-4">
                   <Link
-                    className="flex flex-col items-center justify-center text-xs font-medium hover:text-gray-400"
+                    className="flex  flex-col items-center justify-center text-xs font-medium hover:text-gray-400"
                     href={`/profile/${user.id}`}
                   >
                     <Image
-                      height={40}
-                      width={40}
+                      height={30}
+                      width={30}
                       alt="Foto de perfil"
                       className="rounded-full"
                       src={user.profilePicture}

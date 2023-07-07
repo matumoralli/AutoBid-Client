@@ -45,7 +45,7 @@ export default function CountDownTimer({ endDate }) {
   }
 
   if (time.days > 0) {
-    return <p className="text-white">{time.days} days</p>;
+    return <p className="text-white">{time.days} días</p>;
   }
 
   return (

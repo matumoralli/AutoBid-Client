@@ -10,13 +10,8 @@ import {
   useLazyGetCommentQuery,
   useLazyGetReplyQuery,
 } from "@/redux/api/apiSlice";
-import { io } from "socket.io-client";
-import { env } from "../../../next.config";
 
-const socket = io.connect(env.SOCKET_URL);
-
-export default function CommentBoxLive({ auction, user, router }) {
-  socket.emit("join_room", auction.id);
+export default function CommentBoxLive({ auction, user, socket }) {
   const dispatch = useDispatch();
   const [replyShowing, setReplyShowing] = useState("");
   const [comment, setComment] = useState("");
@@ -37,6 +32,7 @@ export default function CommentBoxLive({ auction, user, router }) {
 
   useEffect(() => {
     socket.on("receive_comment", (data) => {
+      console.log(data);
       setComments((prev) => [...prev, data]);
     });
     socket.on("receive_reply", (data) => {
@@ -52,7 +48,8 @@ export default function CommentBoxLive({ auction, user, router }) {
       postComment({ auctionId: auction.id, userId: user.id, comment: comment })
     );
     const newComment = await getComment(payload.id).unwrap();
-    socket.emit("send_comment", newComment);
+    socket.emit("send_comment", { room: auction.id, newComment });
+    // setComments((prev) => [...prev, newComment]);
     return setComment("");
   };
 
@@ -61,7 +58,8 @@ export default function CommentBoxLive({ auction, user, router }) {
       postReply({ commentId: replyShowing, userId: user.id, reply: reply })
     );
     const newReply = await getReply(payload.id).unwrap();
-    socket.emit("send_reply", newReply);
+    socket.emit("send_reply", { room: auction.id, newReply });
+    // setReplies((prev) => [...prev, newReply]);
     return setReply("");
   };
 
@@ -79,22 +77,32 @@ export default function CommentBoxLive({ auction, user, router }) {
         Comentarios y ofertas
       </h1>
 
-      <textarea
-        onChange={(e) => setComment(e.target.value)}
-        className=" w-full rounded-md border-2 border-gray-800"
-        maxLength={255}
-        name="comment"
-        rows="4"
-        value={comment}
-      ></textarea>
-      <div className="flex justify-end ">
-        <DefButton
-          onClick={handleComment}
-          className={`mx-0 bg-gray-800 text-xs text-white hover:bg-gray-900`}
-        >
-          Comentar
-        </DefButton>
-      </div>
+      {user?.email ? (
+        <>
+          <textarea
+            onChange={(e) => setComment(e.target.value)}
+            className=" w-full rounded-md border-2 border-gray-800"
+            maxLength={255}
+            name="comment"
+            rows="3"
+            value={comment}
+          ></textarea>
+          <div className="flex justify-end ">
+            <DefButton
+              onClick={handleComment}
+              className={`mx-0 bg-gray-800 text-xs text-white hover:bg-gray-900`}
+            >
+              Comentar
+            </DefButton>
+          </div>
+        </>
+      ) : (
+        <input
+          className=" mb-4 w-full rounded-md border-2 border-gray-800 bg-gray-200 text-white"
+          placeholder="Inicia sesión para dejar comentarios"
+          disabled
+        />
+      )}
 
       <ul className="flex flex-col gap-4">
         {comments.toReversed().map((c) => {
@@ -149,19 +157,21 @@ export default function CommentBoxLive({ auction, user, router }) {
                   >
                     {countReplies(c, replies)}
                   </button>
-                  <button
-                    onClick={(e) => showReplies(e)}
-                    className=" text-sm font-light text-gray-400"
-                  >
-                    Responder
-                  </button>
+                  {user?.email && (
+                    <button
+                      onClick={(e) => showReplies(e)}
+                      className=" text-sm font-light text-gray-400"
+                    >
+                      Responder
+                    </button>
+                  )}
                 </div>
                 {replyShowing === c.id && (
                   <ul className="mt-2">
                     {c?.Replies?.map((reply) => {
                       return (
                         <ol
-                          className=" mb-2 ms-3 flex flex-col text-sm text-zinc-700"
+                          className=" mb-2 ms-6 flex flex-col text-sm text-zinc-700"
                           key={reply.id}
                         >
                           <div className="flex items-center gap-2">
@@ -187,7 +197,7 @@ export default function CommentBoxLive({ auction, user, router }) {
                       .map((reply) => {
                         return (
                           <ol
-                            className=" mb-2 ms-3 flex flex-col text-sm text-zinc-700"
+                            className=" mb-2 ms-6 flex flex-col text-sm text-zinc-700"
                             key={reply.id}
                           >
                             <div className="flex items-center gap-2">
@@ -208,25 +218,27 @@ export default function CommentBoxLive({ auction, user, router }) {
                           </ol>
                         );
                       })}
-                    <div className="w-full">
-                      <textarea
-                        onChange={(e) => setReply(e.target.value)}
-                        className=" mx-auto mb-1 block w-10/12 rounded-md border-2 border-gray-800"
-                        maxLength={255}
-                        name="reply"
-                        rows="2"
-                        value={reply}
-                      ></textarea>
+                    {user?.email && (
+                      <div className="w-full">
+                        <textarea
+                          onChange={(e) => setReply(e.target.value)}
+                          className=" mx-auto mb-1 block w-10/12 rounded-md border-2 border-gray-800"
+                          maxLength={255}
+                          name="reply"
+                          rows="2"
+                          value={reply}
+                        ></textarea>
 
-                      <div className="flex justify-end ">
-                        <DefButton
-                          onClick={handleReply}
-                          className={`mx-0 bg-gray-800 text-xs text-white hover:bg-gray-900`}
-                        >
-                          Responder
-                        </DefButton>
+                        <div className="flex justify-end ">
+                          <DefButton
+                            onClick={handleReply}
+                            className={`mx-0 bg-gray-800 text-xs text-white hover:bg-gray-900`}
+                          >
+                            Responder
+                          </DefButton>
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </ul>
                 )}
               </li>

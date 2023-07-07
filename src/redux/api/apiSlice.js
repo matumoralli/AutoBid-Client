@@ -31,6 +31,10 @@ export const apiSlice = createApi({
       query: (id) => ({ url: `replies/reply/${id}`, method: "get" }),
       transformResponse: (response, meta, arg) => response.data,
     }),
+    getBid: builder.query({
+      query: (id) => ({ url: `auctions/bid/${id}`, method: "get" }),
+      transformResponse: (response, meta, arg) => response.data,
+    }),
     getUserAuctions: builder.query({
       query: (userId) => ({ url: `users/user/auctions/${userId}`, method: "get" }),
       transformResponse: (response, meta, arg) => response.data,
@@ -41,7 +45,7 @@ export const apiSlice = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetCarsQuery, useGetCarQuery, useGetAuctionsQuery, useGetAuctionQuery, useLazyGetCommentQuery, useLazyGetReplyQuery, useGetUserAuctionsQuery } = apiSlice;
+export const { useGetCarsQuery, useGetCarQuery, useGetAuctionsQuery, useGetAuctionQuery, useLazyGetCommentQuery, useLazyGetReplyQuery, useLazyGetBidQuery, useGetUserAuctionsQuery } = apiSlice;
 
 
 //* ESTOS HOOKS SE GENERAN AUTOMATICAMENTE (TENES QUE EMPEZAR A ESCRIBIRLOS). AQUELLOS QUE INCLUYAN "LAZY" SON ACTIVADOS CON UN TRIGER, Y LOS QUE NO, SE ACTIVAN AL MOMENTO DE INICIAR LA APLICACIÓN

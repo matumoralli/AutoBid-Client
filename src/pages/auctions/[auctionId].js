@@ -12,6 +12,11 @@ import SideBar from "@/common/SideBar";
 import { useGetCarsQuery } from "@/redux/api/apiSlice";
 import CommentBoxLive from "@/components/auction/CommentBoxLive";
 
+import { io } from "socket.io-client";
+import { env } from "../../../next.config";
+
+const socket = io.connect(env.SOCKET_URL);
+
 const Responsive = dynamic(
   () => {
     return import("../../common/Responsive");
@@ -20,6 +25,7 @@ const Responsive = dynamic(
 );
 
 export async function getServerSideProps(context) {
+
   // context value contains the query params
   const { auctionId } = context.query;
 
@@ -27,31 +33,33 @@ export async function getServerSideProps(context) {
 }
 
 export default function Auction({ auctionId }) {
+  socket.emit("join_room", auctionId);
   const dispatch = useDispatch();
   const router = useRouter();
-  const { data, isFetching } = useGetAuctionQuery(auctionId);
-  const [auction, setAuction] = useState({});
+  const { data: auction, isFetching } = useGetAuctionQuery(auctionId);
   const { user, loading, error } = useSelector((state) => state.user);
+  const [currentBid, setCurrentBid] = useState(0)
   const { data: response } = useGetCarsQuery();
   const carsList = response?.data;
   const rst = carsList?.length / 16 - 1;
 
+  const car = auction?.CarDetail;
+  const seller = auction?.User;
+
   useEffect(() => {
-    setAuction((prev) => {
-      return { ...prev, ...data };
+      if (auction?.Bids?.length > 0) {
+        setCurrentBid(auction.Bids[auction.Bids.length - 1].ammount)
+      } else {
+      setCurrentBid(auction?.minPrice)
+      }
+  }, [auction]);
+
+  useEffect(() => {
+    socket.on("receive_bid", (data) => {
+      setCurrentBid(data.ammount)
     });
-  }, [data]);
+  }, [socket]);
 
-  const car = auction.CarDetail;
-  const seller = auction.User;
-
-  const calculateOffer = (auctionObject) => {
-    if (auctionObject.Bids?.length > 0) {
-      return auctionObject.Bids[auctionObject.Bids.length - 1].ammount;
-    }
-
-    return auctionObject.minPrice;
-  };
 
   return (
     car && (
@@ -63,7 +71,8 @@ export default function Auction({ auctionId }) {
             router={router}
             auction={auction}
             dispatch={dispatch}
-            calculateOffer={calculateOffer}
+            currentBid={currentBid}
+            socket={socket}
           />
         </Responsive>
 
@@ -71,12 +80,13 @@ export default function Auction({ auctionId }) {
 
         <Responsive displayIn={["Tablet", "Laptop"]}>
           <CountDownBar
-            className="hidden md:sticky md:top-[88.8px] md:block"
+            className="hidden md:sticky md:top-[78.8px] md:block"
             user={user}
             router={router}
             auction={auction}
             dispatch={dispatch}
-            calculateOffer={calculateOffer}
+            currentBid={currentBid}
+            socket={socket}
           />
         </Responsive>
 
@@ -244,7 +254,7 @@ export default function Auction({ auctionId }) {
               <dl className="mx-1 my-2 grid grid-cols-[40%,_60%] gap-y-2 text-sm leading-10">
                 <dt className="text-sm font-semibold">Oferta actual</dt>
                 <dd className="flex  items-center text-sm font-semibold ">
-                  ${calculateOffer(auction)}
+                  ${currentBid}
                 </dd>
 
                 <dt className="text-sm font-semibold">Vendedor</dt>
@@ -259,7 +269,7 @@ export default function Auction({ auctionId }) {
           </div>
         </div>
 
-        <CommentBoxLive router={router} user={user} auction={auction} />
+        <CommentBoxLive socket={socket} user={user} auction={auction} />
         {/* <CommentBox router={router} user={user} auction={auction} /> */}
       </main>
     )

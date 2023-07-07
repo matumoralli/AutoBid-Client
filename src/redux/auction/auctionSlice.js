@@ -63,6 +63,7 @@ export const postBid = createAsyncThunk(
   }
 );
 
+
 export const auctionSlice = createSlice({
   name: "auction",
   initialState,
