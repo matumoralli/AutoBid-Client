@@ -10,9 +10,9 @@ export default withApiAuthRequired(async function auctionAPI(req, res) {
 
     const body = JSON.parse(req.body);
 
-    console.log("este es action", body.action);
-    console.log("este es payload", body.payload);
-    console.log("este es accesstoken", accessToken);
+      // console.log("este es action", body.action);
+      // console.log("este es payload", body.payload);
+      // console.log("este es accesstoken", accessToken);
 
     const { action, payload } = body;
 

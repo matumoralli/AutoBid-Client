@@ -10,6 +10,7 @@ import { HiDocumentArrowDown } from "react-icons/hi2";
 import ImagesCarrousel from "@/common/ImagesCarrousel";
 import SideBar from "@/common/SideBar";
 import { useGetCarsQuery } from "@/redux/api/apiSlice";
+import CommentBoxLive from "@/components/auction/CommentBoxLive";
 
 const Responsive = dynamic(
   () => {
@@ -258,7 +259,8 @@ export default function Auction({ auctionId }) {
           </div>
         </div>
 
-        <CommentBox router={router} user={user} auction={auction} />
+        <CommentBoxLive router={router} user={user} auction={auction} />
+        {/* <CommentBox router={router} user={user} auction={auction} /> */}
       </main>
     )
   );
