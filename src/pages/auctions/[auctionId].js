@@ -177,7 +177,7 @@ export default function Auction({ auctionId }) {
             </section>
 
             <section className="mx-2 border-b-[1px] py-6">
-              <h2 className="mb-2 px-2 text-lg font-bold">Destacado</h2>
+              <h2 className="mb-2 px-2 text-lg font-bold">Destacados</h2>
               <ul className="list-disc pe-1 ps-6 text-[15px] text-zinc-800">
                 {car.highlights.map((h, index) => (
                   <li key={h}>{h}</li>

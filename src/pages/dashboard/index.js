@@ -13,29 +13,7 @@ import {
 import { useGetCarsQuery } from "@/redux/api/apiSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUsers } from "@/redux/users/usersSlice";
-
-const carModel = {
-  id: "",
-  brand: "",
-  model: "",
-  year: "",
-  kilometers: "",
-  domain: "",
-  owner: "",
-  engine: "",
-  transmission: "",
-  driveTrain: "",
-  bodyType: "",
-  color: "",
-  highlights: "",
-  equipement: "",
-  modifications: "",
-  knownkFlaws: "",
-  services: "",
-  addedItems: "",
-  checked: "",
-  image: "",
-};
+import CarDetailForm from "@/common/CarDetailForm";
 
 
 
@@ -44,10 +22,13 @@ const Dashboard = () => {
   const [toShow, setToShow] = useState({ section: "users", array: [] });
   const [toSearch, setToSearch] = useState("");
   const [modals, setModals] = useState({
-    add: { inView: false, onConfirm: async function () {
-      const response = await dispatch(createCarDetail({carModel}))
-    } },
-    createAuction: {}
+    createPost: {
+      inView: false,
+      onConfirm: async function () {
+        const response = await dispatch(createCarDetail({ }));
+      },
+    },
+    createAuction: {},
   });
   const { users, loading, error } = useSelector((state) => state.users);
 
@@ -165,7 +146,7 @@ const Dashboard = () => {
             <li
               className={`text-2xl text-gray-400 transition-all duration-300 hover:scale-110 hover:text-black`}
             >
-              <button onClick={() => handleViewModal("add")}>
+              <button onClick={() => handleViewModal("createPost")}>
                 <AiOutlineAppstoreAdd />
               </button>
             </li>
@@ -210,11 +191,11 @@ const Dashboard = () => {
       </main>
 
       <Modal
-        title="Añadir publicación"
-        inView={modals.add.inView}
-        handleView={() => handleViewModal("add")}
+        title="Crear publicación"
+        inView={modals.createPost.inView}
+        handleView={() => handleViewModal("createPost")}
       >
-        <ModifyInfoForm obj={carModel} />
+        <CarDetailForm />
       </Modal>
     </>
   );
