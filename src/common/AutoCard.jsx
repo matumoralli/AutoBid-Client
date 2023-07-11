@@ -2,8 +2,8 @@ import { useState } from "react";
 import { FiClock } from "react-icons/fi";
 import { MdVerified, MdDelete, MdBrush } from "react-icons/md";
 import Modal from "../common/Modal";
-import ModifyInfoForm from "./ModifyInfoForm";
 import Image from "next/image";
+import CarDetailForm from "@/common/CarDetailForm";
 
 const handleDelete = () => {};
 const handleUpdate = () => {};
@@ -79,7 +79,7 @@ const AutoCard = ({ car, adminOpt = false }) => {
             inView={modals.update.inView}
             handleView={() => handleViewModal("update")}
           >
-            <ModifyInfoForm obj={car} />
+            <CarDetailForm createAuction={true} model={car} />
           </Modal>
         }
 

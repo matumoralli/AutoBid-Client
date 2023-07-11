@@ -4,7 +4,7 @@ import { AiOutlineClose } from "react-icons/ai";
 const Modal = ({
   inView,
   handleView = () => {},
-  onConfirm = () => {},
+  onConfirm,
   onCancel = () => {},
   title,
   children,
@@ -35,7 +35,7 @@ const Modal = ({
             onClick={handleClose}
           ></div>
 
-          <div className="relative z-10 max-h-[75vh] mx-2 md:w-1/2 overflow-y-auto rounded-md bg-gray-50 p-6 shadow-lg">
+          <div className="relative z-10 mx-2 max-h-[75vh] overflow-y-auto rounded-md bg-gray-50 p-6 shadow-lg md:w-1/2">
             <button
               className="absolute right-0 top-0 m-2 rounded-md border-2 border-red-500 p-1 font-semibold text-red-500 transition-all duration-300 hover:bg-red-500 hover:text-white"
               onClick={handleClose}
@@ -47,12 +47,14 @@ const Modal = ({
             </header>
             <main className="mb-8 mt-4">{children}</main>
             <footer className="flex items-center justify-center gap-4">
-              <button
-                className="rounded-md border-2 border-green-500 p-1 text-green-500 transition-all duration-300 hover:bg-green-500 hover:text-white"
-                onClick={handleConfirm}
-              >
-                Confirmar
-              </button>
+              {onConfirm  && (
+                <button
+                  className="rounded-md border-2 border-green-500 p-1 text-green-500 transition-all duration-300 hover:bg-green-500 hover:text-white"
+                  onClick={handleConfirm}
+                >
+                  Confirmar
+                </button>
+              )}
               <button
                 className="rounded-md border-2 border-red-500 p-1 font-semibold text-red-500 transition-all duration-300 hover:bg-red-500 hover:text-white"
                 onClick={handleClose}
