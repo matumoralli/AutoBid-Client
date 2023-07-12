@@ -25,7 +25,6 @@ const Responsive = dynamic(
 );
 
 export async function getServerSideProps(context) {
-
   // context value contains the query params
   const { auctionId } = context.query;
 
@@ -38,7 +37,7 @@ export default function Auction({ auctionId }) {
   const router = useRouter();
   const { data: auction, isFetching } = useGetAuctionQuery(auctionId);
   const { user, loading, error } = useSelector((state) => state.user);
-  const [currentBid, setCurrentBid] = useState(0)
+  const [currentBid, setCurrentBid] = useState(0);
   const { data: response } = useGetCarsQuery();
   const carsList = response?.data;
   const rst = carsList?.length / 16 - 1;
@@ -47,19 +46,18 @@ export default function Auction({ auctionId }) {
   const seller = auction?.User;
 
   useEffect(() => {
-      if (auction?.Bids?.length > 0) {
-        setCurrentBid(auction.Bids[auction.Bids.length - 1].ammount)
-      } else {
-      setCurrentBid(auction?.minPrice)
-      }
+    if (auction?.Bids?.length > 0) {
+      setCurrentBid(auction.Bids[auction.Bids.length - 1].ammount);
+    } else {
+      setCurrentBid(auction?.minPrice);
+    }
   }, [auction]);
 
   useEffect(() => {
     socket.on("receive_bid", (data) => {
-      setCurrentBid(data.ammount)
+      setCurrentBid(data.ammount);
     });
   }, [socket]);
-
 
   return (
     car && (
@@ -171,7 +169,9 @@ export default function Auction({ auctionId }) {
                   Tipo de vendedor
                 </dt>
                 <dd className="flex items-center border-y ps-2">
-                  {auction.sellerType}
+                  {auction.sellerType === "Dealer"
+                    ? "Consecionaria"
+                    : "Particular privado"}
                 </dd>
               </dl>
             </section>
@@ -194,14 +194,16 @@ export default function Auction({ auctionId }) {
               </ul>
             </section>
 
-            <section className="mx-2 border-b-[1px] py-6">
-              <h2 className="mb-2 px-2 text-lg font-bold">Modificaciones</h2>
-              <ul className="list-disc pe-1 ps-6 text-[15px] text-zinc-800">
-                {car.modifications.map((m) => (
-                  <li key={m}>{m}</li>
-                ))}
-              </ul>
-            </section>
+            {car.modifications[0].length > 0 && (
+              <section className="mx-2 border-b-[1px] py-6">
+                <h2 className="mb-2 px-2 text-lg font-bold">Modificaciones</h2>
+                <ul className="list-disc pe-1 ps-6 text-[15px] text-zinc-800">
+                  {car.modifications.map((m) =>
+                    m.length > 0 ? <li key={m}>{m}</li> : null
+                  )}
+                </ul>
+              </section>
+            )}
 
             <section className="mx-2 border-b-[1px] py-6">
               <h2 className="mb-2 px-2 text-lg font-bold">Fallas conocidas</h2>
@@ -223,16 +225,18 @@ export default function Auction({ auctionId }) {
               </ul>
             </section>
 
-            <section className="mx-2 border-b-[1px] py-6">
-              <h2 className="mb-2 px-2 text-lg font-bold">
-                Ítems incluidos en la venta
-              </h2>
-              <ul className="list-disc pe-1 ps-6 text-[15px] text-zinc-800">
-                {car.addedItems.map((i) => (
-                  <li key={i}>{i}</li>
-                ))}
-              </ul>
-            </section>
+            {car.addedItems[0].length > 0 && (
+              <section className="mx-2 border-b-[1px] py-6">
+                <h2 className="mb-2 px-2 text-lg font-bold">
+                  Ítems incluidos en la venta
+                </h2>
+                <ul className="list-disc pe-1 ps-6 text-[15px] text-zinc-800">
+                  {car.addedItems.map((i) =>
+                    i.length > 0 ? <li key={i}>{i}</li> : null
+                  )}
+                </ul>
+              </section>
+            )}
 
             <section id="scrollDown" className="mx-2 border-b-[1px] py-6">
               <ul className="flex place-content-center gap-4">

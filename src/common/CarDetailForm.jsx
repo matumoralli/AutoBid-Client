@@ -3,18 +3,26 @@ import axios from "axios";
 import { env } from "../../next.config";
 import Image from "next/image";
 import carDetailsWArrays from "@/helpers/carDetailsWArrays";
-import { HiDocumentArrowDown } from "react-icons/hi2";
+import { HiDocumentArrowDown, HiCalendarDays } from "react-icons/hi2";
+import DatePicker, { registerLocale, setDefaultLocale } from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import es from "date-fns/locale/es";
+import { useDispatch } from "react-redux";
+import { createAuction, updateAuction } from "@/redux/auction/auctionSlice";
+registerLocale("es", es);
 
 export default function CarDetailForm({
   user = {},
   model,
-  createAuction = false,
+  creatingAuction = false,
 }) {
-  console.log(model)
+  const dispatch = useDispatch();
+  const [startDate, setStartDate] = useState(new Date());
   const [carDetail, setCarDetail] = useState({});
   const [auctionDetails, setAuctionDetails] = useState({});
+
   useEffect(() => {
-    if (!createAuction) {
+    if (!creatingAuction) {
       setCarDetail({ ...model, email: user.email });
     } else {
       let carDetailDB = carDetailsWArrays(model);
@@ -23,7 +31,13 @@ export default function CarDetailForm({
         minPrice: model.minPrice,
         carDetailId: model.id,
         userId: model.User.id,
+        auctionId: model?.AuctionId !== null && model.AuctionId,
+        sellerType: model?.Auction?.sellerType,
+        customEnd: model?.Auction?.endTime,
       });
+      if (model?.Auction?.endTime) {
+        setStartDate(new Date(model?.Auction?.endTime));
+      }
     }
     return () => {
       if (user?.email) {
@@ -32,9 +46,9 @@ export default function CarDetailForm({
     };
   }, []);
 
+
   const handleFormChange = (index, event) => {
     const { name, value } = event.target;
-    console.log(event)
     if (
       [
         "highlights",
@@ -54,11 +68,14 @@ export default function CarDetailForm({
       if (name === "minPrice") {
         return setCarDetail((prev) => ({ ...prev, [name]: value }));
       }
-    }
-    else {
-      console.log(name, value)
+    } else {
       return setCarDetail((prev) => ({ ...prev, [name]: value }));
     }
+  };
+
+  const handleDateChange = (date) => {
+    setStartDate(date);
+    return setAuctionDetails((prev) => ({ ...prev, customEnd: date.toISOString() }));
   };
 
   const handleFileSelect = (index, event) => {
@@ -68,11 +85,9 @@ export default function CarDetailForm({
       data[index].value = files[0];
       data[index].preview = URL.createObjectURL(files[0]);
       setCarDetail((prev) => ({ ...prev, [name]: data }));
-      console.log(carDetail);
     }
     if (name !== "images" && files[0]) {
       setCarDetail((prev) => ({ ...prev, [name]: files[0] }));
-      console.log(carDetail);
     }
   };
 
@@ -129,17 +144,14 @@ export default function CarDetailForm({
     for (const [key, value] of Object.entries(carDetail)) {
       if (Array.isArray(value)) {
         const arrayValues = value.map((item) => {
-          if (item?.value) {
-            return item.value;
-          } else {
-            return item;
-          }
+          return item.value;
         });
         newCarDetail[key] = arrayValues;
       } else {
         newCarDetail[key] = value;
       }
     }
+
     const formData = new FormData();
     newCarDetail.images.map((image) => {
       formData.append("images", image);
@@ -147,11 +159,13 @@ export default function CarDetailForm({
     formData.append("inspection", newCarDetail.inspection);
     formData.append("domain", newCarDetail.domain);
     formData.append("carDetail", JSON.stringify(newCarDetail));
-    formData.append("auctionDetails", JSON.stringify(auctionDetails));
     await axios.put(`${env.BACKEND_URL}/cars/`, formData).then(
       async (response) => {
-        console.log(response);
-        await axios.post(`${env.BACKEND_URL}/auctions/`, formData);
+        if (auctionDetails?.auctionId) {
+          dispatch(updateAuction(auctionDetails));
+        } else {
+          dispatch(createAuction(auctionDetails));
+        }
       },
       (error) => {
         console.log(error);
@@ -165,10 +179,12 @@ export default function CarDetailForm({
     <>
       {Array.isArray(carDetail.highlights) && (
         <form
-          onSubmit={createAuction ? handleSubmitAuction : handleSubmitCarDetail}
-          className="flex flex-col gap-2"
+          onSubmit={
+            creatingAuction ? handleSubmitAuction : handleSubmitCarDetail
+          }
+          className="flex flex-col gap-2 "
         >
-          {createAuction && (
+          {creatingAuction && (
             <>
               <label>Tipo de vendedor:</label>
               <select
@@ -176,9 +192,32 @@ export default function CarDetailForm({
                 className={inputStyle}
                 onChange={(event) => handleFormChange(null, event)}
               >
+                <option value="null">Elegir</option>
                 <option value="Dealer">Consecionaria</option>
                 <option value="Private party">Particular privado</option>
               </select>
+            </>
+          )}
+          {creatingAuction && (
+            <>
+              <label>Fin de la Subasta</label>
+              <div className="relative">
+                <div className=" absolute inset-y-0 left-1 flex items-center pr-2.5">
+                  <HiCalendarDays className=" h-full w-full pe-2 text-xl font-bold" />
+                </div>
+                <DatePicker
+                  locale="es"
+                  dateFormat="MMMM d, yyyy h:mm aa"
+                  minDate={new Date()}
+                  showTimeSelect
+                  withPortal
+                  selected={startDate}
+                  className=" ms-9 block rounded-lg border border-gray-300 bg-gray-100 px-2 py-1 text-sm uppercase text-gray-900 hover:bg-gray-200 focus:border-blue-500 focus:bg-gray-50 focus:ring-blue-500"
+                  onChange={(date) => {
+                    handleDateChange(date);
+                  }}
+                />
+              </div>
             </>
           )}
           <input
@@ -529,11 +568,16 @@ export default function CarDetailForm({
               </div>
             );
           })}
+
           <button
             className="mx-auto rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
             type="submit"
           >
-            {createAuction ? "PUBLICAR SUBASTA" : "SUBIR"}
+            {creatingAuction
+              ? carDetail.AuctionId
+                ? "EDITAR SUBASTA"
+                : "PUBLICAR SUBASTA"
+              : "SUBIR"}
           </button>
         </form>
       )}
