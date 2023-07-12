@@ -1,6 +1,5 @@
 import AutoCard from "@/common/AutoCard";
 import Modal from "@/common/Modal";
-import ModifyInfoForm from "@/common/ModifyInfoForm";
 import UserCard from "@/common/UserCard";
 import { useEffect, useState } from "react";
 import {
@@ -9,16 +8,16 @@ import {
   AiOutlineCar,
   AiOutlineAppstoreAdd,
 } from "react-icons/ai";
-
 import { useGetCarsQuery } from "@/redux/api/apiSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUsers } from "@/redux/users/usersSlice";
+import CarDetailForm from "@/common/CarDetailForm";
 
 const carModel = {
-  id: "",
   brand: "",
   model: "",
   year: "",
+  minPrice: "",
   kilometers: "",
   domain: "",
   owner: "",
@@ -27,27 +26,43 @@ const carModel = {
   driveTrain: "",
   bodyType: "",
   color: "",
-  highlights: "",
-  equipement: "",
-  modifications: "",
-  knownkFlaws: "",
-  services: "",
-  addedItems: "",
-  checked: "",
-  image: "",
+  email: "",
+  highlights: [{ value: "" }],
+  equipement: [{ value: "" }],
+  modifications: [{ value: "" }],
+  knownFlaws: [{ value: "" }],
+  services: [{ value: "" }],
+  addedItems: [{ value: "" }],
+  domain: "",
+  inspection: "",
+  images: [{ value: "" }],
 };
-
-
 
 const Dashboard = () => {
   const dispatch = useDispatch();
   const [toShow, setToShow] = useState({ section: "users", array: [] });
   const [toSearch, setToSearch] = useState("");
+  const {
+    user,
+    loading: userLoading,
+    error: userError,
+  } = useSelector((state) => state.user);
   const [modals, setModals] = useState({
-    add: { inView: false, onConfirm: async function () {
-      const response = await dispatch(createCarDetail({carModel}))
-    } },
-    createAuction: {}
+    createPost: {
+      inView: false,
+      onConfirm: function () {},
+      createAuction: {
+        inView: false,
+        onConfirm: async function () {
+          return setModals((prev) => {
+            return {
+              ...prev,
+              createPost: { ...prev.createPost, inView: true },
+            };
+          });
+        },
+      },
+    },
   });
   const { users, loading, error } = useSelector((state) => state.users);
 
@@ -165,7 +180,7 @@ const Dashboard = () => {
             <li
               className={`text-2xl text-gray-400 transition-all duration-300 hover:scale-110 hover:text-black`}
             >
-              <button onClick={() => handleViewModal("add")}>
+              <button onClick={() => handleViewModal("createPost")}>
                 <AiOutlineAppstoreAdd />
               </button>
             </li>
@@ -209,13 +224,19 @@ const Dashboard = () => {
         </section>
       </main>
 
-      <Modal
-        title="Añadir publicación"
-        inView={modals.add.inView}
-        handleView={() => handleViewModal("add")}
-      >
-        <ModifyInfoForm obj={carModel} />
-      </Modal>
+      {!userLoading && !userError && (
+        <Modal
+          title="Crear publicación"
+          inView={modals.createPost.inView}
+          handleView={() => handleViewModal("createPost")}
+
+        >
+          <CarDetailForm
+            user={user}
+            model={carModel}
+          />
+        </Modal>
+      )}
     </>
   );
 };

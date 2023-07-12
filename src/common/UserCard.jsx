@@ -3,8 +3,8 @@ import { MdCircle, MdVerified, MdDelete, MdBrush } from "react-icons/md";
 import { BiCoin } from "react-icons/bi";
 import Modal from "./Modal";
 import ModifyInfoForm from "./ModifyInfoForm";
-import { giveUserCredit, deleteUserCredit } from "@/redux/user/userSlice";
-import { useSelector, useDispatch } from "react-redux";
+import { deleteUserCredit } from "@/redux/user/userSlice";
+import { useDispatch } from "react-redux";
 import Image from "next/image";
 
 const handleDelete = () => {};

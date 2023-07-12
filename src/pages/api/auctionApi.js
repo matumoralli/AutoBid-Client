@@ -10,13 +10,38 @@ export default withApiAuthRequired(async function auctionAPI(req, res) {
 
     const body = JSON.parse(req.body);
 
-    console.log("este es action", body.action);
-    console.log("este es payload", body.payload);
-    console.log("este es accesstoken", accessToken);
+      // console.log("este es action", body.action);
+      // console.log("este es payload", body.payload);
+      // console.log("este es accesstoken", accessToken);
 
     const { action, payload } = body;
 
     switch (action) {
+
+      case API_ACTIONS.CREATE_AUCTION:
+        fetchOptions = {
+          method: "POST",
+          url: process.env.BACKEND_URL + `/auctions/`,
+          headers: {
+            authorization: `Bearer ${accessToken}`,
+          },
+          data: { carDetailId: payload.carDetailId, userId: payload.userId, minPrice: payload.minPrice, sellerType: payload.sellerType, customEnd: payload.customEnd  },
+        };
+
+        break;
+
+        case API_ACTIONS.UPDATE_AUCTION:
+          fetchOptions = {
+            method: "PUT",
+            url: process.env.BACKEND_URL + `/auctions/${payload.auctionId}`,
+            headers: {
+              authorization: `Bearer ${accessToken}`,
+            },
+            data: { newInfo: {...payload} },
+          };
+  
+          break;
+
       case API_ACTIONS.GET_AUCTION:
         fetchOptions = {
           method: "GET",

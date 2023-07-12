@@ -3,6 +3,36 @@ import { API_ACTIONS } from "@/dictionary";
 
 const initialState = {};
 
+export const createAuction = createAsyncThunk(
+  "auction/createAuction",
+  async ({ carDetailId, userId, minPrice, sellerType, customEnd }) => {
+    try {
+      const response = await fetch("/api/auctionApi", {
+        method: "POST",
+        body: `{"action":"${API_ACTIONS.CREATE_AUCTION}", "payload":{"carDetailId":"${carDetailId}", "userId":"${userId}", "minPrice":"${minPrice}",  "sellerType":"${sellerType}", "customEnd":"${customEnd}"}}`,
+      });
+      return await response.json();
+    } catch (error) {
+      console.log("There has been a problem with postComment:", error.message);
+    }
+  }
+);
+
+export const updateAuction = createAsyncThunk(
+  "auction/createAuction",
+  async ({ auctionId, carDetailId, userId, minPrice, sellerType, customEnd }) => {
+    try {
+      const response = await fetch("/api/auctionApi", {
+        method: "POST",
+        body: `{"action":"${API_ACTIONS.UPDATE_AUCTION}", "payload":{"auctionId":"${auctionId}","carDetailId":"${carDetailId}", "userId":"${userId}", "minPrice":"${minPrice}",  "sellerType":"${sellerType}", "customEnd":"${customEnd}"}}`,
+      });
+      return await response.json();
+    } catch (error) {
+      console.log("There has been a problem with postComment:", error.message);
+    }
+  }
+);
+
 export const postComment = createAsyncThunk(
   "auction/postComment",
   async ({ auctionId, userId, comment }) => {
@@ -62,6 +92,7 @@ export const postBid = createAsyncThunk(
     }
   }
 );
+
 
 export const auctionSlice = createSlice({
   name: "auction",

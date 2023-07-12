@@ -24,7 +24,7 @@ const ModifyInfoForm = ({ obj }) => {
           name={c[0]}
           value={c[1]}
           onChange={handleChange}
-          className="w-full p-1 bg-gray-50 border-2 border-gray-200 rounded-md outline-none focus:bg-gray-100 focus:border-gray-300 transition-all duration-200"
+          className="w-full rounded-md border-2 border-gray-200 bg-gray-50 p-1 outline-none transition-all duration-200 focus:border-gray-300 focus:bg-gray-100"
           key={c[0] + "info" + index}
         />
       ))}
